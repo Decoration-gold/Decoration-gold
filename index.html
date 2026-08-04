@@ -193,6 +193,173 @@
     </footer>
 
     <script src="app.js"></script>
+<script>
+/* =========================================================
+   ACTUALIZAR GASTOS DEL DÍA EN LA PÁGINA PRINCIPAL
+   ========================================================= */
 
+document.addEventListener("DOMContentLoaded", actualizarGastosDelDia);
+window.addEventListener("pageshow", actualizarGastosDelDia);
+window.addEventListener("focus", actualizarGastosDelDia);
+window.addEventListener("storage", actualizarGastosDelDia);
+
+function actualizarGastosDelDia() {
+    const STORAGE_KEY = "decorationGoldExpenses";
+
+    let gastos = [];
+
+    try {
+        const gastosGuardados = localStorage.getItem(STORAGE_KEY);
+
+        if (gastosGuardados) {
+            const datosConvertidos = JSON.parse(gastosGuardados);
+
+            if (Array.isArray(datosConvertidos)) {
+                gastos = datosConvertidos;
+            }
+        }
+    } catch (error) {
+        console.error("No se pudieron cargar los gastos:", error);
+    }
+
+    const fechaActual = obtenerFechaLocal(new Date());
+
+    const totalGastosHoy = gastos
+        .filter(function (gasto) {
+            return gasto.date === fechaActual;
+        })
+        .reduce(function (total, gasto) {
+            return total + Number(gasto.amount || 0);
+        }, 0);
+
+    const tarjetaGastos = buscarTarjetaGastos();
+
+    if (!tarjetaGastos) {
+        console.warn("No se encontró la tarjeta Gastos del día.");
+        return;
+    }
+
+    const cantidad = buscarCantidadEnTarjeta(tarjetaGastos);
+    const estado = buscarEstadoEnTarjeta(tarjetaGastos);
+
+    if (cantidad) {
+        cantidad.textContent = formatearDinero(totalGastosHoy);
+    }
+
+    if (estado) {
+        if (totalGastosHoy > 0) {
+            estado.textContent = "Gastos registrados hoy";
+            estado.style.color = "#9b6f17";
+        } else {
+            estado.textContent = "Sin gastos registrados";
+            estado.style.color = "";
+        }
+    }
+}
+
+function buscarTarjetaGastos() {
+    const elementos = document.querySelectorAll(
+        "article, section, .summary-card, .card, .stat-card, .dashboard-card"
+    );
+
+    for (const elemento of elementos) {
+        const texto = elemento.textContent
+            .toLowerCase()
+            .replace(/\s+/g, " ")
+            .trim();
+
+        if (
+            texto.includes("gastos del día") ||
+            texto.includes("gastos del dia")
+        ) {
+            return elemento;
+        }
+    }
+
+    const todosLosElementos = document.querySelectorAll("body *");
+
+    for (const elemento of todosLosElementos) {
+        const texto = elemento.textContent
+            .toLowerCase()
+            .replace(/\s+/g, " ")
+            .trim();
+
+        if (
+            texto === "gastos del día" ||
+            texto === "gastos del dia"
+        ) {
+            return elemento.closest(
+                "article, section, .summary-card, .card, .stat-card, .dashboard-card, div"
+            );
+        }
+    }
+
+    return null;
+}
+
+function buscarCantidadEnTarjeta(tarjeta) {
+    const posiblesCantidades = tarjeta.querySelectorAll(
+        "[id*='expense'], [id*='gasto'], strong, .amount, .value, h2, h3"
+    );
+
+    for (const elemento of posiblesCantidades) {
+        const texto = elemento.textContent.trim();
+
+        if (
+            texto.includes("$") ||
+            texto.match(/^\d+([.,]\d{2})?$/)
+        ) {
+            return elemento;
+        }
+    }
+
+    return null;
+}
+
+function buscarEstadoEnTarjeta(tarjeta) {
+    const elementos = tarjeta.querySelectorAll(
+        "p, span, small, .status, .description"
+    );
+
+    for (const elemento of elementos) {
+        const texto = elemento.textContent
+            .toLowerCase()
+            .trim();
+
+        if (
+            texto.includes("sin gastos") ||
+            texto.includes("gastos registrados")
+        ) {
+            return elemento;
+        }
+    }
+
+    return null;
+}
+
+function obtenerFechaLocal(fecha) {
+    const año = fecha.getFullYear();
+
+    const mes = String(
+        fecha.getMonth() + 1
+    ).padStart(2, "0");
+
+    const día = String(
+        fecha.getDate()
+    ).padStart(2, "0");
+
+    return `${año}-${mes}-${día}`;
+}
+
+function formatearDinero(cantidad) {
+    return new Intl.NumberFormat(
+        "en-US",
+        {
+            style: "currency",
+            currency: "USD"
+        }
+    ).format(Number(cantidad) || 0);
+}
+</script>
 </body>
 </html>
