@@ -1,20 +1,114 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Decoration Gold</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Decoration Gold LLC</title>
+
+<style>
+
+body{
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f4f6f9;
+}
+
+header{
+    background:#111;
+    color:white;
+    padding:20px;
+    text-align:center;
+    font-size:30px;
+    font-weight:bold;
+}
+
+.subtitulo{
+    text-align:center;
+    color:#666;
+    margin-top:10px;
+    margin-bottom:30px;
+    font-size:20px;
+}
+
+.menu{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:20px;
+    padding:25px;
+}
+
+.tarjeta{
+    background:white;
+    border-radius:15px;
+    padding:30px;
+    text-align:center;
+    box-shadow:0 3px 12px rgba(0,0,0,.15);
+    cursor:pointer;
+    transition:.25s;
+}
+
+.tarjeta:hover{
+    transform:scale(1.03);
+}
+
+.icono{
+    font-size:50px;
+}
+
+.titulo{
+    margin-top:15px;
+    font-size:22px;
+    font-weight:bold;
+}
+
+</style>
+
 </head>
 
 <body>
 
-    <h1>DECORATION GOLD LLC</h1>
+<header>
+Decoration Gold LLC
+</header>
 
-    <h2>Sistema Administrativo</h2>
+<div class="subtitulo">
+Sistema Administrativo
+</div>
 
-    <p>
-        Bienvenida a tu sistema de administración.
-    </p>
+<div class="menu">
+
+<div class="tarjeta">
+<div class="icono">📦</div>
+<div class="titulo">Inventario</div>
+</div>
+
+<div class="tarjeta">
+<div class="icono">💳</div>
+<div class="titulo">Ventas</div>
+</div>
+
+<div class="tarjeta">
+<div class="icono">🛒</div>
+<div class="titulo">Compras</div>
+</div>
+
+<div class="tarjeta">
+<div class="icono">💵</div>
+<div class="titulo">Gastos</div>
+</div>
+
+<div class="tarjeta">
+<div class="icono">📊</div>
+<div class="titulo">Reportes</div>
+</div>
+
+<div class="tarjeta">
+<div class="icono">⚙️</div>
+<div class="titulo">Configuración</div>
+</div>
+
+</div>
 
 </body>
 </html>
