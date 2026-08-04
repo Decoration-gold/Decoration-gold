@@ -8,348 +8,969 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Decoration Gold INC</title>
+    <title>Decoration Gold INC | Sistema Administrativo</title>
 
     <style>
+        :root {
+            --negro: #090909;
+            --negro-suave: #171717;
+            --dorado: #d4a83f;
+            --dorado-claro: #f0cf7a;
+            --crema: #f7efe2;
+            --texto: #171717;
+            --verde: #138847;
+            --rojo: #d83a3a;
+        }
+
         * {
             box-sizing: border-box;
         }
 
-        html,
+        html {
+            min-height: 100%;
+        }
+
         body {
             margin: 0;
-            min-height: 100%;
-            font-family: Arial, Helvetica, sans-serif;
-        }
+            min-height: 100vh;
+            overflow-x: hidden;
 
-        body {
-            background-color: #f7ead8;
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            color: var(--texto);
+
+            background-color: #f7efe2;
+
             background-image:
-                linear-gradient(
-                    rgba(255, 250, 242, 0.16),
-                    rgba(255, 250, 242, 0.16)
+                radial-gradient(
+                    circle at 12% 17%,
+                    rgba(255, 255, 255, 0.95) 0,
+                    rgba(255, 255, 255, 0.55) 15%,
+                    transparent 34%
                 ),
-                url("Logo.PNG");
+                radial-gradient(
+                    circle at 85% 23%,
+                    rgba(226, 190, 115, 0.18) 0,
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 42% 78%,
+                    rgba(255, 255, 255, 0.8) 0,
+                    transparent 37%
+                ),
+                repeating-linear-gradient(
+                    118deg,
+                    transparent 0,
+                    transparent 115px,
+                    rgba(185, 137, 48, 0.09) 117px,
+                    rgba(218, 177, 92, 0.18) 120px,
+                    transparent 124px,
+                    transparent 245px
+                ),
+                linear-gradient(
+                    135deg,
+                    #fffaf2 0%,
+                    #f3e4cf 38%,
+                    #fffaf3 66%,
+                    #ead2ad 100%
+                );
 
-            background-size: cover;
-            background-position: center center;
-            background-repeat: no-repeat;
             background-attachment: fixed;
-            color: #111111;
         }
+
+        /*
+        ============================
+        ENCABEZADO
+        ============================
+        */
 
         .encabezado {
-            min-height: 82px;
-            padding: 12px 28px;
+            min-height: 114px;
+            padding: 14px 28px;
 
             display: grid;
-            grid-template-columns: 260px 1fr 260px;
+            grid-template-columns: 390px 1fr 245px;
             align-items: center;
-            gap: 20px;
+            gap: 24px;
 
-            background: linear-gradient(
-                90deg,
-                #080808,
-                #151515,
-                #080808
-            );
+            position: relative;
+            z-index: 20;
 
-            border-bottom: 1px solid #b98a2e;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.28);
+            background:
+                linear-gradient(
+                    90deg,
+                    #050505,
+                    #171717,
+                    #050505
+                );
+
+            border-top: 2px solid var(--dorado);
+            border-bottom: 2px solid var(--dorado);
+
+            box-shadow:
+                0 7px 20px rgba(0, 0, 0, 0.25);
         }
 
         .marca {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 18px;
         }
 
-        .marca-logo {
-            width: 190px;
-            height: 58px;
+        .logo-redondo {
+            width: 78px;
+            height: 78px;
+
+            flex-shrink: 0;
+
             object-fit: cover;
             object-position: center;
-            border-radius: 8px;
+
+            border-radius: 50%;
+
+            border: 3px solid var(--dorado);
+
+            background: #111;
+
+            box-shadow:
+                0 0 0 3px rgba(212, 168, 63, 0.14),
+                0 0 19px rgba(231, 184, 74, 0.55);
         }
 
-        .nombre-negocio {
+        .marca-texto h1 {
             margin: 0;
+
+            color: var(--dorado-claro);
+
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
+
+            font-size: clamp(22px, 2.4vw, 35px);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .marca-texto p {
+            margin: 5px 0 0;
+
+            color: var(--dorado);
+
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
+
+            font-size: 16px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .nombre-central {
+            margin: 0;
+
             text-align: center;
-            color: #d5a94e;
-            font-size: clamp(25px, 3vw, 38px);
-            font-weight: 700;
-            letter-spacing: 0.4px;
-            text-shadow: 0 1px 6px rgba(213, 169, 78, 0.25);
+
+            color: var(--dorado-claro);
+
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
+
+            font-size: clamp(24px, 3vw, 42px);
+            letter-spacing: 0.8px;
+
+            text-shadow:
+                0 2px 9px rgba(212, 168, 63, 0.25);
         }
 
         .usuario {
             justify-self: end;
-            min-width: 170px;
-            padding: 12px 18px;
+
+            min-width: 205px;
+            padding: 14px 18px;
 
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 9px;
+            gap: 11px;
 
-            color: #d9ad52;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid #9e782d;
-            border-radius: 12px;
+            color: #f2d27c;
+            background: rgba(12, 12, 12, 0.75);
+
+            border: 1px solid var(--dorado);
+            border-radius: 13px;
 
             font-size: 17px;
+
             cursor: pointer;
+
+            box-shadow:
+                inset 0 0 12px rgba(212, 168, 63, 0.07);
         }
+
+        .usuario:hover {
+            background: #1d1d1d;
+            box-shadow:
+                0 0 15px rgba(212, 168, 63, 0.2);
+        }
+
+        /*
+        ============================
+        CONTENIDO
+        ============================
+        */
 
         .contenido {
-            min-height: calc(100vh - 82px);
-            padding: 12px 24px 50px;
+            min-height: calc(100vh - 114px);
+            padding: 27px 6% 60px;
+
             position: relative;
+            isolation: isolate;
         }
+
+        /*
+        Marca de agua DG grande
+        */
 
         .contenido::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: rgba(255, 247, 236, 0.08);
+            content: "DG";
+
+            position: fixed;
+            left: 50%;
+            top: 57%;
+
+            z-index: -1;
+
+            transform:
+                translate(-50%, -50%)
+                scaleX(0.92);
+
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
+
+            font-size: clamp(310px, 48vw, 690px);
+            font-weight: normal;
+            line-height: 0.8;
+
+            color: rgba(198, 149, 49, 0.075);
+
+            text-shadow:
+                1px 1px 0 rgba(255, 255, 255, 0.45),
+                0 0 13px rgba(197, 147, 44, 0.08);
+
             pointer-events: none;
+            user-select: none;
         }
 
-        .subtitulo {
-            position: relative;
-            z-index: 1;
-
-            margin: 0;
-            padding: 2px 0 26px;
-
+        .bienvenida {
+            margin-bottom: 25px;
             text-align: center;
-            color: #555555;
-            font-size: clamp(20px, 2.3vw, 28px);
-            font-weight: 600;
-            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.85);
         }
 
-        .menu {
-            position: relative;
-            z-index: 1;
+        .bienvenida h2 {
+            margin: 0 0 7px;
+
+            font-size: clamp(25px, 2.7vw, 35px);
+            font-weight: 700;
+        }
+
+        .bienvenida p {
+            margin: 0;
+
+            color: #3f3f3f;
+            font-size: 19px;
+        }
+
+        /*
+        ============================
+        RESUMEN DEL NEGOCIO
+        ============================
+        */
+
+        .resumen {
+            max-width: 1420px;
+            margin: 0 auto 38px;
 
             display: grid;
-            grid-template-columns: repeat(5, minmax(180px, 1fr));
-            gap: 22px;
+            grid-template-columns:
+                repeat(4, minmax(220px, 1fr));
 
-            max-width: 1500px;
-            margin: 0 auto;
+            gap: 20px;
         }
 
-        .tarjeta {
-            min-height: 190px;
-            padding: 24px 16px;
+        .resumen-tarjeta {
+            min-height: 142px;
+            padding: 21px;
+
+            display: grid;
+            grid-template-columns: 64px 1fr;
+            align-items: center;
+            gap: 15px;
+
+            background:
+                rgba(255, 253, 248, 0.91);
+
+            border:
+                1px solid rgba(198, 150, 56, 0.42);
+
+            border-radius: 16px;
+
+            box-shadow:
+                0 9px 21px rgba(87, 57, 12, 0.13),
+                inset 0 1px 0 rgba(255, 255, 255, 0.95);
+
+            backdrop-filter: blur(4px);
+        }
+
+        .resumen-icono {
+            width: 62px;
+            height: 62px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 50%;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #fff6db,
+                    #f5d990
+                );
+
+            border:
+                1px solid #dfb455;
+
+            font-size: 31px;
+        }
+
+        .resumen-etiqueta {
+            margin-bottom: 7px;
+
+            color: #2d2d2d;
+            font-size: 16px;
+        }
+
+        .resumen-valor {
+            margin: 0;
+
+            font-size: 27px;
+            font-weight: bold;
+        }
+
+        .resumen-detalle {
+            margin-top: 8px;
+
+            color: #666;
+            font-size: 14px;
+        }
+
+        .positivo {
+            color: var(--verde);
+            font-weight: bold;
+        }
+
+        /*
+        ============================
+        MÓDULOS
+        ============================
+        */
+
+        .modulos {
+            max-width: 1420px;
+            margin: 0 auto;
+
+            display: grid;
+            grid-template-columns:
+                repeat(5, minmax(180px, 1fr));
+
+            gap: 23px;
+        }
+
+        .modulo {
+            min-height: 235px;
+            padding: 25px 17px 22px;
 
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
 
+            text-align: center;
             text-decoration: none;
-            color: #111111;
+            color: #151515;
 
-            background: rgba(255, 255, 255, 0.93);
-            border: 1px solid rgba(188, 151, 76, 0.22);
-            border-radius: 18px;
+            background:
+                rgba(255, 253, 248, 0.92);
+
+            border:
+                1px solid rgba(198, 150, 56, 0.38);
+
+            border-radius: 17px;
 
             box-shadow:
-                0 8px 22px rgba(43, 30, 12, 0.18),
+                0 10px 25px rgba(75, 46, 8, 0.14),
                 inset 0 1px 0 rgba(255, 255, 255, 0.95);
 
-            cursor: pointer;
+            backdrop-filter: blur(5px);
+
             transition:
                 transform 0.22s ease,
                 box-shadow 0.22s ease,
                 border-color 0.22s ease;
         }
 
-        .tarjeta:hover,
-        .tarjeta:focus {
-            transform: translateY(-5px);
-            border-color: #c79b43;
+        .modulo:hover,
+        .modulo:focus {
+            transform: translateY(-7px);
+
+            border-color: var(--dorado);
+
             box-shadow:
-                0 13px 30px rgba(43, 30, 12, 0.23),
-                0 0 0 2px rgba(199, 155, 67, 0.12);
+                0 16px 33px rgba(75, 46, 8, 0.21),
+                0 0 0 2px rgba(212, 168, 63, 0.08);
+
             outline: none;
         }
 
-        .icono {
-            margin-bottom: 14px;
-            font-size: 55px;
-            line-height: 1;
-            filter: sepia(0.25) saturate(1.15);
+        .modulo-icono {
+            width: 84px;
+            height: 84px;
+            margin-bottom: 17px;
+
+            display: grid;
+            place-items: center;
+
+            color: #e1b34d;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #050505,
+                    #1c1c1c
+                );
+
+            border: 2px solid var(--dorado);
+            border-radius: 50%;
+
+            box-shadow:
+                0 5px 14px rgba(0, 0, 0, 0.2);
+
+            font-size: 43px;
         }
 
-        .titulo {
+        .modulo h3 {
+            margin: 0 0 8px;
+
             font-size: 24px;
-            font-weight: 700;
+        }
+
+        .modulo p {
+            min-height: 42px;
+            margin: 0;
+
+            color: #555;
+            font-size: 15px;
+            line-height: 1.4;
+        }
+
+        .linea-dorada {
+            width: 42px;
+            height: 3px;
+            margin-top: 16px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #a9781d,
+                    #e6c16d
+                );
+
+            border-radius: 10px;
         }
 
         .configuracion {
             grid-column: 1;
         }
 
-        @media (max-width: 1150px) {
+        /*
+        ============================
+        PIE DE PÁGINA
+        ============================
+        */
+
+        .pie {
+            min-height: 78px;
+            padding: 24px 20px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            color: var(--dorado-claro);
+            background:
+                linear-gradient(
+                    90deg,
+                    #050505,
+                    #171717,
+                    #050505
+                );
+
+            border-top: 2px solid var(--dorado);
+
+            text-align: center;
+            font-size: 15px;
+        }
+
+        /*
+        ============================
+        TABLETA
+        ============================
+        */
+
+        @media (max-width: 1180px) {
             .encabezado {
-                grid-template-columns: 200px 1fr 200px;
-                padding-left: 18px;
-                padding-right: 18px;
+                grid-template-columns:
+                    minmax(285px, 1fr)
+                    auto;
             }
 
-            .marca-logo {
-                width: 165px;
-                height: 52px;
+            .nombre-central {
+                display: none;
             }
 
-            .menu {
-                grid-template-columns: repeat(3, minmax(190px, 1fr));
+            .resumen {
+                grid-template-columns:
+                    repeat(2, minmax(230px, 1fr));
+            }
+
+            .modulos {
+                grid-template-columns:
+                    repeat(3, minmax(190px, 1fr));
             }
         }
 
-        @media (max-width: 760px) {
-            body {
-                background-attachment: scroll;
-                background-size: auto 100%;
-            }
+        /*
+        ============================
+        CELULAR
+        ============================
+        */
 
+        @media (max-width: 720px) {
             .encabezado {
-                grid-template-columns: 1fr auto;
                 min-height: auto;
                 padding: 12px 14px;
+
+                grid-template-columns: 1fr auto;
+                gap: 10px;
+            }
+
+            .logo-redondo {
+                width: 61px;
+                height: 61px;
             }
 
             .marca {
-                display: none;
+                gap: 11px;
             }
 
-            .nombre-negocio {
-                text-align: left;
-                font-size: 24px;
+            .marca-texto h1 {
+                font-size: 18px;
+            }
+
+            .marca-texto p {
+                font-size: 11px;
             }
 
             .usuario {
-                min-width: auto;
-                padding: 10px 12px;
-                font-size: 15px;
+                min-width: 50px;
+                padding: 12px;
             }
 
-            .contenido {
-                padding: 14px 15px 36px;
-            }
-
-            .subtitulo {
-                padding-bottom: 18px;
-                font-size: 20px;
-            }
-
-            .menu {
-                grid-template-columns: repeat(2, minmax(140px, 1fr));
-                gap: 14px;
-            }
-
-            .tarjeta {
-                min-height: 150px;
-                padding: 18px 10px;
-                border-radius: 15px;
-            }
-
-            .icono {
-                font-size: 43px;
-            }
-
-            .titulo {
-                font-size: 19px;
-            }
-        }
-
-        @media (max-width: 430px) {
-            .nombre-negocio {
-                font-size: 20px;
-            }
-
-            .usuario span:last-child {
+            .usuario-texto,
+            .usuario-flecha {
                 display: none;
             }
 
-            .menu {
+            .contenido {
+                padding: 23px 15px 42px;
+            }
+
+            .contenido::before {
+                top: 63%;
+                font-size: 380px;
+            }
+
+            .bienvenida h2 {
+                font-size: 25px;
+            }
+
+            .bienvenida p {
+                font-size: 16px;
+            }
+
+            .resumen {
                 grid-template-columns: 1fr;
+                gap: 14px;
+            }
+
+            .modulos {
+                grid-template-columns:
+                    repeat(2, minmax(135px, 1fr));
+
+                gap: 14px;
+            }
+
+            .modulo {
+                min-height: 205px;
+                padding: 19px 10px;
+            }
+
+            .modulo-icono {
+                width: 70px;
+                height: 70px;
+                font-size: 35px;
+            }
+
+            .modulo h3 {
+                font-size: 20px;
+            }
+
+            .modulo p {
+                font-size: 13px;
             }
 
             .configuracion {
                 grid-column: auto;
             }
         }
+
+        @media (max-width: 390px) {
+            .marca-texto p {
+                display: none;
+            }
+
+            .modulos {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 
 <body>
+
     <header class="encabezado">
 
         <div class="marca">
+
             <img
-                class="marca-logo"
-                src="Logo.PNG"
-                alt="Logo de Decoration Gold"
+                class="logo-redondo"
+                src="LogoRedondo.PNG"
+                alt="Logo redondo de Decoration Gold INC"
             >
+
+            <div class="marca-texto">
+
+                <h1>
+                    Decoration Gold INC
+                </h1>
+
+                <p>
+                    Sistema Administrativo
+                </p>
+
+            </div>
+
         </div>
 
-        <h1 class="nombre-negocio">
+        <h2 class="nombre-central">
             Decoration Gold INC
-        </h1>
+        </h2>
 
-        <button class="usuario" type="button">
-            <span>♙</span>
-            <span>Administrador</span>
-            <span>⌄</span>
+        <button
+            class="usuario"
+            type="button"
+            aria-label="Menú del administrador"
+        >
+            <span>👤</span>
+
+            <span class="usuario-texto">
+                Administrador
+            </span>
+
+            <span class="usuario-flecha">
+                ▾
+            </span>
         </button>
 
     </header>
 
     <main class="contenido">
 
-        <h2 class="subtitulo">
-            Sistema Administrativo
-        </h2>
+        <section class="bienvenida">
 
-        <section class="menu">
+            <h2>
+                Bienvenida al Sistema Administrativo
+            </h2>
 
-            <a class="tarjeta" href="inventario.html">
-                <div class="icono">📦</div>
-                <div class="titulo">Inventario</div>
+            <p>
+                Resumen general de tu negocio
+            </p>
+
+        </section>
+
+        <section
+            class="resumen"
+            aria-label="Resumen del negocio"
+        >
+
+            <article class="resumen-tarjeta">
+
+                <div class="resumen-icono">
+                    🛒
+                </div>
+
+                <div>
+
+                    <div class="resumen-etiqueta">
+                        Ventas del día
+                    </div>
+
+                    <p class="resumen-valor">
+                        $0.00
+                    </p>
+
+                    <div class="resumen-detalle positivo">
+                        Lista para registrar ventas
+                    </div>
+
+                </div>
+
+            </article>
+
+            <article class="resumen-tarjeta">
+
+                <div class="resumen-icono">
+                    📦
+                </div>
+
+                <div>
+
+                    <div class="resumen-etiqueta">
+                        Inventario
+                    </div>
+
+                    <p class="resumen-valor">
+                        0
+                    </p>
+
+                    <div class="resumen-detalle">
+                        Productos registrados
+                    </div>
+
+                </div>
+
+            </article>
+
+            <article class="resumen-tarjeta">
+
+                <div class="resumen-icono">
+                    💵
+                </div>
+
+                <div>
+
+                    <div class="resumen-etiqueta">
+                        Gastos del día
+                    </div>
+
+                    <p class="resumen-valor">
+                        $0.00
+                    </p>
+
+                    <div class="resumen-detalle">
+                        Sin gastos registrados
+                    </div>
+
+                </div>
+
+            </article>
+
+            <article class="resumen-tarjeta">
+
+                <div class="resumen-icono">
+                    📊
+                </div>
+
+                <div>
+
+                    <div class="resumen-etiqueta">
+                        Ganancia del día
+                    </div>
+
+                    <p class="resumen-valor">
+                        $0.00
+                    </p>
+
+                    <div class="resumen-detalle positivo">
+                        Se calculará automáticamente
+                    </div>
+
+                </div>
+
+            </article>
+
+        </section>
+
+        <section
+            class="modulos"
+            aria-label="Módulos administrativos"
+        >
+
+            <a
+                class="modulo"
+                href="inventario.html"
+            >
+
+                <div class="modulo-icono">
+                    📦
+                </div>
+
+                <h3>
+                    Inventario
+                </h3>
+
+                <p>
+                    Gestiona tus productos y existencias
+                </p>
+
+                <div class="linea-dorada"></div>
+
             </a>
 
-            <a class="tarjeta" href="ventas.html">
-                <div class="icono">💳</div>
-                <div class="titulo">Ventas</div>
+            <a
+                class="modulo"
+                href="ventas.html"
+            >
+
+                <div class="modulo-icono">
+                    💳
+                </div>
+
+                <h3>
+                    Ventas
+                </h3>
+
+                <p>
+                    Registra y consulta todas tus ventas
+                </p>
+
+                <div class="linea-dorada"></div>
+
             </a>
 
-            <a class="tarjeta" href="compras.html">
-                <div class="icono">🛒</div>
-                <div class="titulo">Compras</div>
+            <a
+                class="modulo"
+                href="compras.html"
+            >
+
+                <div class="modulo-icono">
+                    🛒
+                </div>
+
+                <h3>
+                    Compras
+                </h3>
+
+                <p>
+                    Gestiona tus compras a proveedores
+                </p>
+
+                <div class="linea-dorada"></div>
+
             </a>
 
-            <a class="tarjeta" href="gastos.html">
-                <div class="icono">💵</div>
-                <div class="titulo">Gastos</div>
+            <a
+                class="modulo"
+                href="gastos.html"
+            >
+
+                <div class="modulo-icono">
+                    💵
+                </div>
+
+                <h3>
+                    Gastos
+                </h3>
+
+                <p>
+                    Controla tus gastos operativos
+                </p>
+
+                <div class="linea-dorada"></div>
+
             </a>
 
-            <a class="tarjeta" href="reportes.html">
-                <div class="icono">📊</div>
-                <div class="titulo">Reportes</div>
+            <a
+                class="modulo"
+                href="reportes.html"
+            >
+
+                <div class="modulo-icono">
+                    📊
+                </div>
+
+                <h3>
+                    Reportes
+                </h3>
+
+                <p>
+                    Visualiza reportes y estadísticas
+                </p>
+
+                <div class="linea-dorada"></div>
+
             </a>
 
-            <a class="tarjeta configuracion" href="configuracion.html">
-                <div class="icono">⚙️</div>
-                <div class="titulo">Configuración</div>
+            <a
+                class="modulo configuracion"
+                href="configuracion.html"
+            >
+
+                <div class="modulo-icono">
+                    ⚙️
+                </div>
+
+                <h3>
+                    Configuración
+                </h3>
+
+                <p>
+                    Ajustes del sistema y preferencias
+                </p>
+
+                <div class="linea-dorada"></div>
+
             </a>
 
         </section>
 
     </main>
+
+    <footer class="pie">
+        Decoration Gold INC &nbsp;©&nbsp; 2026
+        &nbsp;&nbsp;|&nbsp;&nbsp;
+        Todos los derechos reservados
+    </footer>
+
 </body>
 </html>
