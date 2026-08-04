@@ -1,1 +1,573 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
 
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Inventario | Decoration Gold INC</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="pagina-inventario">
+
+    <!-- ENCABEZADO -->
+
+    <header class="encabezado">
+
+        <div class="marca">
+
+            <img
+                class="logo-redondo"
+                src="LogoRedondo.PNG"
+                alt="Logo de Decoration Gold INC"
+            >
+
+            <div class="marca-texto">
+                <h1>DECORATION GOLD INC</h1>
+                <p>SISTEMA ADMINISTRATIVO</p>
+            </div>
+
+        </div>
+
+        <div class="acciones-encabezado">
+
+            <a class="boton-volver" href="index.html">
+                ← Panel principal
+            </a>
+
+            <button class="usuario" type="button">
+                <span class="usuario-icono">◉</span>
+                <span class="usuario-texto">Administrador</span>
+                <span class="usuario-flecha">⌄</span>
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- CONTENIDO PRINCIPAL -->
+
+    <main class="inventario-contenido">
+
+        <!-- TÍTULO -->
+
+        <section class="encabezado-pagina">
+
+            <div>
+                <span class="etiqueta-seccion">
+                    CONTROL DE MERCANCÍA
+                </span>
+
+                <h2>Inventario</h2>
+
+                <p>
+                    Registra productos, controla existencias,
+                    costos, precios y ganancias.
+                </p>
+            </div>
+
+            <button
+                class="boton-dorado"
+                id="boton-nuevo-producto"
+                type="button"
+            >
+                + Nuevo producto
+            </button>
+
+        </section>
+
+
+        <!-- RESUMEN DEL INVENTARIO -->
+
+        <section class="inventario-resumen">
+
+            <article class="inventario-resumen-tarjeta">
+
+                <div class="inventario-resumen-icono">
+                    📦
+                </div>
+
+                <div>
+                    <p class="inventario-resumen-etiqueta">
+                        Total de productos
+                    </p>
+
+                    <p
+                        class="inventario-resumen-valor"
+                        id="cantidad-productos"
+                    >
+                        0
+                    </p>
+                </div>
+
+            </article>
+
+
+            <article class="inventario-resumen-tarjeta">
+
+                <div class="inventario-resumen-icono">
+                    🧮
+                </div>
+
+                <div>
+                    <p class="inventario-resumen-etiqueta">
+                        Unidades disponibles
+                    </p>
+
+                    <p
+                        class="inventario-resumen-valor"
+                        id="total-unidades"
+                    >
+                        0
+                    </p>
+                </div>
+
+            </article>
+
+
+            <article class="inventario-resumen-tarjeta">
+
+                <div class="inventario-resumen-icono">
+                    💰
+                </div>
+
+                <div>
+                    <p class="inventario-resumen-etiqueta">
+                        Valor del inventario
+                    </p>
+
+                    <p
+                        class="inventario-resumen-valor"
+                        id="valor-inventario"
+                    >
+                        $0.00
+                    </p>
+                </div>
+
+            </article>
+
+
+            <article class="inventario-resumen-tarjeta">
+
+                <div class="inventario-resumen-icono">
+                    ⚠
+                </div>
+
+                <div>
+                    <p class="inventario-resumen-etiqueta">
+                        Productos con poco stock
+                    </p>
+
+                    <p
+                        class="inventario-resumen-valor"
+                        id="productos-stock-bajo"
+                    >
+                        0
+                    </p>
+                </div>
+
+            </article>
+
+        </section>
+
+
+        <!-- BUSCADOR Y FILTROS -->
+
+        <section class="inventario-herramientas">
+
+            <div class="campo-busqueda">
+
+                <span class="busqueda-icono">
+                    ⌕
+                </span>
+
+                <input
+                    id="buscar-producto"
+                    type="search"
+                    placeholder="Buscar por nombre, código o categoría..."
+                    autocomplete="off"
+                >
+
+            </div>
+
+            <select id="filtro-categoria">
+                <option value="">Todas las categorías</option>
+                <option value="Cuadros">Cuadros</option>
+                <option value="Relojes">Relojes</option>
+                <option value="Flores">Flores y arreglos</option>
+                <option value="Muebles">Muebles</option>
+                <option value="Decoración">Decoración</option>
+                <option value="Otros">Otros</option>
+            </select>
+
+            <select id="filtro-stock">
+                <option value="">Todo el inventario</option>
+                <option value="disponible">Disponible</option>
+                <option value="bajo">Stock bajo</option>
+                <option value="agotado">Agotado</option>
+            </select>
+
+        </section>
+
+
+        <!-- TABLA DE PRODUCTOS -->
+
+        <section class="tabla-contenedor">
+
+            <div class="tabla-encabezado">
+
+                <div>
+                    <h3>Productos registrados</h3>
+                    <p>
+                        Lista completa de la mercancía del negocio
+                    </p>
+                </div>
+
+                <span
+                    class="contador-registros"
+                    id="contador-registros"
+                >
+                    0 productos
+                </span>
+
+            </div>
+
+
+            <div class="tabla-desplazable">
+
+                <table class="tabla-inventario">
+
+                    <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th>Código</th>
+                            <th>Categoría</th>
+                            <th>Cantidad</th>
+                            <th>Costo</th>
+                            <th>Precio</th>
+                            <th>Ganancia</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="lista-productos">
+
+                        <tr class="fila-vacia">
+                            <td colspan="9">
+
+                                <div class="inventario-vacio">
+
+                                    <div class="inventario-vacio-icono">
+                                        📦
+                                    </div>
+
+                                    <h4>
+                                        No hay productos registrados
+                                    </h4>
+
+                                    <p>
+                                        Pulsa “Nuevo producto” para
+                                        agregar tu primera mercancía.
+                                    </p>
+
+                                </div>
+
+                            </td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- VENTANA PARA AGREGAR PRODUCTOS -->
+
+    <div
+        class="modal-producto"
+        id="modal-producto"
+        aria-hidden="true"
+    >
+
+        <div class="modal-fondo" id="cerrar-modal-fondo"></div>
+
+        <section
+            class="modal-contenido"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="titulo-modal"
+        >
+
+            <div class="modal-encabezado">
+
+                <div>
+                    <span class="etiqueta-seccion">
+                        INVENTARIO
+                    </span>
+
+                    <h2 id="titulo-modal">
+                        Nuevo producto
+                    </h2>
+                </div>
+
+                <button
+                    class="boton-cerrar"
+                    id="cerrar-modal"
+                    type="button"
+                    aria-label="Cerrar"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <form id="formulario-producto">
+
+                <input
+                    type="hidden"
+                    id="producto-id"
+                >
+
+
+                <div class="formulario-grid">
+
+                    <div class="campo-formulario campo-completo">
+
+                        <label for="nombre-producto">
+                            Nombre del producto
+                        </label>
+
+                        <input
+                            id="nombre-producto"
+                            type="text"
+                            placeholder="Ejemplo: Cuadro Árbol de la Vida"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="campo-formulario">
+
+                        <label for="codigo-producto">
+                            Código
+                        </label>
+
+                        <input
+                            id="codigo-producto"
+                            type="text"
+                            placeholder="Ejemplo: DG-001"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="campo-formulario">
+
+                        <label for="categoria-producto">
+                            Categoría
+                        </label>
+
+                        <select
+                            id="categoria-producto"
+                            required
+                        >
+                            <option value="">
+                                Selecciona una categoría
+                            </option>
+
+                            <option value="Cuadros">
+                                Cuadros
+                            </option>
+
+                            <option value="Relojes">
+                                Relojes
+                            </option>
+
+                            <option value="Flores">
+                                Flores y arreglos
+                            </option>
+
+                            <option value="Muebles">
+                                Muebles
+                            </option>
+
+                            <option value="Decoración">
+                                Decoración
+                            </option>
+
+                            <option value="Otros">
+                                Otros
+                            </option>
+                        </select>
+
+                    </div>
+
+
+                    <div class="campo-formulario">
+
+                        <label for="cantidad-producto">
+                            Cantidad
+                        </label>
+
+                        <input
+                            id="cantidad-producto"
+                            type="number"
+                            min="0"
+                            step="1"
+                            value="1"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="campo-formulario">
+
+                        <label for="stock-minimo-producto">
+                            Alerta de stock mínimo
+                        </label>
+
+                        <input
+                            id="stock-minimo-producto"
+                            type="number"
+                            min="0"
+                            step="1"
+                            value="2"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="campo-formulario">
+
+                        <label for="costo-producto">
+                            Costo de compra
+                        </label>
+
+                        <div class="campo-dinero">
+                            <span>$</span>
+
+                            <input
+                                id="costo-producto"
+                                type="number"
+                                min="0"
+                                step="0.01"
+                                placeholder="0.00"
+                                required
+                            >
+                        </div>
+
+                    </div>
+
+
+                    <div class="campo-formulario">
+
+                        <label for="precio-producto">
+                            Precio de venta
+                        </label>
+
+                        <div class="campo-dinero">
+                            <span>$</span>
+
+                            <input
+                                id="precio-producto"
+                                type="number"
+                                min="0"
+                                step="0.01"
+                                placeholder="0.00"
+                                required
+                            >
+                        </div>
+
+                    </div>
+
+
+                    <div class="campo-formulario campo-completo">
+
+                        <label for="descripcion-producto">
+                            Descripción o notas
+                        </label>
+
+                        <textarea
+                            id="descripcion-producto"
+                            rows="3"
+                            placeholder="Medidas, color, proveedor o detalles importantes..."
+                        ></textarea>
+
+                    </div>
+
+                </div>
+
+
+                <div class="ganancia-calculada">
+
+                    <span>
+                        Ganancia estimada por unidad
+                    </span>
+
+                    <strong id="ganancia-estimada">
+                        $0.00
+                    </strong>
+
+                </div>
+
+
+                <div class="modal-acciones">
+
+                    <button
+                        class="boton-secundario"
+                        id="cancelar-producto"
+                        type="button"
+                    >
+                        Cancelar
+                    </button>
+
+                    <button
+                        class="boton-dorado"
+                        type="submit"
+                    >
+                        Guardar producto
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section>
+
+    </div>
+
+
+    <!-- PIE DE PÁGINA -->
+
+    <footer class="pie">
+
+        Decoration Gold INC © 2026
+
+        <span class="separador">|</span>
+
+        Todos los derechos reservados
+
+    </footer>
+
+
+    <script src="inventario.js"></script>
+
+</body>
+</html>
