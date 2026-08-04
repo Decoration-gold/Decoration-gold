@@ -1,1 +1,699 @@
+/* =====================================================
+   DECORATION GOLD INC
+   DISEÑO PRINCIPAL DEL SISTEMA ADMINISTRATIVO
+===================================================== */
 
+/* ---------- CONFIGURACIÓN GENERAL ---------- */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --negro: #080808;
+    --negro-suave: #161616;
+    --dorado: #c9a54c;
+    --dorado-claro: #ead18b;
+    --dorado-oscuro: #8f6b22;
+    --crema: #f4efe5;
+    --crema-claro: #fffdf8;
+    --texto: #30291f;
+    --blanco: #ffffff;
+    --sombra: rgba(58, 42, 15, 0.18);
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+    font-family: Arial, Helvetica, sans-serif;
+    color: var(--texto);
+    background:
+        linear-gradient(
+            115deg,
+            rgba(255, 255, 255, 0.72),
+            rgba(240, 228, 201, 0.58)
+        ),
+        repeating-linear-gradient(
+            125deg,
+            transparent 0px,
+            transparent 110px,
+            rgba(177, 139, 56, 0.08) 112px,
+            rgba(177, 139, 56, 0.03) 116px,
+            transparent 122px
+        ),
+        linear-gradient(
+            135deg,
+            #fffdf8 0%,
+            #eee3cf 35%,
+            #faf5ea 65%,
+            #e5d5b5 100%
+        );
+    background-attachment: fixed;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Líneas suaves estilo mármol */
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: -2;
+    opacity: 0.65;
+    background:
+        linear-gradient(
+            28deg,
+            transparent 0%,
+            transparent 24%,
+            rgba(173, 132, 42, 0.12) 24.3%,
+            transparent 24.8%,
+            transparent 63%,
+            rgba(120, 91, 36, 0.08) 63.4%,
+            transparent 64%
+        ),
+        linear-gradient(
+            153deg,
+            transparent 0%,
+            transparent 42%,
+            rgba(190, 151, 69, 0.1) 42.4%,
+            transparent 43%,
+            transparent 78%,
+            rgba(143, 107, 34, 0.08) 78.5%,
+            transparent 79%
+        );
+}
+
+/* Monograma DG de fondo */
+
+body::after {
+    content: "DG";
+    position: fixed;
+    top: 53%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(180px, 32vw, 500px);
+    font-weight: 700;
+    letter-spacing: -30px;
+    color: rgba(173, 132, 42, 0.055);
+    z-index: -1;
+    pointer-events: none;
+    user-select: none;
+}
+
+/* ---------- BARRA SUPERIOR ---------- */
+
+header,
+.encabezado,
+.header-principal,
+.barra-superior {
+    width: 100%;
+    min-height: 118px;
+    padding: 16px 5%;
+    background:
+        linear-gradient(
+            135deg,
+            #050505 0%,
+            #171717 50%,
+            #050505 100%
+        );
+    border-bottom: 3px solid var(--dorado);
+    box-shadow:
+        0 7px 22px rgba(0, 0, 0, 0.28),
+        inset 0 -1px 0 rgba(255, 220, 130, 0.35);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 22px;
+    position: relative;
+    z-index: 20;
+}
+
+/* Línea dorada interior de la cabecera */
+
+header::after,
+.encabezado::after,
+.header-principal::after,
+.barra-superior::after {
+    content: "";
+    position: absolute;
+    left: 4%;
+    right: 4%;
+    bottom: 7px;
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        var(--dorado),
+        var(--dorado-claro),
+        var(--dorado),
+        transparent
+    );
+    opacity: 0.72;
+}
+
+/* Zona izquierda de la cabecera */
+
+.marca,
+.identidad,
+.logo-con-texto,
+.empresa {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    min-width: 0;
+}
+
+/* Logo redondo */
+
+.logo-redondo,
+.logo-circular,
+header img,
+.encabezado img {
+    width: 84px;
+    height: 84px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid var(--dorado);
+    background: #000;
+    padding: 3px;
+    box-shadow:
+        0 0 0 3px rgba(201, 165, 76, 0.14),
+        0 7px 18px rgba(0, 0, 0, 0.55);
+    flex-shrink: 0;
+}
+
+/* Textos de la empresa */
+
+.texto-marca,
+.texto-logo,
+.nombre-empresa,
+.titulos-empresa {
+    min-width: 0;
+}
+
+.texto-marca h1,
+.texto-logo h1,
+.nombre-empresa h1,
+.titulos-empresa h1,
+header h1,
+.encabezado h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(22px, 2.7vw, 38px);
+    font-weight: 600;
+    letter-spacing: 2px;
+    color: var(--dorado-claro);
+    line-height: 1.08;
+    text-shadow:
+        0 1px 0 #000,
+        0 0 10px rgba(201, 165, 76, 0.24);
+}
+
+.texto-marca p,
+.texto-logo p,
+.nombre-empresa p,
+.titulos-empresa p,
+header .subtitulo,
+.encabezado .subtitulo {
+    margin-top: 7px;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(11px, 1.3vw, 16px);
+    letter-spacing: 4px;
+    color: #d6bd7c;
+    text-transform: uppercase;
+}
+
+/* Botón administrador */
+
+.administrador,
+.boton-administrador,
+.usuario,
+.btn-administrador {
+    border: 1px solid var(--dorado);
+    border-radius: 30px;
+    padding: 12px 21px;
+    background:
+        linear-gradient(
+            145deg,
+            rgba(201, 165, 76, 0.16),
+            rgba(201, 165, 76, 0.04)
+        );
+    color: var(--dorado-claro);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 14px;
+    letter-spacing: 0.8px;
+    white-space: nowrap;
+    box-shadow:
+        inset 0 0 12px rgba(201, 165, 76, 0.08),
+        0 4px 12px rgba(0, 0, 0, 0.32);
+}
+
+/* ---------- CONTENIDO PRINCIPAL ---------- */
+
+main,
+.contenido-principal {
+    width: min(1180px, 92%);
+    margin: 0 auto;
+    padding: 58px 0 70px;
+    position: relative;
+    z-index: 2;
+}
+
+/* Texto de bienvenida */
+
+.bienvenida,
+.presentacion,
+.hero {
+    text-align: center;
+    margin-bottom: 42px;
+}
+
+.bienvenida h2,
+.presentacion h2,
+.hero h2,
+.titulo-principal {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(28px, 4vw, 46px);
+    font-weight: 500;
+    color: #3d3020;
+    letter-spacing: 1px;
+    line-height: 1.18;
+}
+
+.bienvenida h2::after,
+.presentacion h2::after,
+.hero h2::after,
+.titulo-principal::after {
+    content: "";
+    display: block;
+    width: 130px;
+    height: 2px;
+    margin: 17px auto 0;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        var(--dorado),
+        var(--dorado-claro),
+        var(--dorado),
+        transparent
+    );
+}
+
+.bienvenida p,
+.presentacion p,
+.hero p,
+.descripcion-principal {
+    max-width: 760px;
+    margin: 17px auto 0;
+    font-size: 16px;
+    line-height: 1.7;
+    color: #6a5942;
+}
+
+/* ---------- CUADRÍCULA DE MÓDULOS ---------- */
+
+.modulos,
+.grid-modulos,
+.contenedor-modulos,
+.panel-modulos {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+    width: 100%;
+}
+
+/* Tarjetas */
+
+.modulo {
+    min-height: 210px;
+    padding: 30px 26px 25px;
+    text-decoration: none;
+    color: var(--texto);
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.94),
+            rgba(239, 228, 207, 0.86)
+        );
+    border: 1px solid rgba(171, 128, 44, 0.48);
+    border-radius: 20px;
+    box-shadow:
+        0 13px 28px var(--sombra),
+        inset 0 1px 0 rgba(255, 255, 255, 0.95);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        border-color 0.25s ease;
+}
+
+/* Brillo sutil sobre las tarjetas */
+
+.modulo::before {
+    content: "";
+    position: absolute;
+    top: -55%;
+    left: -35%;
+    width: 75%;
+    height: 190%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.48),
+        transparent
+    );
+    transform: rotate(22deg);
+    transition: left 0.5s ease;
+}
+
+.modulo::after {
+    content: "";
+    position: absolute;
+    inset: 7px;
+    border: 1px solid rgba(201, 165, 76, 0.16);
+    border-radius: 14px;
+    pointer-events: none;
+}
+
+.modulo:hover,
+.modulo:focus {
+    transform: translateY(-7px);
+    border-color: var(--dorado);
+    box-shadow:
+        0 20px 36px rgba(63, 44, 13, 0.24),
+        0 0 0 3px rgba(201, 165, 76, 0.09);
+}
+
+.modulo:hover::before {
+    left: 105%;
+}
+
+/* Íconos */
+
+.modulo-icono {
+    width: 58px;
+    height: 58px;
+    margin-bottom: 18px;
+    border-radius: 16px;
+    background:
+        linear-gradient(
+            145deg,
+            #17120b,
+            #000000
+        );
+    border: 1px solid var(--dorado);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 29px;
+    line-height: 1;
+    box-shadow:
+        0 7px 15px rgba(0, 0, 0, 0.23),
+        inset 0 0 11px rgba(201, 165, 76, 0.13);
+}
+
+.modulo h3 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 24px;
+    font-weight: 600;
+    color: #342819;
+    letter-spacing: 0.3px;
+    position: relative;
+    z-index: 2;
+}
+
+.modulo p {
+    margin-top: 9px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #6f604c;
+    position: relative;
+    z-index: 2;
+}
+
+/* Línea dorada inferior de cada tarjeta */
+
+.linea-dorada {
+    width: 62px;
+    height: 2px;
+    margin-top: 19px;
+    background: linear-gradient(
+        90deg,
+        var(--dorado-oscuro),
+        var(--dorado-claro),
+        var(--dorado-oscuro)
+    );
+    border-radius: 50px;
+    position: relative;
+    z-index: 2;
+    transition: width 0.25s ease;
+}
+
+.modulo:hover .linea-dorada {
+    width: 105px;
+}
+
+/* Tarjeta de configuración */
+
+.modulo.configuracion {
+    background:
+        linear-gradient(
+            145deg,
+            #15120d,
+            #050505
+        );
+    border-color: var(--dorado);
+}
+
+.modulo.configuracion h3 {
+    color: var(--dorado-claro);
+}
+
+.modulo.configuracion p {
+    color: #d1c3a2;
+}
+
+.modulo.configuracion .modulo-icono {
+    background:
+        linear-gradient(
+            145deg,
+            #f6e4ad,
+            #a77d28
+        );
+    color: #161109;
+    border-color: #f1d88e;
+}
+
+/* ---------- PIE DE PÁGINA ---------- */
+
+.pie,
+footer {
+    width: 100%;
+    min-height: 74px;
+    padding: 22px 5%;
+    background:
+        linear-gradient(
+            135deg,
+            #050505,
+            #171717,
+            #050505
+        );
+    border-top: 2px solid var(--dorado);
+    color: #d4c39f;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 13px;
+    letter-spacing: 0.7px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 9px;
+    box-shadow: 0 -6px 18px rgba(0, 0, 0, 0.18);
+}
+
+.separador {
+    color: var(--dorado);
+    margin: 0 5px;
+}
+
+/* ---------- ENLACES Y BOTONES ---------- */
+
+a {
+    -webkit-tap-highlight-color: transparent;
+}
+
+button,
+a {
+    touch-action: manipulation;
+}
+
+/* ---------- TABLETAS ---------- */
+
+@media screen and (max-width: 950px) {
+    .modulos,
+    .grid-modulos,
+    .contenedor-modulos,
+    .panel-modulos {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    header,
+    .encabezado,
+    .header-principal,
+    .barra-superior {
+        padding-left: 4%;
+        padding-right: 4%;
+    }
+}
+
+/* ---------- TELÉFONOS ---------- */
+
+@media screen and (max-width: 650px) {
+    header,
+    .encabezado,
+    .header-principal,
+    .barra-superior {
+        min-height: auto;
+        padding: 15px 17px 20px;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .marca,
+    .identidad,
+    .logo-con-texto,
+    .empresa {
+        gap: 12px;
+    }
+
+    .logo-redondo,
+    .logo-circular,
+    header img,
+    .encabezado img {
+        width: 64px;
+        height: 64px;
+    }
+
+    .texto-marca h1,
+    .texto-logo h1,
+    .nombre-empresa h1,
+    .titulos-empresa h1,
+    header h1,
+    .encabezado h1 {
+        font-size: 20px;
+        letter-spacing: 1px;
+    }
+
+    .texto-marca p,
+    .texto-logo p,
+    .nombre-empresa p,
+    .titulos-empresa p,
+    header .subtitulo,
+    .encabezado .subtitulo {
+        font-size: 9px;
+        letter-spacing: 2px;
+    }
+
+    .administrador,
+    .boton-administrador,
+    .usuario,
+    .btn-administrador {
+        padding: 9px 12px;
+        font-size: 11px;
+    }
+
+    main,
+    .contenido-principal {
+        width: 90%;
+        padding-top: 40px;
+        padding-bottom: 48px;
+    }
+
+    .bienvenida,
+    .presentacion,
+    .hero {
+        margin-bottom: 30px;
+    }
+
+    .modulos,
+    .grid-modulos,
+    .contenedor-modulos,
+    .panel-modulos {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+
+    .modulo {
+        min-height: 178px;
+        padding: 25px 22px;
+    }
+
+    .modulo-icono {
+        width: 51px;
+        height: 51px;
+        font-size: 25px;
+        margin-bottom: 14px;
+    }
+
+    .modulo h3 {
+        font-size: 22px;
+    }
+
+    body::after {
+        font-size: 210px;
+        letter-spacing: -18px;
+    }
+
+    footer,
+    .pie {
+        font-size: 11px;
+        padding-left: 18px;
+        padding-right: 18px;
+    }
+}
+
+/* ---------- PANTALLAS MUY PEQUEÑAS ---------- */
+
+@media screen and (max-width: 430px) {
+    header,
+    .encabezado,
+    .header-principal,
+    .barra-superior {
+        flex-wrap: wrap;
+    }
+
+    .administrador,
+    .boton-administrador,
+    .usuario,
+    .btn-administrador {
+        margin-left: 76px;
+        margin-top: -12px;
+    }
+
+    .bienvenida h2,
+    .presentacion h2,
+    .hero h2,
+    .titulo-principal {
+        font-size: 28px;
+    }
+
+    .bienvenida p,
+    .presentacion p,
+    .hero p,
+    .descripcion-principal {
+        font-size: 14px;
+    }
+}
