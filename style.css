@@ -1,9 +1,7 @@
-/* =====================================================
+/* =========================================================
    DECORATION GOLD INC
-   DISEÑO PRINCIPAL DEL SISTEMA ADMINISTRATIVO
-===================================================== */
-
-/* ---------- CONFIGURACIÓN GENERAL ---------- */
+   DASHBOARD PRINCIPAL
+========================================================= */
 
 * {
     margin: 0;
@@ -13,15 +11,14 @@
 
 :root {
     --negro: #080808;
-    --negro-suave: #161616;
-    --dorado: #c9a54c;
-    --dorado-claro: #ead18b;
-    --dorado-oscuro: #8f6b22;
-    --crema: #f4efe5;
-    --crema-claro: #fffdf8;
-    --texto: #30291f;
+    --negro-claro: #171717;
+    --dorado: #bf9744;
+    --dorado-claro: #efd890;
+    --dorado-oscuro: #80601f;
+    --crema: #f6f0e4;
+    --marron: #382b1c;
+    --texto: #675945;
     --blanco: #ffffff;
-    --sombra: rgba(58, 42, 15, 0.18);
 }
 
 html {
@@ -31,123 +28,125 @@ html {
 body {
     min-height: 100vh;
     font-family: Arial, Helvetica, sans-serif;
-    color: var(--texto);
+    color: var(--marron);
+    overflow-x: hidden;
+
     background:
         linear-gradient(
             115deg,
-            rgba(255, 255, 255, 0.72),
-            rgba(240, 228, 201, 0.58)
+            rgba(255,255,255,0.76),
+            rgba(242,232,211,0.64)
         ),
         repeating-linear-gradient(
-            125deg,
-            transparent 0px,
-            transparent 110px,
-            rgba(177, 139, 56, 0.08) 112px,
-            rgba(177, 139, 56, 0.03) 116px,
-            transparent 122px
+            135deg,
+            transparent 0,
+            transparent 135px,
+            rgba(174,132,45,0.055) 137px,
+            transparent 141px
         ),
         linear-gradient(
             135deg,
             #fffdf8 0%,
-            #eee3cf 35%,
-            #faf5ea 65%,
-            #e5d5b5 100%
+            #eee2cd 45%,
+            #fbf7ef 72%,
+            #eadbbd 100%
         );
+
     background-attachment: fixed;
     position: relative;
-    overflow-x: hidden;
 }
 
-/* Líneas suaves estilo mármol */
+/* Vetas suaves de mármol */
 
 body::before {
     content: "";
     position: fixed;
     inset: 0;
-    pointer-events: none;
     z-index: -2;
-    opacity: 0.65;
+    pointer-events: none;
+
     background:
         linear-gradient(
             28deg,
             transparent 0%,
-            transparent 24%,
-            rgba(173, 132, 42, 0.12) 24.3%,
-            transparent 24.8%,
-            transparent 63%,
-            rgba(120, 91, 36, 0.08) 63.4%,
-            transparent 64%
+            transparent 29%,
+            rgba(166,125,38,0.09) 29.3%,
+            transparent 29.9%,
+            transparent 69%,
+            rgba(166,125,38,0.07) 69.4%,
+            transparent 70%
         ),
         linear-gradient(
-            153deg,
+            148deg,
             transparent 0%,
-            transparent 42%,
-            rgba(190, 151, 69, 0.1) 42.4%,
-            transparent 43%,
-            transparent 78%,
-            rgba(143, 107, 34, 0.08) 78.5%,
-            transparent 79%
+            transparent 47%,
+            rgba(125,92,32,0.07) 47.4%,
+            transparent 48%,
+            transparent 82%,
+            rgba(184,143,53,0.07) 82.5%,
+            transparent 83%
         );
 }
 
-/* Monograma DG de fondo */
+/* Monograma central */
 
 body::after {
     content: "DG";
     position: fixed;
-    top: 53%;
     left: 50%;
+    top: 59%;
     transform: translate(-50%, -50%);
-    font-family: Georgia, "Times New Roman", serif;
-    font-size: clamp(180px, 32vw, 500px);
-    font-weight: 700;
-    letter-spacing: -30px;
-    color: rgba(173, 132, 42, 0.055);
     z-index: -1;
+
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(180px, 28vw, 390px);
+    font-weight: 700;
+    letter-spacing: -24px;
+
+    color: rgba(181,138,48,0.047);
     pointer-events: none;
     user-select: none;
 }
 
-/* ---------- BARRA SUPERIOR ---------- */
+/* =========================================================
+   ENCABEZADO
+========================================================= */
 
-header,
-.encabezado,
-.header-principal,
-.barra-superior {
+.encabezado {
+    min-height: 116px;
     width: 100%;
-    min-height: 118px;
-    padding: 16px 5%;
-    background:
-        linear-gradient(
-            135deg,
-            #050505 0%,
-            #171717 50%,
-            #050505 100%
-        );
-    border-bottom: 3px solid var(--dorado);
-    box-shadow:
-        0 7px 22px rgba(0, 0, 0, 0.28),
-        inset 0 -1px 0 rgba(255, 220, 130, 0.35);
+    padding: 15px 5%;
+
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 22px;
+    gap: 24px;
+
+    background:
+        linear-gradient(
+            125deg,
+            #050505 0%,
+            #171717 49%,
+            #050505 100%
+        );
+
+    border-bottom: 3px solid var(--dorado);
+    box-shadow:
+        0 7px 20px rgba(0,0,0,0.28),
+        inset 0 -1px 0 rgba(255,221,133,0.32);
+
     position: relative;
     z-index: 20;
 }
 
-/* Línea dorada interior de la cabecera */
-
-header::after,
-.encabezado::after,
-.header-principal::after,
-.barra-superior::after {
+.encabezado::after {
     content: "";
     position: absolute;
     left: 4%;
     right: 4%;
     bottom: 7px;
     height: 1px;
+
     background: linear-gradient(
         90deg,
         transparent,
@@ -156,146 +155,132 @@ header::after,
         var(--dorado),
         transparent
     );
-    opacity: 0.72;
+
+    opacity: 0.65;
 }
 
-/* Zona izquierda de la cabecera */
-
-.marca,
-.identidad,
-.logo-con-texto,
-.empresa {
+.marca {
     display: flex;
     align-items: center;
     gap: 18px;
     min-width: 0;
 }
 
-/* Logo redondo */
-
-.logo-redondo,
-.logo-circular,
-header img,
-.encabezado img {
+.logo-redondo {
     width: 84px;
     height: 84px;
+    flex-shrink: 0;
+
     object-fit: cover;
     border-radius: 50%;
     border: 2px solid var(--dorado);
-    background: #000;
     padding: 3px;
+
+    background: #080808;
+
     box-shadow:
-        0 0 0 3px rgba(201, 165, 76, 0.14),
-        0 7px 18px rgba(0, 0, 0, 0.55);
-    flex-shrink: 0;
+        0 0 0 3px rgba(191,151,68,0.14),
+        0 6px 16px rgba(0,0,0,0.55);
 }
 
-/* Textos de la empresa */
-
-.texto-marca,
-.texto-logo,
-.nombre-empresa,
-.titulos-empresa {
-    min-width: 0;
-}
-
-.texto-marca h1,
-.texto-logo h1,
-.nombre-empresa h1,
-.titulos-empresa h1,
-header h1,
-.encabezado h1 {
+.marca-texto h1 {
     font-family: Georgia, "Times New Roman", serif;
-    font-size: clamp(22px, 2.7vw, 38px);
+    font-size: clamp(25px, 3vw, 39px);
+    line-height: 1.05;
     font-weight: 600;
-    letter-spacing: 2px;
+    letter-spacing: 1.5px;
+
     color: var(--dorado-claro);
-    line-height: 1.08;
+
     text-shadow:
         0 1px 0 #000,
-        0 0 10px rgba(201, 165, 76, 0.24);
+        0 0 10px rgba(191,151,68,0.22);
 }
 
-.texto-marca p,
-.texto-logo p,
-.nombre-empresa p,
-.titulos-empresa p,
-header .subtitulo,
-.encabezado .subtitulo {
+.marca-texto p {
     margin-top: 7px;
+
     font-family: Georgia, "Times New Roman", serif;
-    font-size: clamp(11px, 1.3vw, 16px);
-    letter-spacing: 4px;
-    color: #d6bd7c;
+    font-size: clamp(11px, 1.25vw, 15px);
+    letter-spacing: 3.5px;
     text-transform: uppercase;
+
+    color: #ccb477;
 }
 
-/* Botón administrador */
+.usuario {
+    flex-shrink: 0;
+    min-height: 46px;
+    padding: 0 20px;
 
-.administrador,
-.boton-administrador,
-.usuario,
-.btn-administrador {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
     border: 1px solid var(--dorado);
     border-radius: 30px;
-    padding: 12px 21px;
+
     background:
         linear-gradient(
             145deg,
-            rgba(201, 165, 76, 0.16),
-            rgba(201, 165, 76, 0.04)
+            rgba(191,151,68,0.17),
+            rgba(191,151,68,0.035)
         );
+
     color: var(--dorado-claro);
     font-family: Georgia, "Times New Roman", serif;
     font-size: 14px;
-    letter-spacing: 0.8px;
-    white-space: nowrap;
+
     box-shadow:
-        inset 0 0 12px rgba(201, 165, 76, 0.08),
-        0 4px 12px rgba(0, 0, 0, 0.32);
+        inset 0 0 12px rgba(191,151,68,0.08),
+        0 5px 13px rgba(0,0,0,0.35);
 }
 
-/* ---------- CONTENIDO PRINCIPAL ---------- */
+.usuario-icono {
+    font-size: 15px;
+}
 
-main,
-.contenido-principal {
-    width: min(1180px, 92%);
+.usuario-flecha {
+    color: var(--dorado);
+    font-size: 11px;
+}
+
+/* =========================================================
+   CONTENIDO
+========================================================= */
+
+.contenido {
+    width: min(1180px, 91%);
     margin: 0 auto;
-    padding: 58px 0 70px;
+    padding: 45px 0 64px;
     position: relative;
     z-index: 2;
 }
 
-/* Texto de bienvenida */
+/* Bienvenida */
 
-.bienvenida,
-.presentacion,
-.hero {
+.bienvenida {
     text-align: center;
-    margin-bottom: 42px;
+    margin-bottom: 30px;
 }
 
-.bienvenida h2,
-.presentacion h2,
-.hero h2,
-.titulo-principal {
+.bienvenida h2 {
     font-family: Georgia, "Times New Roman", serif;
-    font-size: clamp(28px, 4vw, 46px);
+    font-size: clamp(30px, 4vw, 47px);
     font-weight: 500;
-    color: #3d3020;
-    letter-spacing: 1px;
-    line-height: 1.18;
+    line-height: 1.15;
+    letter-spacing: 0.5px;
+    color: #382b1c;
 }
 
-.bienvenida h2::after,
-.presentacion h2::after,
-.hero h2::after,
-.titulo-principal::after {
+.bienvenida h2::after {
     content: "";
     display: block;
-    width: 130px;
+    width: 145px;
     height: 2px;
-    margin: 17px auto 0;
+    margin: 16px auto 0;
+
     background: linear-gradient(
         90deg,
         transparent,
@@ -306,174 +291,279 @@ main,
     );
 }
 
-.bienvenida p,
-.presentacion p,
-.hero p,
-.descripcion-principal {
-    max-width: 760px;
-    margin: 17px auto 0;
-    font-size: 16px;
-    line-height: 1.7;
-    color: #6a5942;
+.bienvenida p {
+    margin-top: 15px;
+    font-size: 15px;
+    color: #786954;
 }
 
-/* ---------- CUADRÍCULA DE MÓDULOS ---------- */
+/* =========================================================
+   RESUMEN
+========================================================= */
 
-.modulos,
-.grid-modulos,
-.contenedor-modulos,
-.panel-modulos {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 24px;
+.resumen {
     width: 100%;
+    margin-bottom: 30px;
+
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 17px;
 }
 
-/* Tarjetas */
+.resumen-tarjeta {
+    min-height: 133px;
+    padding: 19px;
 
-.modulo {
-    min-height: 210px;
-    padding: 30px 26px 25px;
-    text-decoration: none;
-    color: var(--texto);
+    display: grid;
+    grid-template-columns: 48px 1fr;
+    align-items: center;
+    column-gap: 14px;
+
+    border: 1px solid rgba(160,117,34,0.38);
+    border-radius: 16px;
+
     background:
         linear-gradient(
             145deg,
-            rgba(255, 255, 255, 0.94),
-            rgba(239, 228, 207, 0.86)
+            rgba(255,255,255,0.94),
+            rgba(239,227,205,0.87)
         );
-    border: 1px solid rgba(171, 128, 44, 0.48);
-    border-radius: 20px;
+
     box-shadow:
-        0 13px 28px var(--sombra),
-        inset 0 1px 0 rgba(255, 255, 255, 0.95);
+        0 9px 22px rgba(73,51,16,0.12),
+        inset 0 1px 0 rgba(255,255,255,0.96);
+
     position: relative;
     overflow: hidden;
+}
+
+.resumen-tarjeta::after {
+    content: "";
+    position: absolute;
+    inset: 6px;
+    border: 1px solid rgba(191,151,68,0.12);
+    border-radius: 11px;
+    pointer-events: none;
+}
+
+.resumen-icono {
+    width: 48px;
+    height: 48px;
+    grid-row: 1 / span 3;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 14px;
+    border: 1px solid var(--dorado);
+
+    background:
+        linear-gradient(
+            145deg,
+            #2a251d,
+            #090909
+        );
+
+    font-size: 22px;
+
+    box-shadow:
+        0 6px 13px rgba(0,0,0,0.25),
+        inset 0 0 10px rgba(191,151,68,0.13);
+
+    position: relative;
+    z-index: 2;
+}
+
+.resumen-tarjeta > div:not(.resumen-icono) {
+    min-width: 0;
+    position: relative;
+    z-index: 2;
+}
+
+.resumen-etiqueta {
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: #74634b;
+}
+
+.resumen-valor {
+    margin-top: 4px;
+    margin-bottom: 4px;
+
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 24px;
+    font-weight: 600;
+
+    color: #342719;
+}
+
+.resumen-detalle {
+    font-size: 11px;
+    line-height: 1.35;
+    color: #8a7a63;
+}
+
+.resumen-detalle.positivo {
+    color: #7c672f;
+}
+
+/* =========================================================
+   MÓDULOS
+========================================================= */
+
+.modulos {
+    width: 100%;
+
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 21px;
+}
+
+.modulo {
+    min-height: 184px;
+    padding: 24px 24px 21px;
+
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
+
+    text-decoration: none;
+    color: var(--marron);
+
+    border: 1px solid rgba(163,120,35,0.45);
+    border-radius: 18px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,0.96),
+            rgba(238,226,204,0.87)
+        );
+
+    box-shadow:
+        0 11px 24px rgba(62,43,13,0.14),
+        inset 0 1px 0 rgba(255,255,255,0.98);
+
+    position: relative;
+    overflow: hidden;
+
     transition:
-        transform 0.25s ease,
-        box-shadow 0.25s ease,
-        border-color 0.25s ease;
-}
-
-/* Brillo sutil sobre las tarjetas */
-
-.modulo::before {
-    content: "";
-    position: absolute;
-    top: -55%;
-    left: -35%;
-    width: 75%;
-    height: 190%;
-    background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255, 255, 255, 0.48),
-        transparent
-    );
-    transform: rotate(22deg);
-    transition: left 0.5s ease;
+        transform 0.22s ease,
+        box-shadow 0.22s ease,
+        border-color 0.22s ease;
 }
 
 .modulo::after {
     content: "";
     position: absolute;
     inset: 7px;
-    border: 1px solid rgba(201, 165, 76, 0.16);
-    border-radius: 14px;
+    border: 1px solid rgba(191,151,68,0.15);
+    border-radius: 12px;
     pointer-events: none;
 }
 
 .modulo:hover,
 .modulo:focus {
-    transform: translateY(-7px);
+    transform: translateY(-5px);
     border-color: var(--dorado);
+
     box-shadow:
-        0 20px 36px rgba(63, 44, 13, 0.24),
-        0 0 0 3px rgba(201, 165, 76, 0.09);
+        0 17px 31px rgba(62,43,13,0.21),
+        0 0 0 3px rgba(191,151,68,0.075);
 }
-
-.modulo:hover::before {
-    left: 105%;
-}
-
-/* Íconos */
 
 .modulo-icono {
-    width: 58px;
-    height: 58px;
-    margin-bottom: 18px;
-    border-radius: 16px;
-    background:
-        linear-gradient(
-            145deg,
-            #17120b,
-            #000000
-        );
-    border: 1px solid var(--dorado);
+    width: 52px;
+    height: 52px;
+    margin-bottom: 15px;
+
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 29px;
-    line-height: 1;
+
+    border-radius: 14px;
+    border: 1px solid var(--dorado);
+
+    background:
+        linear-gradient(
+            145deg,
+            #2c271f,
+            #080808
+        );
+
+    font-size: 24px;
+
     box-shadow:
-        0 7px 15px rgba(0, 0, 0, 0.23),
-        inset 0 0 11px rgba(201, 165, 76, 0.13);
+        0 6px 14px rgba(0,0,0,0.24),
+        inset 0 0 10px rgba(191,151,68,0.12);
+
+    position: relative;
+    z-index: 2;
 }
 
 .modulo h3 {
     font-family: Georgia, "Times New Roman", serif;
-    font-size: 24px;
+    font-size: 23px;
     font-weight: 600;
-    color: #342819;
-    letter-spacing: 0.3px;
+    color: #342719;
+
     position: relative;
     z-index: 2;
 }
 
 .modulo p {
-    margin-top: 9px;
-    font-size: 14px;
-    line-height: 1.5;
-    color: #6f604c;
+    margin-top: 7px;
+
+    font-size: 13px;
+    line-height: 1.45;
+    color: #776750;
+
     position: relative;
     z-index: 2;
 }
 
-/* Línea dorada inferior de cada tarjeta */
-
 .linea-dorada {
-    width: 62px;
+    width: 57px;
     height: 2px;
-    margin-top: 19px;
+    margin-top: 15px;
+
+    border-radius: 50px;
+
     background: linear-gradient(
         90deg,
         var(--dorado-oscuro),
         var(--dorado-claro),
         var(--dorado-oscuro)
     );
-    border-radius: 50px;
+
     position: relative;
     z-index: 2;
-    transition: width 0.25s ease;
+
+    transition: width 0.22s ease;
 }
 
 .modulo:hover .linea-dorada {
-    width: 105px;
+    width: 95px;
 }
 
-/* Tarjeta de configuración */
+/* Configuración oscura */
 
 .modulo.configuracion {
     background:
+        radial-gradient(
+            circle at top right,
+            rgba(191,151,68,0.15),
+            transparent 35%
+        ),
         linear-gradient(
             145deg,
-            #15120d,
+            #191713,
             #050505
         );
+
     border-color: var(--dorado);
 }
 
@@ -482,218 +572,181 @@ main,
 }
 
 .modulo.configuracion p {
-    color: #d1c3a2;
+    color: #cfc2a4;
 }
 
 .modulo.configuracion .modulo-icono {
+    color: #171109;
+
     background:
         linear-gradient(
             145deg,
-            #f6e4ad,
-            #a77d28
+            #f5dfa1,
+            #a77c29
         );
-    color: #161109;
-    border-color: #f1d88e;
+
+    border-color: #f1d88c;
 }
 
-/* ---------- PIE DE PÁGINA ---------- */
+/* =========================================================
+   PIE DE PÁGINA
+========================================================= */
 
-.pie,
-footer {
+.pie {
+    min-height: 68px;
     width: 100%;
-    min-height: 74px;
-    padding: 22px 5%;
-    background:
-        linear-gradient(
-            135deg,
-            #050505,
-            #171717,
-            #050505
-        );
-    border-top: 2px solid var(--dorado);
-    color: #d4c39f;
-    font-family: Georgia, "Times New Roman", serif;
-    font-size: 13px;
-    letter-spacing: 0.7px;
-    text-align: center;
+    padding: 20px 5%;
+
     display: flex;
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
-    gap: 9px;
-    box-shadow: 0 -6px 18px rgba(0, 0, 0, 0.18);
+    gap: 8px;
+
+    text-align: center;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 12px;
+    letter-spacing: 0.6px;
+
+    color: #d3c29e;
+
+    background:
+        linear-gradient(
+            135deg,
+            #050505,
+            #181818,
+            #050505
+        );
+
+    border-top: 2px solid var(--dorado);
+    box-shadow: 0 -5px 17px rgba(0,0,0,0.16);
 }
 
 .separador {
     color: var(--dorado);
-    margin: 0 5px;
 }
 
-/* ---------- ENLACES Y BOTONES ---------- */
+/* =========================================================
+   TABLETAS
+========================================================= */
 
-a {
-    -webkit-tap-highlight-color: transparent;
-}
+@media screen and (max-width: 980px) {
 
-button,
-a {
-    touch-action: manipulation;
-}
-
-/* ---------- TABLETAS ---------- */
-
-@media screen and (max-width: 950px) {
-    .modulos,
-    .grid-modulos,
-    .contenedor-modulos,
-    .panel-modulos {
+    .resumen {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    header,
-    .encabezado,
-    .header-principal,
-    .barra-superior {
-        padding-left: 4%;
-        padding-right: 4%;
+    .modulos {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 }
 
-/* ---------- TELÉFONOS ---------- */
+/* =========================================================
+   TELÉFONOS
+========================================================= */
 
 @media screen and (max-width: 650px) {
-    header,
-    .encabezado,
-    .header-principal,
-    .barra-superior {
+
+    .encabezado {
         min-height: auto;
-        padding: 15px 17px 20px;
+        padding: 14px 16px 19px;
         align-items: flex-start;
         gap: 10px;
     }
 
-    .marca,
-    .identidad,
-    .logo-con-texto,
-    .empresa {
-        gap: 12px;
+    .marca {
+        gap: 11px;
     }
 
-    .logo-redondo,
-    .logo-circular,
-    header img,
-    .encabezado img {
-        width: 64px;
-        height: 64px;
+    .logo-redondo {
+        width: 62px;
+        height: 62px;
     }
 
-    .texto-marca h1,
-    .texto-logo h1,
-    .nombre-empresa h1,
-    .titulos-empresa h1,
-    header h1,
-    .encabezado h1 {
-        font-size: 20px;
-        letter-spacing: 1px;
+    .marca-texto h1 {
+        font-size: 19px;
+        letter-spacing: 0.7px;
     }
 
-    .texto-marca p,
-    .texto-logo p,
-    .nombre-empresa p,
-    .titulos-empresa p,
-    header .subtitulo,
-    .encabezado .subtitulo {
-        font-size: 9px;
-        letter-spacing: 2px;
+    .marca-texto p {
+        margin-top: 5px;
+        font-size: 8px;
+        letter-spacing: 1.7px;
     }
 
-    .administrador,
-    .boton-administrador,
-    .usuario,
-    .btn-administrador {
-        padding: 9px 12px;
+    .usuario {
+        min-height: 39px;
+        padding: 0 12px;
         font-size: 11px;
     }
 
-    main,
-    .contenido-principal {
+    .contenido {
         width: 90%;
-        padding-top: 40px;
-        padding-bottom: 48px;
+        padding-top: 35px;
+        padding-bottom: 45px;
     }
 
-    .bienvenida,
-    .presentacion,
-    .hero {
-        margin-bottom: 30px;
+    .bienvenida {
+        margin-bottom: 25px;
     }
 
-    .modulos,
-    .grid-modulos,
-    .contenedor-modulos,
-    .panel-modulos {
-        grid-template-columns: 1fr;
-        gap: 18px;
-    }
-
-    .modulo {
-        min-height: 178px;
-        padding: 25px 22px;
-    }
-
-    .modulo-icono {
-        width: 51px;
-        height: 51px;
-        font-size: 25px;
-        margin-bottom: 14px;
-    }
-
-    .modulo h3 {
-        font-size: 22px;
-    }
-
-    body::after {
-        font-size: 210px;
-        letter-spacing: -18px;
-    }
-
-    footer,
-    .pie {
-        font-size: 11px;
-        padding-left: 18px;
-        padding-right: 18px;
-    }
-}
-
-/* ---------- PANTALLAS MUY PEQUEÑAS ---------- */
-
-@media screen and (max-width: 430px) {
-    header,
-    .encabezado,
-    .header-principal,
-    .barra-superior {
-        flex-wrap: wrap;
-    }
-
-    .administrador,
-    .boton-administrador,
-    .usuario,
-    .btn-administrador {
-        margin-left: 76px;
-        margin-top: -12px;
-    }
-
-    .bienvenida h2,
-    .presentacion h2,
-    .hero h2,
-    .titulo-principal {
+    .bienvenida h2 {
         font-size: 28px;
     }
 
-    .bienvenida p,
-    .presentacion p,
-    .hero p,
-    .descripcion-principal {
+    .bienvenida p {
         font-size: 14px;
+    }
+
+    .resumen {
+        grid-template-columns: 1fr;
+        gap: 13px;
+        margin-bottom: 22px;
+    }
+
+    .resumen-tarjeta {
+        min-height: 112px;
+        padding: 16px;
+    }
+
+    .modulos {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .modulo {
+        min-height: 165px;
+        padding: 22px;
+    }
+
+    .modulo-icono {
+        width: 48px;
+        height: 48px;
+        margin-bottom: 13px;
+        font-size: 22px;
+    }
+
+    .modulo h3 {
+        font-size: 21px;
+    }
+
+    body::after {
+        top: 60%;
+        font-size: 190px;
+        letter-spacing: -15px;
+    }
+}
+
+/* Pantallas muy pequeñas */
+
+@media screen and (max-width: 430px) {
+
+    .encabezado {
+        flex-wrap: wrap;
+    }
+
+    .usuario {
+        margin-left: 73px;
+        margin-top: -10px;
     }
 }
