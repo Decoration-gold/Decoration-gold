@@ -1,1 +1,2043 @@
+/* =========================================================
+   DECORATION GOLD INC
+   MÓDULO DE COMPRAS
+   ========================================================= */
 
+:root {
+    --black: #080808;
+    --black-soft: #151515;
+    --black-light: #242424;
+
+    --gold-dark: #8b641b;
+    --gold: #c99b36;
+    --gold-light: #e7ca78;
+    --gold-pale: #f2dfaa;
+
+    --cream: #f3ead8;
+    --cream-light: #fbf8f1;
+    --cream-dark: #dfcfaf;
+
+    --brown: #5f4829;
+    --text-dark: #2b261f;
+    --text-soft: #746a5d;
+
+    --white: #ffffff;
+    --danger: #a13d3d;
+    --success: #3d7657;
+    --warning: #9a6b16;
+
+    --shadow-soft: 0 12px 30px rgba(44, 31, 12, 0.12);
+    --shadow-deep: 0 18px 45px rgba(0, 0, 0, 0.20);
+
+    --radius-large: 27px;
+    --radius-medium: 19px;
+    --radius-small: 12px;
+}
+
+/* =========================================================
+   CONFIGURACIÓN GENERAL
+   ========================================================= */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+    overflow-x: hidden;
+    font-family: "Montserrat", sans-serif;
+    color: var(--text-dark);
+
+    background:
+        radial-gradient(
+            circle at 12% 18%,
+            rgba(255, 255, 255, 0.96) 0%,
+            rgba(255, 255, 255, 0.25) 24%,
+            transparent 43%
+        ),
+        radial-gradient(
+            circle at 85% 15%,
+            rgba(220, 188, 113, 0.23) 0%,
+            transparent 34%
+        ),
+        radial-gradient(
+            circle at 18% 85%,
+            rgba(199, 154, 54, 0.13) 0%,
+            transparent 36%
+        ),
+        linear-gradient(
+            135deg,
+            #fbf8f1 0%,
+            #eee2cd 36%,
+            #f9f4e9 65%,
+            #e5d4b5 100%
+        );
+}
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
+
+/* =========================================================
+   FONDO MÁRMOL
+   ========================================================= */
+
+.purchases-page {
+    position: relative;
+    min-height: 100vh;
+    overflow: hidden;
+    isolation: isolate;
+}
+
+.purchases-page::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -3;
+    pointer-events: none;
+
+    background:
+        linear-gradient(
+            118deg,
+            transparent 0%,
+            transparent 17%,
+            rgba(153, 109, 26, 0.08) 18%,
+            rgba(225, 196, 131, 0.21) 18.5%,
+            transparent 20%,
+            transparent 40%,
+            rgba(112, 82, 31, 0.07) 41%,
+            rgba(235, 218, 178, 0.20) 42.5%,
+            transparent 45%,
+            transparent 70%,
+            rgba(162, 116, 29, 0.10) 71%,
+            transparent 74%
+        ),
+        linear-gradient(
+            63deg,
+            transparent 0%,
+            transparent 24%,
+            rgba(255, 255, 255, 0.58) 25%,
+            transparent 29%,
+            transparent 59%,
+            rgba(154, 110, 30, 0.10) 60%,
+            transparent 64%
+        );
+
+    opacity: 0.78;
+    filter: blur(0.4px);
+}
+
+.purchases-page::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    pointer-events: none;
+
+    background:
+        repeating-linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.13) 0,
+            rgba(255, 255, 255, 0.13) 1px,
+            transparent 1px,
+            transparent 7px
+        );
+
+    opacity: 0.16;
+}
+
+/* =========================================================
+   MARCA DE AGUA
+   ========================================================= */
+
+.purchases-watermark {
+    position: fixed;
+    top: 53%;
+    left: 50%;
+    z-index: -1;
+
+    transform: translate(-50%, -50%);
+
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(190px, 35vw, 540px);
+    font-weight: 700;
+    letter-spacing: -0.08em;
+    line-height: 0.75;
+
+    color: rgba(159, 113, 29, 0.052);
+
+    user-select: none;
+    pointer-events: none;
+    white-space: nowrap;
+}
+
+/* =========================================================
+   CABECERA
+   ========================================================= */
+
+.purchases-header {
+    position: relative;
+    z-index: 20;
+
+    min-height: 106px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+
+    padding: 17px clamp(20px, 4vw, 64px);
+
+    background:
+        linear-gradient(
+            115deg,
+            #050505 0%,
+            #171717 48%,
+            #050505 100%
+        );
+
+    border-bottom: 2px solid var(--gold);
+
+    box-shadow:
+        0 8px 24px rgba(0, 0, 0, 0.30),
+        0 2px 0 rgba(229, 201, 121, 0.15);
+}
+
+.purchases-header::after {
+    content: "";
+    position: absolute;
+    left: 8%;
+    right: 8%;
+    bottom: -2px;
+
+    height: 1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            var(--gold-light),
+            transparent
+        );
+}
+
+.purchases-brand {
+    display: flex;
+    align-items: center;
+    gap: 17px;
+
+    color: inherit;
+    text-decoration: none;
+}
+
+.purchases-logo {
+    width: 72px;
+    height: 72px;
+    flex-shrink: 0;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 50%;
+    border: 2px solid var(--gold);
+
+    background:
+        radial-gradient(
+            circle at 30% 25%,
+            rgba(255, 255, 255, 0.15),
+            transparent 34%
+        ),
+        linear-gradient(
+            145deg,
+            #242424,
+            #060606
+        );
+
+    box-shadow:
+        0 0 0 4px rgba(199, 154, 54, 0.09),
+        inset 0 0 18px rgba(229, 201, 121, 0.08),
+        0 8px 18px rgba(0, 0, 0, 0.43);
+
+    overflow: hidden;
+}
+
+.purchases-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.purchases-brand-text h1 {
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(24px, 3vw, 38px);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 1px;
+
+    color: var(--gold-light);
+}
+
+.purchases-brand-text p {
+    margin-top: 7px;
+
+    font-size: clamp(9px, 1.2vw, 12px);
+    font-weight: 500;
+    letter-spacing: 4px;
+
+    color: rgba(255, 255, 255, 0.67);
+}
+
+.purchases-home-button {
+    min-height: 44px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+
+    padding: 0 20px;
+
+    border: 1px solid rgba(229, 201, 121, 0.66);
+    border-radius: 999px;
+
+    color: var(--gold-light);
+    text-decoration: none;
+
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.05),
+            rgba(255, 255, 255, 0.01)
+        );
+
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        background 0.2s ease;
+}
+
+.purchases-home-button:hover {
+    transform: translateY(-2px);
+    border-color: var(--gold-light);
+    background: rgba(199, 154, 54, 0.12);
+}
+
+.purchases-home-arrow {
+    font-size: 19px;
+    line-height: 1;
+}
+
+/* =========================================================
+   CONTENIDO PRINCIPAL
+   ========================================================= */
+
+.purchases-main {
+    width: min(1380px, calc(100% - 34px));
+    margin: 0 auto;
+    padding: 40px 0 75px;
+}
+
+/* =========================================================
+   TÍTULO DEL MÓDULO
+   ========================================================= */
+
+.purchases-heading {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+
+    margin-bottom: 30px;
+}
+
+.purchases-heading-icon {
+    width: 72px;
+    height: 72px;
+    flex-shrink: 0;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 50%;
+    border: 1px solid rgba(143, 104, 28, 0.82);
+
+    background:
+        radial-gradient(
+            circle at 33% 25%,
+            rgba(255, 255, 255, 0.14),
+            transparent 34%
+        ),
+        linear-gradient(
+            145deg,
+            var(--black-light),
+            var(--black)
+        );
+
+    box-shadow:
+        0 9px 25px rgba(0, 0, 0, 0.23),
+        0 0 0 5px rgba(199, 154, 54, 0.08);
+}
+
+.purchases-heading-icon span {
+    font-size: 31px;
+    color: var(--gold-light);
+    text-shadow: 0 0 13px rgba(229, 201, 121, 0.35);
+}
+
+.purchases-eyebrow,
+.purchases-section-label {
+    margin-bottom: 5px;
+
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 3px;
+
+    color: var(--gold-dark);
+}
+
+.purchases-heading h2 {
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(34px, 5vw, 52px);
+    font-weight: 700;
+    line-height: 1;
+
+    color: var(--black-soft);
+}
+
+.purchases-heading-description {
+    margin-top: 8px;
+
+    font-size: 14px;
+    line-height: 1.55;
+
+    color: var(--text-soft);
+}
+
+/* =========================================================
+   TARJETAS DE RESUMEN
+   ========================================================= */
+
+.purchases-summary-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 18px;
+
+    margin-bottom: 28px;
+}
+
+.purchase-summary-card {
+    position: relative;
+
+    min-height: 132px;
+
+    display: flex;
+    align-items: center;
+    gap: 17px;
+
+    padding: 21px;
+
+    overflow: hidden;
+
+    border-radius: var(--radius-medium);
+    border: 1px solid rgba(154, 113, 35, 0.31);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.89),
+            rgba(247, 238, 220, 0.80)
+        );
+
+    box-shadow: var(--shadow-soft);
+
+    backdrop-filter: blur(13px);
+    -webkit-backdrop-filter: blur(13px);
+}
+
+.purchase-summary-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 18px;
+    right: 18px;
+
+    height: 2px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            var(--gold),
+            transparent
+        );
+}
+
+.purchase-summary-card::after {
+    content: "";
+    position: absolute;
+    right: -46px;
+    bottom: -58px;
+
+    width: 110px;
+    height: 110px;
+
+    border-radius: 50%;
+    border: 1px solid rgba(199, 154, 54, 0.17);
+
+    box-shadow:
+        0 0 0 14px rgba(199, 154, 54, 0.035),
+        0 0 0 28px rgba(199, 154, 54, 0.024);
+}
+
+.purchase-summary-icon {
+    width: 54px;
+    height: 54px;
+    flex-shrink: 0;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 50%;
+    border: 1px solid var(--gold);
+
+    background:
+        linear-gradient(
+            145deg,
+            #202020,
+            #070707
+        );
+
+    box-shadow:
+        0 7px 15px rgba(0, 0, 0, 0.23),
+        inset 0 0 14px rgba(229, 201, 121, 0.07);
+}
+
+.purchase-summary-icon span {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--gold-light);
+}
+
+.purchase-summary-content {
+    position: relative;
+    z-index: 2;
+
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.purchase-summary-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+
+    color: var(--text-soft);
+}
+
+.purchase-summary-content strong {
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(27px, 3.2vw, 38px);
+    line-height: 1;
+
+    color: var(--black-soft);
+}
+
+.purchase-summary-content small {
+    font-size: 11px;
+    color: var(--text-soft);
+}
+
+/* =========================================================
+   PANELES
+   ========================================================= */
+
+.purchases-panel {
+    position: relative;
+
+    margin-bottom: 28px;
+    padding: clamp(22px, 3vw, 34px);
+
+    border-radius: var(--radius-large);
+    border: 1px solid rgba(143, 104, 28, 0.28);
+
+    background:
+        linear-gradient(
+            140deg,
+            rgba(255, 255, 255, 0.91),
+            rgba(245, 237, 221, 0.83)
+        );
+
+    box-shadow: var(--shadow-soft);
+
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+}
+
+.purchases-panel::before {
+    content: "";
+    position: absolute;
+    inset: 8px;
+
+    border: 1px solid rgba(199, 154, 54, 0.12);
+    border-radius: calc(var(--radius-large) - 7px);
+
+    pointer-events: none;
+}
+
+.purchases-panel-header {
+    position: relative;
+    z-index: 2;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+
+    margin-bottom: 28px;
+    padding-bottom: 17px;
+
+    border-bottom: 1px solid rgba(111, 91, 57, 0.16);
+}
+
+.purchases-panel-header h3 {
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(28px, 4vw, 38px);
+    line-height: 1;
+
+    color: var(--black-soft);
+}
+
+.purchases-panel-description {
+    margin-top: 7px;
+
+    font-size: 13px;
+    line-height: 1.55;
+
+    color: var(--text-soft);
+}
+
+.purchases-gold-decoration {
+    font-size: 29px;
+    color: var(--gold);
+
+    text-shadow:
+        0 0 10px rgba(199, 154, 54, 0.38),
+        0 0 23px rgba(199, 154, 54, 0.18);
+}
+
+/* =========================================================
+   FORMULARIO
+   ========================================================= */
+
+.purchase-form {
+    position: relative;
+    z-index: 2;
+}
+
+.purchase-form-section {
+    margin-bottom: 30px;
+    padding: 23px;
+
+    border-radius: var(--radius-medium);
+    border: 1px solid rgba(143, 104, 28, 0.18);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.58),
+            rgba(243, 234, 216, 0.48)
+        );
+}
+
+.purchase-subheading {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+
+    margin-bottom: 21px;
+}
+
+.purchase-subheading-products {
+    justify-content: space-between;
+}
+
+.purchase-subheading-left {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+}
+
+.purchase-subheading-number {
+    width: 39px;
+    height: 39px;
+    flex-shrink: 0;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 50%;
+    border: 1px solid var(--gold);
+
+    font-family: "Cormorant Garamond", serif;
+    font-size: 20px;
+    font-weight: 700;
+
+    color: var(--gold-light);
+
+    background:
+        linear-gradient(
+            145deg,
+            #202020,
+            #070707
+        );
+}
+
+.purchase-subheading h4 {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 27px;
+    line-height: 1;
+
+    color: var(--black-soft);
+}
+
+.purchase-subheading p {
+    margin-top: 5px;
+
+    font-size: 12px;
+    color: var(--text-soft);
+}
+
+.purchase-form-grid,
+.purchase-item-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.purchase-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.purchase-form-group label {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.35px;
+
+    color: var(--brown);
+}
+
+.purchase-form-group input,
+.purchase-form-group select,
+.purchase-form-group textarea,
+.purchase-filters select,
+.purchase-search-box input {
+    width: 100%;
+    min-height: 49px;
+
+    border: 1px solid rgba(119, 92, 44, 0.25);
+    border-radius: var(--radius-small);
+    outline: none;
+
+    font-family: "Montserrat", sans-serif;
+    font-size: 14px;
+    color: var(--text-dark);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.95),
+            rgba(248, 241, 228, 0.89)
+        );
+
+    box-shadow:
+        inset 0 1px 1px rgba(255, 255, 255, 0.9),
+        0 4px 10px rgba(65, 48, 20, 0.04);
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+.purchase-form-group input,
+.purchase-form-group select,
+.purchase-form-group textarea {
+    padding: 13px 15px;
+}
+
+.purchase-form-group textarea {
+    min-height: 92px;
+    resize: vertical;
+}
+
+.purchase-form-group input:focus,
+.purchase-form-group select:focus,
+.purchase-form-group textarea:focus,
+.purchase-filters select:focus,
+.purchase-search-box input:focus {
+    border-color: var(--gold);
+    background: rgba(255, 255, 255, 0.99);
+
+    box-shadow:
+        0 0 0 4px rgba(199, 154, 54, 0.10),
+        0 6px 16px rgba(97, 69, 19, 0.07);
+}
+
+.purchase-form-group input::placeholder,
+.purchase-form-group textarea::placeholder,
+.purchase-search-box input::placeholder {
+    color: #a39989;
+}
+
+.purchase-full-width {
+    grid-column: 1 / -1;
+}
+
+/* =========================================================
+   CAMPOS DE DINERO
+   ========================================================= */
+
+.purchase-money-input {
+    position: relative;
+}
+
+.purchase-money-input span {
+    position: absolute;
+    z-index: 2;
+    left: 16px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    font-family: "Cormorant Garamond", serif;
+    font-size: 22px;
+    font-weight: 700;
+
+    color: var(--gold-dark);
+}
+
+.purchase-money-input input {
+    padding-left: 38px;
+}
+
+.purchase-readonly-money input {
+    color: var(--gold-dark);
+    font-weight: 700;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(239, 228, 205, 0.88),
+            rgba(250, 246, 237, 0.90)
+        );
+
+    cursor: default;
+}
+
+/* =========================================================
+   PRODUCTOS
+   ========================================================= */
+
+.purchase-items-container {
+    display: flex;
+    flex-direction: column;
+    gap: 19px;
+}
+
+.purchase-item-card {
+    position: relative;
+
+    padding: 20px;
+
+    border-radius: 18px;
+    border: 1px solid rgba(143, 104, 28, 0.24);
+
+    background:
+        linear-gradient(
+            140deg,
+            rgba(255, 255, 255, 0.89),
+            rgba(244, 235, 217, 0.76)
+        );
+
+    box-shadow: 0 8px 20px rgba(61, 43, 15, 0.07);
+}
+
+.purchase-item-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 18px;
+    right: 18px;
+
+    height: 2px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            var(--gold),
+            transparent
+        );
+}
+
+.purchase-item-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+
+    margin-bottom: 19px;
+    padding-bottom: 13px;
+
+    border-bottom: 1px solid rgba(111, 91, 57, 0.13);
+}
+
+.purchase-item-number {
+    display: block;
+
+    font-family: "Cormorant Garamond", serif;
+    font-size: 23px;
+    font-weight: 700;
+
+    color: var(--black-soft);
+}
+
+.purchase-item-header small {
+    display: block;
+    margin-top: 3px;
+
+    font-size: 11px;
+    color: var(--text-soft);
+}
+
+.purchase-item-name-group,
+.purchase-item-notes-group {
+    grid-column: 1 / -1;
+}
+
+/* =========================================================
+   BOTÓN AGREGAR PRODUCTO
+   ========================================================= */
+
+.add-product-button {
+    min-height: 44px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    padding: 0 18px;
+
+    border: 1px solid var(--gold);
+    border-radius: 999px;
+
+    color: var(--gold-light);
+
+    font-size: 12px;
+    font-weight: 600;
+
+    background:
+        linear-gradient(
+            145deg,
+            #202020,
+            #070707
+        );
+
+    box-shadow:
+        0 8px 18px rgba(0, 0, 0, 0.20),
+        inset 0 0 15px rgba(229, 201, 121, 0.05);
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.add-product-button span {
+    font-size: 18px;
+}
+
+.add-product-button:hover {
+    transform: translateY(-2px);
+    border-color: var(--gold-light);
+
+    box-shadow:
+        0 11px 23px rgba(0, 0, 0, 0.24),
+        0 0 0 4px rgba(199, 154, 54, 0.08);
+}
+
+.remove-product-button {
+    width: 37px;
+    height: 37px;
+    flex-shrink: 0;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 50%;
+    border: 1px solid rgba(161, 61, 61, 0.28);
+
+    color: var(--danger);
+    background: rgba(255, 255, 255, 0.78);
+
+    font-size: 18px;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.remove-product-button:hover:not(:disabled) {
+    transform: scale(1.06);
+    border-color: rgba(161, 61, 61, 0.63);
+    background: rgba(161, 61, 61, 0.07);
+}
+
+.remove-product-button:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+}
+
+/* =========================================================
+   RESUMEN DE TOTALES
+   ========================================================= */
+
+.purchase-totals-section {
+    margin-bottom: 28px;
+    padding: 24px;
+
+    border-radius: 20px;
+    border: 1px solid rgba(143, 104, 28, 0.30);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(23, 23, 23, 0.97),
+            rgba(5, 5, 5, 0.98)
+        );
+
+    box-shadow: var(--shadow-deep);
+}
+
+.purchase-totals-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+
+    margin-bottom: 20px;
+    padding-bottom: 14px;
+
+    border-bottom: 1px solid rgba(229, 201, 121, 0.18);
+}
+
+.purchase-totals-heading .purchases-section-label {
+    color: var(--gold);
+}
+
+.purchase-totals-heading h4 {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 29px;
+
+    color: var(--gold-light);
+}
+
+.purchase-totals-decoration {
+    font-size: 25px;
+    color: var(--gold-light);
+
+    text-shadow: 0 0 13px rgba(229, 201, 121, 0.38);
+}
+
+.purchase-totals-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px 28px;
+}
+
+.purchase-total-line {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+
+    min-height: 45px;
+    padding: 0 5px;
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.purchase-total-line span {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.68);
+}
+
+.purchase-total-line strong {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 20px;
+
+    color: var(--gold-pale);
+}
+
+.purchase-discount-line strong {
+    color: #efc2b8;
+}
+
+.purchase-grand-total {
+    grid-column: 1 / -1;
+
+    margin-top: 5px;
+    padding: 16px 17px;
+
+    border: 1px solid rgba(229, 201, 121, 0.30);
+    border-radius: 15px;
+
+    background: rgba(199, 154, 54, 0.07);
+}
+
+.purchase-grand-total span {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+
+    color: var(--gold-light);
+}
+
+.purchase-grand-total strong {
+    font-size: 34px;
+    color: var(--gold-light);
+}
+
+/* =========================================================
+   BOTONES DEL FORMULARIO
+   ========================================================= */
+
+.purchase-form-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 13px;
+}
+
+.purchase-primary-button,
+.purchase-secondary-button,
+.delete-all-purchases-button {
+    min-height: 47px;
+
+    border-radius: 999px;
+
+    font-family: "Montserrat", sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease,
+        background 0.2s ease;
+}
+
+.purchase-primary-button {
+    min-width: 184px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+
+    padding: 0 23px;
+
+    border: 1px solid var(--gold);
+
+    color: var(--gold-light);
+
+    background:
+        linear-gradient(
+            145deg,
+            #202020,
+            #070707
+        );
+
+    box-shadow:
+        0 9px 20px rgba(0, 0, 0, 0.22),
+        inset 0 0 18px rgba(229, 201, 121, 0.05);
+}
+
+.purchase-primary-button span {
+    font-size: 19px;
+}
+
+.purchase-primary-button:hover {
+    transform: translateY(-2px);
+    border-color: var(--gold-light);
+
+    box-shadow:
+        0 12px 25px rgba(0, 0, 0, 0.26),
+        0 0 0 4px rgba(199, 154, 54, 0.08);
+}
+
+.purchase-secondary-button {
+    min-width: 150px;
+    padding: 0 20px;
+
+    border: 1px solid rgba(100, 79, 44, 0.26);
+
+    color: var(--text-dark);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.91),
+            rgba(237, 226, 205, 0.81)
+        );
+}
+
+.purchase-secondary-button:hover {
+    transform: translateY(-2px);
+    border-color: var(--gold);
+
+    box-shadow: 0 8px 17px rgba(85, 61, 20, 0.10);
+}
+
+.delete-all-purchases-button {
+    min-width: 125px;
+    padding: 0 18px;
+
+    border: 1px solid rgba(161, 61, 61, 0.32);
+
+    color: var(--danger);
+    background: rgba(255, 250, 248, 0.76);
+}
+
+.delete-all-purchases-button:hover {
+    transform: translateY(-2px);
+    border-color: rgba(161, 61, 61, 0.65);
+    background: rgba(161, 61, 61, 0.06);
+}
+
+/* =========================================================
+   FILTROS
+   ========================================================= */
+
+.purchase-filters {
+    position: relative;
+    z-index: 2;
+
+    display: grid;
+    grid-template-columns:
+        minmax(260px, 1fr)
+        minmax(160px, 210px)
+        minmax(160px, 210px)
+        minmax(150px, 190px);
+
+    gap: 13px;
+
+    margin-bottom: 21px;
+}
+
+.purchase-search-box {
+    position: relative;
+}
+
+.purchase-search-box span {
+    position: absolute;
+    z-index: 2;
+    left: 16px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    font-size: 21px;
+    color: var(--gold-dark);
+}
+
+.purchase-search-box input {
+    padding: 0 15px 0 45px;
+}
+
+.purchase-filters select {
+    padding: 0 14px;
+}
+
+/* =========================================================
+   TABLA
+   ========================================================= */
+
+.purchases-table-wrapper {
+    position: relative;
+    z-index: 2;
+
+    width: 100%;
+    overflow-x: auto;
+
+    border-radius: var(--radius-medium);
+    border: 1px solid rgba(143, 104, 28, 0.18);
+
+    background: rgba(255, 255, 255, 0.56);
+}
+
+.purchases-table {
+    width: 100%;
+    min-width: 1080px;
+
+    border-collapse: collapse;
+}
+
+.purchases-table thead {
+    background:
+        linear-gradient(
+            105deg,
+            #090909,
+            #1d1d1d,
+            #080808
+        );
+}
+
+.purchases-table th {
+    padding: 16px 14px;
+
+    color: var(--gold-light);
+
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-align: left;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.purchases-table td {
+    padding: 15px 14px;
+
+    font-size: 12px;
+    color: var(--text-dark);
+
+    border-bottom: 1px solid rgba(101, 77, 36, 0.10);
+
+    background: rgba(255, 255, 255, 0.36);
+}
+
+.purchases-table tbody tr:not(.purchases-empty-row):hover td {
+    background: rgba(234, 218, 183, 0.31);
+}
+
+.purchases-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* =========================================================
+   ESTADO VACÍO
+   ========================================================= */
+
+.purchases-empty-row td {
+    padding: 0;
+}
+
+.purchases-empty-state {
+    min-height: 250px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    padding: 30px;
+
+    text-align: center;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(225, 204, 157, 0.22),
+            transparent 60%
+        );
+}
+
+.purchases-empty-icon {
+    width: 62px;
+    height: 62px;
+
+    display: grid;
+    place-items: center;
+
+    margin-bottom: 5px;
+
+    border-radius: 50%;
+    border: 1px solid rgba(199, 154, 54, 0.68);
+
+    font-size: 26px;
+    color: var(--gold-light);
+
+    background:
+        linear-gradient(
+            145deg,
+            #222222,
+            #080808
+        );
+
+    box-shadow:
+        0 9px 20px rgba(0, 0, 0, 0.17),
+        0 0 0 6px rgba(199, 154, 54, 0.06);
+}
+
+.purchases-empty-state strong {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 26px;
+
+    color: var(--black-soft);
+}
+
+.purchases-empty-state span {
+    font-size: 13px;
+    color: var(--text-soft);
+}
+
+/* =========================================================
+   ETIQUETAS PARA compras.js
+   ========================================================= */
+
+.purchase-status-badge,
+.purchase-payment-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 28px;
+    padding: 0 11px;
+
+    border-radius: 999px;
+
+    font-size: 10px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.purchase-status-pending {
+    color: #815a12;
+    border: 1px solid rgba(154, 107, 22, 0.30);
+    background: rgba(222, 180, 83, 0.16);
+}
+
+.purchase-status-received {
+    color: #326247;
+    border: 1px solid rgba(61, 118, 87, 0.28);
+    background: rgba(92, 164, 121, 0.13);
+}
+
+.purchase-status-partial {
+    color: #745719;
+    border: 1px solid rgba(154, 107, 22, 0.26);
+    background: rgba(210, 178, 94, 0.14);
+}
+
+.purchase-status-cancelled {
+    color: #903838;
+    border: 1px solid rgba(161, 61, 61, 0.27);
+    background: rgba(161, 61, 61, 0.08);
+}
+
+.purchase-payment-paid {
+    color: #326247;
+    border: 1px solid rgba(61, 118, 87, 0.28);
+    background: rgba(92, 164, 121, 0.13);
+}
+
+.purchase-payment-pending {
+    color: #815a12;
+    border: 1px solid rgba(154, 107, 22, 0.30);
+    background: rgba(222, 180, 83, 0.16);
+}
+
+.purchase-payment-partial {
+    color: #745719;
+    border: 1px solid rgba(154, 107, 22, 0.26);
+    background: rgba(210, 178, 94, 0.14);
+}
+
+.purchase-total-cell {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 20px;
+    font-weight: 700;
+
+    color: var(--black-soft);
+    white-space: nowrap;
+}
+
+.purchase-actions-cell {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.view-purchase-button,
+.delete-purchase-button {
+    width: 36px;
+    height: 36px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 50%;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        background 0.2s ease;
+}
+
+.view-purchase-button {
+    border: 1px solid rgba(143, 104, 28, 0.28);
+
+    color: var(--gold-dark);
+    background: rgba(255, 255, 255, 0.80);
+}
+
+.view-purchase-button:hover {
+    transform: scale(1.06);
+    border-color: var(--gold);
+    background: rgba(199, 154, 54, 0.08);
+}
+
+.delete-purchase-button {
+    border: 1px solid rgba(161, 61, 61, 0.25);
+
+    color: var(--danger);
+    background: rgba(255, 255, 255, 0.80);
+}
+
+.delete-purchase-button:hover {
+    transform: scale(1.06);
+    border-color: rgba(161, 61, 61, 0.62);
+    background: rgba(161, 61, 61, 0.07);
+}
+
+/* =========================================================
+   MODAL
+   ========================================================= */
+
+.purchase-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    transition:
+        opacity 0.25s ease,
+        visibility 0.25s ease;
+}
+
+.purchase-modal.is-open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.purchase-modal-overlay {
+    position: absolute;
+    inset: 0;
+
+    background: rgba(0, 0, 0, 0.65);
+
+    backdrop-filter: blur(7px);
+    -webkit-backdrop-filter: blur(7px);
+}
+
+.purchase-modal-content {
+    position: relative;
+    z-index: 2;
+
+    width: min(900px, 100%);
+    max-height: 88vh;
+    overflow-y: auto;
+
+    padding: 28px;
+
+    border-radius: 24px;
+    border: 1px solid rgba(199, 154, 54, 0.42);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.98),
+            rgba(241, 230, 209, 0.97)
+        );
+
+    box-shadow:
+        0 24px 70px rgba(0, 0, 0, 0.38),
+        0 0 0 6px rgba(199, 154, 54, 0.08);
+
+    transform: translateY(20px) scale(0.98);
+
+    transition: transform 0.25s ease;
+}
+
+.purchase-modal.is-open .purchase-modal-content {
+    transform: translateY(0) scale(1);
+}
+
+.purchase-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+
+    margin-bottom: 22px;
+    padding-bottom: 15px;
+
+    border-bottom: 1px solid rgba(111, 91, 57, 0.17);
+}
+
+.purchase-modal-header h3 {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 32px;
+
+    color: var(--black-soft);
+}
+
+.purchase-modal-close {
+    width: 42px;
+    height: 42px;
+    flex-shrink: 0;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 50%;
+    border: 1px solid rgba(161, 61, 61, 0.27);
+
+    color: var(--danger);
+    background: rgba(255, 255, 255, 0.78);
+
+    font-size: 22px;
+
+    cursor: pointer;
+}
+
+.purchase-modal-body {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+/* =========================================================
+   CLASES DEL CONTENIDO DEL MODAL
+   ========================================================= */
+
+.purchase-detail-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 13px;
+}
+
+.purchase-detail-item {
+    padding: 14px;
+
+    border-radius: 13px;
+    border: 1px solid rgba(143, 104, 28, 0.15);
+
+    background: rgba(255, 255, 255, 0.55);
+}
+
+.purchase-detail-item span {
+    display: block;
+    margin-bottom: 5px;
+
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+
+    color: var(--gold-dark);
+}
+
+.purchase-detail-item strong {
+    font-size: 13px;
+    color: var(--text-dark);
+}
+
+.purchase-detail-products {
+    padding: 18px;
+
+    border-radius: 16px;
+    border: 1px solid rgba(143, 104, 28, 0.18);
+
+    background: rgba(255, 255, 255, 0.48);
+}
+
+.purchase-detail-products h4 {
+    margin-bottom: 14px;
+
+    font-family: "Cormorant Garamond", serif;
+    font-size: 25px;
+
+    color: var(--black-soft);
+}
+
+.purchase-detail-product {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 12px;
+
+    padding: 13px 0;
+
+    border-bottom: 1px solid rgba(111, 91, 57, 0.12);
+}
+
+.purchase-detail-product:last-child {
+    border-bottom: none;
+}
+
+.purchase-detail-product strong {
+    display: block;
+    margin-bottom: 4px;
+
+    font-size: 13px;
+}
+
+.purchase-detail-product small {
+    font-size: 11px;
+    color: var(--text-soft);
+}
+
+.purchase-detail-product-total {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 20px;
+    font-weight: 700;
+
+    color: var(--gold-dark);
+}
+
+/* =========================================================
+   NOTIFICACIÓN
+   ========================================================= */
+
+.purchase-notification {
+    position: fixed;
+    right: 25px;
+    bottom: 25px;
+    z-index: 300;
+
+    min-width: 285px;
+
+    padding: 16px 20px;
+
+    border-radius: 14px;
+    border: 1px solid var(--gold);
+
+    color: var(--gold-light);
+
+    font-size: 13px;
+    font-weight: 600;
+
+    background:
+        linear-gradient(
+            145deg,
+            #1c1c1c,
+            #060606
+        );
+
+    box-shadow:
+        0 15px 35px rgba(0, 0, 0, 0.30),
+        0 0 0 5px rgba(199, 154, 54, 0.08);
+
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+
+    transition:
+        opacity 0.25s ease,
+        visibility 0.25s ease,
+        transform 0.25s ease;
+}
+
+.purchase-notification.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* =========================================================
+   TABLET GRANDE
+   ========================================================= */
+
+@media (max-width: 1100px) {
+
+    .purchases-summary-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .purchase-filters {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .purchases-header {
+        min-height: 96px;
+        padding: 15px 22px;
+    }
+
+    .purchases-logo {
+        width: 62px;
+        height: 62px;
+    }
+
+    .purchases-brand-text h1 {
+        font-size: 28px;
+    }
+
+    .purchases-brand-text p {
+        letter-spacing: 2.6px;
+    }
+
+    .purchase-form-grid,
+    .purchase-item-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .purchase-full-width,
+    .purchase-item-name-group,
+    .purchase-item-notes-group {
+        grid-column: auto;
+    }
+
+    .purchase-totals-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .purchase-grand-total {
+        grid-column: auto;
+    }
+}
+
+/* =========================================================
+   TELÉFONO
+   ========================================================= */
+
+@media (max-width: 620px) {
+
+    .purchases-header {
+        align-items: flex-start;
+        padding: 14px 15px;
+    }
+
+    .purchases-brand {
+        gap: 11px;
+    }
+
+    .purchases-logo {
+        width: 53px;
+        height: 53px;
+    }
+
+    .purchases-brand-text h1 {
+        font-size: 21px;
+    }
+
+    .purchases-brand-text p {
+        margin-top: 5px;
+        font-size: 8px;
+        letter-spacing: 1.6px;
+    }
+
+    .purchases-home-button {
+        min-width: 43px;
+        width: 43px;
+        height: 43px;
+        min-height: 43px;
+
+        padding: 0;
+
+        border-radius: 50%;
+    }
+
+    .purchases-home-text {
+        display: none;
+    }
+
+    .purchases-main {
+        width: min(100% - 22px, 1380px);
+        padding-top: 26px;
+    }
+
+    .purchases-heading {
+        align-items: flex-start;
+        gap: 14px;
+    }
+
+    .purchases-heading-icon {
+        width: 57px;
+        height: 57px;
+    }
+
+    .purchases-heading-icon span {
+        font-size: 24px;
+    }
+
+    .purchases-heading h2 {
+        font-size: 35px;
+    }
+
+    .purchases-heading-description {
+        font-size: 12px;
+    }
+
+    .purchases-summary-grid {
+        grid-template-columns: 1fr;
+        gap: 13px;
+    }
+
+    .purchase-summary-card {
+        min-height: 108px;
+        padding: 18px;
+    }
+
+    .purchase-summary-icon {
+        width: 49px;
+        height: 49px;
+    }
+
+    .purchase-summary-content strong {
+        font-size: 30px;
+    }
+
+    .purchases-panel {
+        padding: 20px 15px;
+        border-radius: 20px;
+    }
+
+    .purchases-panel::before {
+        inset: 6px;
+        border-radius: 14px;
+    }
+
+    .purchases-panel-header {
+        align-items: flex-start;
+    }
+
+    .purchases-panel-header h3 {
+        font-size: 29px;
+    }
+
+    .purchases-gold-decoration {
+        font-size: 23px;
+    }
+
+    .purchase-form-section {
+        padding: 17px 13px;
+    }
+
+    .purchase-subheading-products {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .purchase-subheading-left {
+        align-items: flex-start;
+    }
+
+    .add-product-button {
+        width: 100%;
+    }
+
+    .purchase-item-card {
+        padding: 17px 13px;
+    }
+
+    .purchase-form-actions {
+        flex-direction: column-reverse;
+        align-items: stretch;
+    }
+
+    .purchase-primary-button,
+    .purchase-secondary-button {
+        width: 100%;
+    }
+
+    .purchase-filters {
+        grid-template-columns: 1fr;
+    }
+
+    .delete-all-purchases-button {
+        min-width: auto;
+        min-height: 40px;
+        padding: 0 13px;
+
+        font-size: 11px;
+    }
+
+    .purchase-detail-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .purchase-modal {
+        padding: 10px;
+    }
+
+    .purchase-modal-content {
+        padding: 20px 14px;
+        border-radius: 19px;
+    }
+
+    .purchase-modal-header h3 {
+        font-size: 27px;
+    }
+
+    .purchase-notification {
+        left: 13px;
+        right: 13px;
+        bottom: 15px;
+
+        min-width: 0;
+
+        text-align: center;
+    }
+
+    .purchases-watermark {
+        font-size: 210px;
+    }
+}
