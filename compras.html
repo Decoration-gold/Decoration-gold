@@ -1,1 +1,1717 @@
+<!DOCTYPE html>
+<html lang="es">
 
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="theme-color"
+        content="#080808"
+    >
+
+    <title>
+        Compras | Decoration Gold INC
+    </title>
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Montserrat:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="compras.css"
+    >
+
+</head>
+
+<body>
+
+    <div class="purchases-page">
+
+        <div
+            class="purchases-watermark"
+            aria-hidden="true"
+        >
+            DG
+        </div>
+
+        <!-- =====================================================
+             CABECERA
+             ===================================================== -->
+
+        <header class="purchases-header">
+
+            <a
+                href="index.html"
+                class="purchases-brand"
+                aria-label="Regresar al panel principal"
+            >
+
+                <div class="purchases-logo">
+
+                    <img
+                        src="LogoRedondo.PNG"
+                        alt="Logo de Decoration Gold INC"
+                    >
+
+                </div>
+
+                <div class="purchases-brand-text">
+
+                    <h1>
+                        DECORATION GOLD INC
+                    </h1>
+
+                    <p>
+                        SISTEMA ADMINISTRATIVO
+                    </p>
+
+                </div>
+
+            </a>
+
+            <a
+                href="index.html"
+                class="purchases-home-button"
+            >
+
+                <span class="purchases-home-arrow">
+                    ←
+                </span>
+
+                <span class="purchases-home-text">
+                    Inicio
+                </span>
+
+            </a>
+
+        </header>
+
+        <!-- =====================================================
+             CONTENIDO PRINCIPAL
+             ===================================================== -->
+
+        <main class="purchases-main">
+
+            <!-- =================================================
+                 TÍTULO DEL MÓDULO
+                 ================================================= -->
+
+            <section class="purchases-heading">
+
+                <div class="purchases-heading-icon">
+
+                    <span>
+                        ◆
+                    </span>
+
+                </div>
+
+                <div class="purchases-heading-content">
+
+                    <p class="purchases-eyebrow">
+                        CONTROL DE MERCANCÍA
+                    </p>
+
+                    <h2>
+                        Registro de compras
+                    </h2>
+
+                    <p class="purchases-heading-description">
+                        Registra compras a proveedores, productos recibidos,
+                        costos y pagos del negocio.
+                    </p>
+
+                </div>
+
+            </section>
+
+            <!-- =================================================
+                 TARJETAS DE RESUMEN
+                 ================================================= -->
+
+            <section class="purchases-summary-grid">
+
+                <article class="purchase-summary-card">
+
+                    <div class="purchase-summary-icon">
+
+                        <span>
+                            $
+                        </span>
+
+                    </div>
+
+                    <div class="purchase-summary-content">
+
+                        <span class="purchase-summary-label">
+                            Compras de hoy
+                        </span>
+
+                        <strong id="todayPurchases">
+                            $0.00
+                        </strong>
+
+                        <small id="todayPurchasesStatus">
+                            Sin compras registradas
+                        </small>
+
+                    </div>
+
+                </article>
+
+                <article class="purchase-summary-card">
+
+                    <div class="purchase-summary-icon">
+
+                        <span>
+                            7
+                        </span>
+
+                    </div>
+
+                    <div class="purchase-summary-content">
+
+                        <span class="purchase-summary-label">
+                            Esta semana
+                        </span>
+
+                        <strong id="weekPurchases">
+                            $0.00
+                        </strong>
+
+                        <small id="weekPurchasesStatus">
+                            Total semanal
+                        </small>
+
+                    </div>
+
+                </article>
+
+                <article class="purchase-summary-card">
+
+                    <div class="purchase-summary-icon">
+
+                        <span>
+                            30
+                        </span>
+
+                    </div>
+
+                    <div class="purchase-summary-content">
+
+                        <span class="purchase-summary-label">
+                            Este mes
+                        </span>
+
+                        <strong id="monthPurchases">
+                            $0.00
+                        </strong>
+
+                        <small id="monthPurchasesStatus">
+                            Total mensual
+                        </small>
+
+                    </div>
+
+                </article>
+
+                <article class="purchase-summary-card">
+
+                    <div class="purchase-summary-icon">
+
+                        <span>
+                            ◇
+                        </span>
+
+                    </div>
+
+                    <div class="purchase-summary-content">
+
+                        <span class="purchase-summary-label">
+                            Pendiente de recibir
+                        </span>
+
+                        <strong id="pendingPurchases">
+                            0
+                        </strong>
+
+                        <small id="pendingPurchasesStatus">
+                            Compras pendientes
+                        </small>
+
+                    </div>
+
+                </article>
+
+            </section>
+
+            <!-- =================================================
+                 PANEL PARA AGREGAR COMPRA
+                 ================================================= -->
+
+            <section class="purchases-panel">
+
+                <div class="purchases-panel-header">
+
+                    <div>
+
+                        <p class="purchases-section-label">
+                            NUEVO MOVIMIENTO
+                        </p>
+
+                        <h3>
+                            Agregar compra
+                        </h3>
+
+                        <p class="purchases-panel-description">
+                            Registra la información general de la compra
+                            y los productos adquiridos.
+                        </p>
+
+                    </div>
+
+                    <div
+                        class="purchases-gold-decoration"
+                        aria-hidden="true"
+                    >
+                        ✦
+                    </div>
+
+                </div>
+
+                <form
+                    id="purchaseForm"
+                    class="purchase-form"
+                    autocomplete="off"
+                >
+
+                    <!-- =========================================
+                         INFORMACIÓN GENERAL
+                         ========================================= -->
+
+                    <div class="purchase-form-section">
+
+                        <div class="purchase-subheading">
+
+                            <div class="purchase-subheading-number">
+                                1
+                            </div>
+
+                            <div>
+
+                                <h4>
+                                    Información general
+                                </h4>
+
+                                <p>
+                                    Datos principales de la compra.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                        <div class="purchase-form-grid">
+
+                            <div class="purchase-form-group">
+
+                                <label for="purchaseDate">
+                                    Fecha de compra
+                                </label>
+
+                                <input
+                                    type="date"
+                                    id="purchaseDate"
+                                    required
+                                >
+
+                            </div>
+
+                            <div class="purchase-form-group">
+
+                                <label for="purchaseSupplier">
+                                    Proveedor
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="purchaseSupplier"
+                                    list="suppliersList"
+                                    placeholder="Ejemplo: Proveedor local"
+                                    required
+                                >
+
+                                <datalist id="suppliersList">
+
+                                    <option value="Alibaba"></option>
+                                    <option value="Temu"></option>
+                                    <option value="Amazon"></option>
+                                    <option value="Proveedor local"></option>
+                                    <option value="Home Décor USA"></option>
+                                    <option value="Importador de Miami"></option>
+
+                                </datalist>
+
+                            </div>
+
+                            <div class="purchase-form-group">
+
+                                <label for="purchaseInvoice">
+                                    Número de factura
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="purchaseInvoice"
+                                    placeholder="Ejemplo: INV-10025"
+                                >
+
+                            </div>
+
+                            <div class="purchase-form-group">
+
+                                <label for="purchaseOrder">
+                                    Número de orden
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="purchaseOrder"
+                                    placeholder="Ejemplo: PO-0001"
+                                >
+
+                            </div>
+
+                            <div class="purchase-form-group">
+
+                                <label for="purchaseStatus">
+                                    Estado de la compra
+                                </label>
+
+                                <select
+                                    id="purchaseStatus"
+                                    required
+                                >
+
+                                    <option value="">
+                                        Seleccionar
+                                    </option>
+
+                                    <option value="Pendiente">
+                                        Pendiente de recibir
+                                    </option>
+
+                                    <option value="Recibida">
+                                        Recibida completamente
+                                    </option>
+
+                                    <option value="Recibida parcialmente">
+                                        Recibida parcialmente
+                                    </option>
+
+                                    <option value="Cancelada">
+                                        Cancelada
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                            <div class="purchase-form-group">
+
+                                <label for="purchasePaymentStatus">
+                                    Estado del pago
+                                </label>
+
+                                <select
+                                    id="purchasePaymentStatus"
+                                    required
+                                >
+
+                                    <option value="">
+                                        Seleccionar
+                                    </option>
+
+                                    <option value="Pagada">
+                                        Pagada
+                                    </option>
+
+                                    <option value="Pendiente">
+                                        Pendiente
+                                    </option>
+
+                                    <option value="Pago parcial">
+                                        Pago parcial
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                            <div class="purchase-form-group">
+
+                                <label for="purchasePaymentMethod">
+                                    Método de pago
+                                </label>
+
+                                <select
+                                    id="purchasePaymentMethod"
+                                    required
+                                >
+
+                                    <option value="">
+                                        Seleccionar
+                                    </option>
+
+                                    <option value="Efectivo">
+                                        Efectivo
+                                    </option>
+
+                                    <option value="Tarjeta">
+                                        Tarjeta
+                                    </option>
+
+                                    <option value="Transferencia">
+                                        Transferencia bancaria
+                                    </option>
+
+                                    <option value="Cheque">
+                                        Cheque
+                                    </option>
+
+                                    <option value="PayPal">
+                                        PayPal
+                                    </option>
+
+                                    <option value="Financiamiento">
+                                        Financiamiento
+                                    </option>
+
+                                    <option value="Otro">
+                                        Otro
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                            <div class="purchase-form-group">
+
+                                <label for="purchaseExpectedDate">
+                                    Fecha esperada de entrega
+                                </label>
+
+                                <input
+                                    type="date"
+                                    id="purchaseExpectedDate"
+                                >
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- =========================================
+                         PRODUCTOS
+                         ========================================= -->
+
+                    <div class="purchase-form-section">
+
+                        <div class="purchase-subheading purchase-subheading-products">
+
+                            <div class="purchase-subheading-left">
+
+                                <div class="purchase-subheading-number">
+                                    2
+                                </div>
+
+                                <div>
+
+                                    <h4>
+                                        Productos comprados
+                                    </h4>
+
+                                    <p>
+                                        Agrega uno o varios productos a esta compra.
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+                            <button
+                                type="button"
+                                id="addProductButton"
+                                class="add-product-button"
+                            >
+
+                                <span>
+                                    ＋
+                                </span>
+
+                                Agregar producto
+
+                            </button>
+
+                        </div>
+
+                        <div
+                            id="purchaseItemsContainer"
+                            class="purchase-items-container"
+                        >
+
+                            <!-- Primera fila de producto -->
+
+                            <article
+                                class="purchase-item-card"
+                                data-item-index="0"
+                            >
+
+                                <div class="purchase-item-header">
+
+                                    <div>
+
+                                        <span class="purchase-item-number">
+                                            Producto 1
+                                        </span>
+
+                                        <small>
+                                            Información para inventario y costos
+                                        </small>
+
+                                    </div>
+
+                                    <button
+                                        type="button"
+                                        class="remove-product-button"
+                                        aria-label="Eliminar producto"
+                                        title="Eliminar producto"
+                                        disabled
+                                    >
+                                        ×
+                                    </button>
+
+                                </div>
+
+                                <div class="purchase-item-grid">
+
+                                    <div class="purchase-form-group purchase-item-name-group">
+
+                                        <label>
+                                            Nombre del producto
+                                        </label>
+
+                                        <input
+                                            type="text"
+                                            class="item-name"
+                                            placeholder="Ejemplo: Cuadro Árbol de la Vida"
+                                            required
+                                        >
+
+                                    </div>
+
+                                    <div class="purchase-form-group">
+
+                                        <label>
+                                            SKU o código
+                                        </label>
+
+                                        <input
+                                            type="text"
+                                            class="item-sku"
+                                            placeholder="Ejemplo: CUA-001"
+                                        >
+
+                                    </div>
+
+                                    <div class="purchase-form-group">
+
+                                        <label>
+                                            Categoría
+                                        </label>
+
+                                        <select
+                                            class="item-category"
+                                            required
+                                        >
+
+                                            <option value="">
+                                                Seleccionar
+                                            </option>
+
+                                            <option value="Cuadros">
+                                                Cuadros
+                                            </option>
+
+                                            <option value="Relojes">
+                                                Relojes
+                                            </option>
+
+                                            <option value="Muebles">
+                                                Muebles
+                                            </option>
+
+                                            <option value="Flores y arreglos">
+                                                Flores y arreglos
+                                            </option>
+
+                                            <option value="Espejos">
+                                                Espejos
+                                            </option>
+
+                                            <option value="Figuras decorativas">
+                                                Figuras decorativas
+                                            </option>
+
+                                            <option value="Decoración de cocina">
+                                                Decoración de cocina
+                                            </option>
+
+                                            <option value="Decoración de baño">
+                                                Decoración de baño
+                                            </option>
+
+                                            <option value="Textiles">
+                                                Textiles
+                                            </option>
+
+                                            <option value="Iluminación">
+                                                Iluminación
+                                            </option>
+
+                                            <option value="Otros">
+                                                Otros
+                                            </option>
+
+                                        </select>
+
+                                    </div>
+
+                                    <div class="purchase-form-group">
+
+                                        <label>
+                                            Variante
+                                        </label>
+
+                                        <input
+                                            type="text"
+                                            class="item-variant"
+                                            placeholder="Color, tamaño o modelo"
+                                        >
+
+                                    </div>
+
+                                    <div class="purchase-form-group">
+
+                                        <label>
+                                            Cantidad comprada
+                                        </label>
+
+                                        <input
+                                            type="number"
+                                            class="item-quantity"
+                                            min="1"
+                                            step="1"
+                                            value="1"
+                                            required
+                                        >
+
+                                    </div>
+
+                                    <div class="purchase-form-group">
+
+                                        <label>
+                                            Cantidad recibida
+                                        </label>
+
+                                        <input
+                                            type="number"
+                                            class="item-received-quantity"
+                                            min="0"
+                                            step="1"
+                                            value="0"
+                                        >
+
+                                    </div>
+
+                                    <div class="purchase-form-group">
+
+                                        <label>
+                                            Costo por unidad
+                                        </label>
+
+                                        <div class="purchase-money-input">
+
+                                            <span>
+                                                $
+                                            </span>
+
+                                            <input
+                                                type="number"
+                                                class="item-unit-cost"
+                                                min="0"
+                                                step="0.01"
+                                                placeholder="0.00"
+                                                required
+                                            >
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="purchase-form-group">
+
+                                        <label>
+                                            Precio de venta sugerido
+                                        </label>
+
+                                        <div class="purchase-money-input">
+
+                                            <span>
+                                                $
+                                            </span>
+
+                                            <input
+                                                type="number"
+                                                class="item-sale-price"
+                                                min="0"
+                                                step="0.01"
+                                                placeholder="0.00"
+                                            >
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="purchase-form-group">
+
+                                        <label>
+                                            Costo total del producto
+                                        </label>
+
+                                        <div class="purchase-money-input purchase-readonly-money">
+
+                                            <span>
+                                                $
+                                            </span>
+
+                                            <input
+                                                type="text"
+                                                class="item-total"
+                                                value="0.00"
+                                                readonly
+                                            >
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="purchase-form-group">
+
+                                        <label>
+                                            Ubicación futura
+                                        </label>
+
+                                        <input
+                                            type="text"
+                                            class="item-location"
+                                            placeholder="Ejemplo: Almacén A"
+                                        >
+
+                                    </div>
+
+                                    <div class="purchase-form-group purchase-item-notes-group">
+
+                                        <label>
+                                            Notas del producto
+                                        </label>
+
+                                        <textarea
+                                            class="item-notes"
+                                            rows="2"
+                                            placeholder="Color, medidas, condiciones o información adicional"
+                                        ></textarea>
+
+                                    </div>
+
+                                </div>
+
+                            </article>
+
+                        </div>
+
+                    </div>
+
+                    <!-- =========================================
+                         COSTOS ADICIONALES
+                         ========================================= -->
+
+                    <div class="purchase-form-section">
+
+                        <div class="purchase-subheading">
+
+                            <div class="purchase-subheading-number">
+                                3
+                            </div>
+
+                            <div>
+
+                                <h4>
+                                    Costos adicionales
+                                </h4>
+
+                                <p>
+                                    Gastos relacionados con esta compra.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                        <div class="purchase-form-grid">
+
+                            <div class="purchase-form-group">
+
+                                <label for="purchaseShipping">
+                                    Envío o transporte
+                                </label>
+
+                                <div class="purchase-money-input">
+
+                                    <span>
+                                        $
+                                    </span>
+
+                                    <input
+                                        type="number"
+                                        id="purchaseShipping"
+                                        min="0"
+                                        step="0.01"
+                                        value="0"
+                                        placeholder="0.00"
+                                    >
+
+                                </div>
+
+                            </div>
+
+                            <div class="purchase-form-group">
+
+                                <label for="purchaseTaxes">
+                                    Impuestos
+                                </label>
+
+                                <div class="purchase-money-input">
+
+                                    <span>
+                                        $
+                                    </span>
+
+                                    <input
+                                        type="number"
+                                        id="purchaseTaxes"
+                                        min="0"
+                                        step="0.01"
+                                        value="0"
+                                        placeholder="0.00"
+                                    >
+
+                                </div>
+
+                            </div>
+
+                            <div class="purchase-form-group">
+
+                                <label for="purchaseOtherCosts">
+                                    Otros costos
+                                </label>
+
+                                <div class="purchase-money-input">
+
+                                    <span>
+                                        $
+                                    </span>
+
+                                    <input
+                                        type="number"
+                                        id="purchaseOtherCosts"
+                                        min="0"
+                                        step="0.01"
+                                        value="0"
+                                        placeholder="0.00"
+                                    >
+
+                                </div>
+
+                            </div>
+
+                            <div class="purchase-form-group">
+
+                                <label for="purchaseDiscount">
+                                    Descuento
+                                </label>
+
+                                <div class="purchase-money-input">
+
+                                    <span>
+                                        $
+                                    </span>
+
+                                    <input
+                                        type="number"
+                                        id="purchaseDiscount"
+                                        min="0"
+                                        step="0.01"
+                                        value="0"
+                                        placeholder="0.00"
+                                    >
+
+                                </div>
+
+                            </div>
+
+                            <div class="purchase-form-group purchase-full-width">
+
+                                <label for="purchaseNotes">
+                                    Notas generales
+                                </label>
+
+                                <textarea
+                                    id="purchaseNotes"
+                                    rows="4"
+                                    placeholder="Información adicional sobre esta compra, proveedor o entrega"
+                                ></textarea>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- =========================================
+                         RESUMEN DE TOTALES
+                         ========================================= -->
+
+                    <div class="purchase-totals-section">
+
+                        <div class="purchase-totals-heading">
+
+                            <div>
+
+                                <p class="purchases-section-label">
+                                    RESUMEN DE LA COMPRA
+                                </p>
+
+                                <h4>
+                                    Totales
+                                </h4>
+
+                            </div>
+
+                            <span class="purchase-totals-decoration">
+                                ✦
+                            </span>
+
+                        </div>
+
+                        <div class="purchase-totals-grid">
+
+                            <div class="purchase-total-line">
+
+                                <span>
+                                    Productos
+                                </span>
+
+                                <strong id="productsSubtotal">
+                                    $0.00
+                                </strong>
+
+                            </div>
+
+                            <div class="purchase-total-line">
+
+                                <span>
+                                    Envío
+                                </span>
+
+                                <strong id="shippingTotal">
+                                    $0.00
+                                </strong>
+
+                            </div>
+
+                            <div class="purchase-total-line">
+
+                                <span>
+                                    Impuestos
+                                </span>
+
+                                <strong id="taxesTotal">
+                                    $0.00
+                                </strong>
+
+                            </div>
+
+                            <div class="purchase-total-line">
+
+                                <span>
+                                    Otros costos
+                                </span>
+
+                                <strong id="otherCostsTotal">
+                                    $0.00
+                                </strong>
+
+                            </div>
+
+                            <div class="purchase-total-line purchase-discount-line">
+
+                                <span>
+                                    Descuento
+                                </span>
+
+                                <strong id="discountTotal">
+                                    -$0.00
+                                </strong>
+
+                            </div>
+
+                            <div class="purchase-total-line purchase-grand-total">
+
+                                <span>
+                                    Total de la compra
+                                </span>
+
+                                <strong id="purchaseGrandTotal">
+                                    $0.00
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- =========================================
+                         BOTONES
+                         ========================================= -->
+
+                    <div class="purchase-form-actions">
+
+                        <button
+                            type="reset"
+                            id="clearPurchaseButton"
+                            class="purchase-secondary-button"
+                        >
+                            Limpiar formulario
+                        </button>
+
+                        <button
+                            type="submit"
+                            class="purchase-primary-button"
+                        >
+
+                            <span>
+                                ＋
+                            </span>
+
+                            Guardar compra
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </section>
+
+            <!-- =================================================
+                 HISTORIAL
+                 ================================================= -->
+
+            <section class="purchases-panel purchases-history-panel">
+
+                <div class="purchases-panel-header">
+
+                    <div>
+
+                        <p class="purchases-section-label">
+                            HISTORIAL
+                        </p>
+
+                        <h3>
+                            Compras registradas
+                        </h3>
+
+                        <p class="purchases-panel-description">
+                            Consulta, busca y administra todas las compras.
+                        </p>
+
+                    </div>
+
+                    <button
+                        type="button"
+                        id="deleteAllPurchasesButton"
+                        class="delete-all-purchases-button"
+                    >
+                        Borrar todas
+                    </button>
+
+                </div>
+
+                <!-- =============================================
+                     FILTROS
+                     ============================================= -->
+
+                <div class="purchase-filters">
+
+                    <div class="purchase-search-box">
+
+                        <span aria-hidden="true">
+                            ⌕
+                        </span>
+
+                        <input
+                            type="search"
+                            id="purchaseSearch"
+                            placeholder="Buscar por proveedor, producto, factura o código"
+                        >
+
+                    </div>
+
+                    <select id="purchaseStatusFilter">
+
+                        <option value="Todos">
+                            Todos los estados
+                        </option>
+
+                        <option value="Pendiente">
+                            Pendiente
+                        </option>
+
+                        <option value="Recibida">
+                            Recibida
+                        </option>
+
+                        <option value="Recibida parcialmente">
+                            Recibida parcialmente
+                        </option>
+
+                        <option value="Cancelada">
+                            Cancelada
+                        </option>
+
+                    </select>
+
+                    <select id="purchasePaymentFilter">
+
+                        <option value="Todos">
+                            Todos los pagos
+                        </option>
+
+                        <option value="Pagada">
+                            Pagada
+                        </option>
+
+                        <option value="Pendiente">
+                            Pendiente
+                        </option>
+
+                        <option value="Pago parcial">
+                            Pago parcial
+                        </option>
+
+                    </select>
+
+                    <select id="purchasePeriodFilter">
+
+                        <option value="Todos">
+                            Todas las fechas
+                        </option>
+
+                        <option value="Hoy">
+                            Hoy
+                        </option>
+
+                        <option value="Semana">
+                            Esta semana
+                        </option>
+
+                        <option value="Mes">
+                            Este mes
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <!-- =============================================
+                     TABLA
+                     ============================================= -->
+
+                <div class="purchases-table-wrapper">
+
+                    <table class="purchases-table">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    Fecha
+                                </th>
+
+                                <th>
+                                    Proveedor
+                                </th>
+
+                                <th>
+                                    Factura
+                                </th>
+
+                                <th>
+                                    Productos
+                                </th>
+
+                                <th>
+                                    Estado
+                                </th>
+
+                                <th>
+                                    Pago
+                                </th>
+
+                                <th>
+                                    Total
+                                </th>
+
+                                <th>
+                                    Acciones
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="purchasesTableBody">
+
+                            <tr class="purchases-empty-row">
+
+                                <td colspan="8">
+
+                                    <div class="purchases-empty-state">
+
+                                        <div class="purchases-empty-icon">
+                                            ◆
+                                        </div>
+
+                                        <strong>
+                                            Todavía no hay compras
+                                        </strong>
+
+                                        <span>
+                                            Las compras que registres aparecerán aquí.
+                                        </span>
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+        </main>
+
+        <!-- =====================================================
+             MODAL DE DETALLES
+             ===================================================== -->
+
+        <div
+            id="purchaseDetailsModal"
+            class="purchase-modal"
+            aria-hidden="true"
+        >
+
+            <div
+                class="purchase-modal-overlay"
+                data-close-modal="true"
+            ></div>
+
+            <section
+                class="purchase-modal-content"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="purchaseModalTitle"
+            >
+
+                <div class="purchase-modal-header">
+
+                    <div>
+
+                        <p class="purchases-section-label">
+                            DETALLES
+                        </p>
+
+                        <h3 id="purchaseModalTitle">
+                            Información de la compra
+                        </h3>
+
+                    </div>
+
+                    <button
+                        type="button"
+                        id="closePurchaseModalButton"
+                        class="purchase-modal-close"
+                        aria-label="Cerrar ventana"
+                    >
+                        ×
+                    </button>
+
+                </div>
+
+                <div
+                    id="purchaseModalBody"
+                    class="purchase-modal-body"
+                >
+                </div>
+
+            </section>
+
+        </div>
+
+        <!-- =====================================================
+             NOTIFICACIÓN
+             ===================================================== -->
+
+        <div
+            id="purchaseNotification"
+            class="purchase-notification"
+            role="status"
+            aria-live="polite"
+        >
+            Compra guardada correctamente
+        </div>
+
+    </div>
+
+    <!-- =========================================================
+         PLANTILLA PARA PRODUCTOS NUEVOS
+         compras.js la utilizará para crear más filas
+         ========================================================= -->
+
+    <template id="purchaseItemTemplate">
+
+        <article
+            class="purchase-item-card"
+            data-item-index=""
+        >
+
+            <div class="purchase-item-header">
+
+                <div>
+
+                    <span class="purchase-item-number">
+                        Producto
+                    </span>
+
+                    <small>
+                        Información para inventario y costos
+                    </small>
+
+                </div>
+
+                <button
+                    type="button"
+                    class="remove-product-button"
+                    aria-label="Eliminar producto"
+                    title="Eliminar producto"
+                >
+                    ×
+                </button>
+
+            </div>
+
+            <div class="purchase-item-grid">
+
+                <div class="purchase-form-group purchase-item-name-group">
+
+                    <label>
+                        Nombre del producto
+                    </label>
+
+                    <input
+                        type="text"
+                        class="item-name"
+                        placeholder="Ejemplo: Cuadro Árbol de la Vida"
+                        required
+                    >
+
+                </div>
+
+                <div class="purchase-form-group">
+
+                    <label>
+                        SKU o código
+                    </label>
+
+                    <input
+                        type="text"
+                        class="item-sku"
+                        placeholder="Ejemplo: CUA-001"
+                    >
+
+                </div>
+
+                <div class="purchase-form-group">
+
+                    <label>
+                        Categoría
+                    </label>
+
+                    <select
+                        class="item-category"
+                        required
+                    >
+
+                        <option value="">
+                            Seleccionar
+                        </option>
+
+                        <option value="Cuadros">
+                            Cuadros
+                        </option>
+
+                        <option value="Relojes">
+                            Relojes
+                        </option>
+
+                        <option value="Muebles">
+                            Muebles
+                        </option>
+
+                        <option value="Flores y arreglos">
+                            Flores y arreglos
+                        </option>
+
+                        <option value="Espejos">
+                            Espejos
+                        </option>
+
+                        <option value="Figuras decorativas">
+                            Figuras decorativas
+                        </option>
+
+                        <option value="Decoración de cocina">
+                            Decoración de cocina
+                        </option>
+
+                        <option value="Decoración de baño">
+                            Decoración de baño
+                        </option>
+
+                        <option value="Textiles">
+                            Textiles
+                        </option>
+
+                        <option value="Iluminación">
+                            Iluminación
+                        </option>
+
+                        <option value="Otros">
+                            Otros
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <div class="purchase-form-group">
+
+                    <label>
+                        Variante
+                    </label>
+
+                    <input
+                        type="text"
+                        class="item-variant"
+                        placeholder="Color, tamaño o modelo"
+                    >
+
+                </div>
+
+                <div class="purchase-form-group">
+
+                    <label>
+                        Cantidad comprada
+                    </label>
+
+                    <input
+                        type="number"
+                        class="item-quantity"
+                        min="1"
+                        step="1"
+                        value="1"
+                        required
+                    >
+
+                </div>
+
+                <div class="purchase-form-group">
+
+                    <label>
+                        Cantidad recibida
+                    </label>
+
+                    <input
+                        type="number"
+                        class="item-received-quantity"
+                        min="0"
+                        step="1"
+                        value="0"
+                    >
+
+                </div>
+
+                <div class="purchase-form-group">
+
+                    <label>
+                        Costo por unidad
+                    </label>
+
+                    <div class="purchase-money-input">
+
+                        <span>
+                            $
+                        </span>
+
+                        <input
+                            type="number"
+                            class="item-unit-cost"
+                            min="0"
+                            step="0.01"
+                            placeholder="0.00"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+                <div class="purchase-form-group">
+
+                    <label>
+                        Precio de venta sugerido
+                    </label>
+
+                    <div class="purchase-money-input">
+
+                        <span>
+                            $
+                        </span>
+
+                        <input
+                            type="number"
+                            class="item-sale-price"
+                            min="0"
+                            step="0.01"
+                            placeholder="0.00"
+                        >
+
+                    </div>
+
+                </div>
+
+                <div class="purchase-form-group">
+
+                    <label>
+                        Costo total del producto
+                    </label>
+
+                    <div class="purchase-money-input purchase-readonly-money">
+
+                        <span>
+                            $
+                        </span>
+
+                        <input
+                            type="text"
+                            class="item-total"
+                            value="0.00"
+                            readonly
+                        >
+
+                    </div>
+
+                </div>
+
+                <div class="purchase-form-group">
+
+                    <label>
+                        Ubicación futura
+                    </label>
+
+                    <input
+                        type="text"
+                        class="item-location"
+                        placeholder="Ejemplo: Almacén A"
+                    >
+
+                </div>
+
+                <div class="purchase-form-group purchase-item-notes-group">
+
+                    <label>
+                        Notas del producto
+                    </label>
+
+                    <textarea
+                        class="item-notes"
+                        rows="2"
+                        placeholder="Color, medidas, condiciones o información adicional"
+                    ></textarea>
+
+                </div>
+
+            </div>
+
+        </article>
+
+    </template>
+
+    <script src="compras.js"></script>
+
+</body>
+
+</html>
