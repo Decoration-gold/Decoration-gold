@@ -141,8 +141,8 @@
                     </h2>
 
                     <p class="purchases-heading-description">
-                        Registra compras a proveedores, productos recibidos,
-                        costos y pagos del negocio.
+                        Registra compras, productos, costos y mercancía
+                        que será enviada al inventario de Square.
                     </p>
 
                 </div>
@@ -270,7 +270,7 @@
             </section>
 
             <!-- =================================================
-                 PANEL PARA AGREGAR COMPRA
+                 PANEL AGREGAR COMPRA
                  ================================================= -->
 
             <section class="purchases-panel">
@@ -288,8 +288,8 @@
                         </h3>
 
                         <p class="purchases-panel-description">
-                            Registra la información general de la compra
-                            y los productos adquiridos.
+                            Introduce la compra y los productos que después
+                            serán sincronizados con Square.
                         </p>
 
                     </div>
@@ -585,7 +585,9 @@
                             class="purchase-items-container"
                         >
 
-                            <!-- Primera fila de producto -->
+                            <!-- =================================
+                                 PRIMER PRODUCTO
+                                 ================================= -->
 
                             <article
                                 class="purchase-item-card"
@@ -601,7 +603,7 @@
                                         </span>
 
                                         <small>
-                                            Información para inventario y costos
+                                            Información para Square, inventario y costos
                                         </small>
 
                                     </div>
@@ -638,13 +640,27 @@
                                     <div class="purchase-form-group">
 
                                         <label>
-                                            SKU o código
+                                            SKU o código interno
                                         </label>
 
                                         <input
                                             type="text"
                                             class="item-sku"
-                                            placeholder="Ejemplo: CUA-001"
+                                            placeholder="Ejemplo: CUA-ARB-001"
+                                        >
+
+                                    </div>
+
+                                    <div class="purchase-form-group">
+
+                                        <label>
+                                            Código de barras
+                                        </label>
+
+                                        <input
+                                            type="text"
+                                            class="item-barcode"
+                                            placeholder="UPC, EAN o GTIN"
                                         >
 
                                     </div>
@@ -715,13 +731,28 @@
                                     <div class="purchase-form-group">
 
                                         <label>
-                                            Variante
+                                            Características o variante
                                         </label>
 
                                         <input
                                             type="text"
                                             class="item-variant"
-                                            placeholder="Color, tamaño o modelo"
+                                            placeholder="Ejemplo: Dorado, 60x40"
+                                        >
+
+                                    </div>
+
+                                    <div class="purchase-form-group">
+
+                                        <label>
+                                            Nombre de la variación en Square
+                                        </label>
+
+                                        <input
+                                            type="text"
+                                            class="item-variation-name"
+                                            value="Regular"
+                                            placeholder="Ejemplo: Dorado / 60x40"
                                         >
 
                                     </div>
@@ -787,7 +818,7 @@
                                     <div class="purchase-form-group">
 
                                         <label>
-                                            Precio de venta sugerido
+                                            Precio de venta en Square
                                         </label>
 
                                         <div class="purchase-money-input">
@@ -834,7 +865,7 @@
                                     <div class="purchase-form-group">
 
                                         <label>
-                                            Ubicación futura
+                                            Ubicación física
                                         </label>
 
                                         <input
@@ -844,6 +875,81 @@
                                         >
 
                                     </div>
+
+                                    <!-- =========================
+                                         CONFIGURACIÓN DE SQUARE
+                                         ========================= -->
+
+                                    <div class="purchase-form-group">
+
+                                        <label>
+                                            Sincronizar con Square
+                                        </label>
+
+                                        <select class="item-square-enabled">
+
+                                            <option value="true">
+                                                Sí, crear o actualizar en Square
+                                            </option>
+
+                                            <option value="false">
+                                                No enviar a Square
+                                            </option>
+
+                                        </select>
+
+                                    </div>
+
+                                    <div class="purchase-form-group">
+
+                                        <label>
+                                            Controlar inventario en Square
+                                        </label>
+
+                                        <select class="item-track-inventory">
+
+                                            <option value="true">
+                                                Sí, controlar existencias
+                                            </option>
+
+                                            <option value="false">
+                                                No controlar existencias
+                                            </option>
+
+                                        </select>
+
+                                    </div>
+
+                                    <div class="purchase-form-group">
+
+                                        <label>
+                                            Estado de sincronización
+                                        </label>
+
+                                        <input
+                                            type="text"
+                                            class="item-sync-status"
+                                            value="Pendiente de sincronizar"
+                                            readonly
+                                        >
+
+                                    </div>
+
+                                    <input
+                                        type="hidden"
+                                        class="item-square-item-id"
+                                    >
+
+                                    <input
+                                        type="hidden"
+                                        class="item-square-variation-id"
+                                    >
+
+                                    <input
+                                        type="hidden"
+                                        class="item-inventory-synced-quantity"
+                                        value="0"
+                                    >
 
                                     <div class="purchase-form-group purchase-item-notes-group">
 
@@ -1199,7 +1305,7 @@
                         <input
                             type="search"
                             id="purchaseSearch"
-                            placeholder="Buscar por proveedor, producto, factura o código"
+                            placeholder="Buscar proveedor, producto, factura, SKU o código"
                         >
 
                     </div>
@@ -1427,8 +1533,7 @@
     </div>
 
     <!-- =========================================================
-         PLANTILLA PARA PRODUCTOS NUEVOS
-         compras.js la utilizará para crear más filas
+         PLANTILLA PARA AGREGAR PRODUCTOS NUEVOS
          ========================================================= -->
 
     <template id="purchaseItemTemplate">
@@ -1447,7 +1552,7 @@
                     </span>
 
                     <small>
-                        Información para inventario y costos
+                        Información para Square, inventario y costos
                     </small>
 
                 </div>
@@ -1483,13 +1588,27 @@
                 <div class="purchase-form-group">
 
                     <label>
-                        SKU o código
+                        SKU o código interno
                     </label>
 
                     <input
                         type="text"
                         class="item-sku"
-                        placeholder="Ejemplo: CUA-001"
+                        placeholder="Ejemplo: CUA-ARB-001"
+                    >
+
+                </div>
+
+                <div class="purchase-form-group">
+
+                    <label>
+                        Código de barras
+                    </label>
+
+                    <input
+                        type="text"
+                        class="item-barcode"
+                        placeholder="UPC, EAN o GTIN"
                     >
 
                 </div>
@@ -1560,13 +1679,28 @@
                 <div class="purchase-form-group">
 
                     <label>
-                        Variante
+                        Características o variante
                     </label>
 
                     <input
                         type="text"
                         class="item-variant"
-                        placeholder="Color, tamaño o modelo"
+                        placeholder="Ejemplo: Dorado, 60x40"
+                    >
+
+                </div>
+
+                <div class="purchase-form-group">
+
+                    <label>
+                        Nombre de la variación en Square
+                    </label>
+
+                    <input
+                        type="text"
+                        class="item-variation-name"
+                        value="Regular"
+                        placeholder="Ejemplo: Dorado / 60x40"
                     >
 
                 </div>
@@ -1632,7 +1766,7 @@
                 <div class="purchase-form-group">
 
                     <label>
-                        Precio de venta sugerido
+                        Precio de venta en Square
                     </label>
 
                     <div class="purchase-money-input">
@@ -1679,7 +1813,7 @@
                 <div class="purchase-form-group">
 
                     <label>
-                        Ubicación futura
+                        Ubicación física
                     </label>
 
                     <input
@@ -1689,6 +1823,81 @@
                     >
 
                 </div>
+
+                <!-- =============================================
+                     CONFIGURACIÓN DE SQUARE
+                     ============================================= -->
+
+                <div class="purchase-form-group">
+
+                    <label>
+                        Sincronizar con Square
+                    </label>
+
+                    <select class="item-square-enabled">
+
+                        <option value="true">
+                            Sí, crear o actualizar en Square
+                        </option>
+
+                        <option value="false">
+                            No enviar a Square
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <div class="purchase-form-group">
+
+                    <label>
+                        Controlar inventario en Square
+                    </label>
+
+                    <select class="item-track-inventory">
+
+                        <option value="true">
+                            Sí, controlar existencias
+                        </option>
+
+                        <option value="false">
+                            No controlar existencias
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <div class="purchase-form-group">
+
+                    <label>
+                        Estado de sincronización
+                    </label>
+
+                    <input
+                        type="text"
+                        class="item-sync-status"
+                        value="Pendiente de sincronizar"
+                        readonly
+                    >
+
+                </div>
+
+                <input
+                    type="hidden"
+                    class="item-square-item-id"
+                >
+
+                <input
+                    type="hidden"
+                    class="item-square-variation-id"
+                >
+
+                <input
+                    type="hidden"
+                    class="item-inventory-synced-quantity"
+                    value="0"
+                >
 
                 <div class="purchase-form-group purchase-item-notes-group">
 
