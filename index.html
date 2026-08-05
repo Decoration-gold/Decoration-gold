@@ -361,5 +361,298 @@ function formatearDinero(cantidad) {
     ).format(Number(cantidad) || 0);
 }
 </script>
+    <script>
+/* =========================================================
+   DECORATION GOLD INC
+   CONEXIÓN DEL DASHBOARD CON EL MÓDULO DE COMPRAS
+   ========================================================= */
+
+document.addEventListener("DOMContentLoaded", actualizarComprasDashboard);
+window.addEventListener("pageshow", actualizarComprasDashboard);
+window.addEventListener("focus", actualizarComprasDashboard);
+window.addEventListener("storage", actualizarComprasDashboard);
+
+function actualizarComprasDashboard() {
+    const STORAGE_KEY = "decorationGoldPurchases";
+
+    let compras = [];
+
+    try {
+        const comprasGuardadas = localStorage.getItem(STORAGE_KEY);
+
+        if (comprasGuardadas) {
+            const datos = JSON.parse(comprasGuardadas);
+
+            if (Array.isArray(datos)) {
+                compras = datos;
+            }
+        }
+    } catch (error) {
+        console.error(
+            "No se pudieron cargar las compras:",
+            error
+        );
+    }
+
+    const fechaHoy = obtenerFechaLocalCompras(new Date());
+
+    const comprasDeHoy = compras.filter(function (compra) {
+        return compra.date === fechaHoy;
+    });
+
+    const totalComprasHoy = comprasDeHoy.reduce(
+        function (total, compra) {
+            return total + Number(compra.total || 0);
+        },
+        0
+    );
+
+    const comprasPendientes = compras.filter(function (compra) {
+        return (
+            compra.status === "Pendiente" ||
+            compra.status === "Recibida parcialmente"
+        );
+    }).length;
+
+    actualizarTarjetaCompras(
+        totalComprasHoy,
+        comprasDeHoy.length
+    );
+
+    actualizarTarjetaComprasPendientes(
+        comprasPendientes
+    );
+
+    conectarBotonCompras();
+}
+
+/* =========================================================
+   ACTUALIZAR TARJETA DE COMPRAS DEL DÍA
+   ========================================================= */
+
+function actualizarTarjetaCompras(total, cantidad) {
+    const tarjeta = buscarTarjetaPorTexto([
+        "compras del día",
+        "compras del dia",
+        "compras de hoy"
+    ]);
+
+    if (!tarjeta) {
+        return;
+    }
+
+    const elementoCantidad =
+        buscarCantidadDentroDeTarjeta(tarjeta);
+
+    const elementoEstado =
+        buscarEstadoDentroDeTarjeta(tarjeta);
+
+    if (elementoCantidad) {
+        elementoCantidad.textContent =
+            formatearDineroCompras(total);
+    }
+
+    if (elementoEstado) {
+        if (cantidad === 0) {
+            elementoEstado.textContent =
+                "Sin compras registradas";
+        } else if (cantidad === 1) {
+            elementoEstado.textContent =
+                "1 compra registrada hoy";
+        } else {
+            elementoEstado.textContent =
+                `${cantidad} compras registradas hoy`;
+        }
+    }
+}
+
+/* =========================================================
+   ACTUALIZAR TARJETA DE COMPRAS PENDIENTES
+   ========================================================= */
+
+function actualizarTarjetaComprasPendientes(cantidad) {
+    const tarjeta = buscarTarjetaPorTexto([
+        "compras pendientes",
+        "pendiente de recibir",
+        "compras por recibir"
+    ]);
+
+    if (!tarjeta) {
+        return;
+    }
+
+    const elementoCantidad =
+        buscarCantidadDentroDeTarjeta(tarjeta);
+
+    const elementoEstado =
+        buscarEstadoDentroDeTarjeta(tarjeta);
+
+    if (elementoCantidad) {
+        elementoCantidad.textContent = cantidad;
+    }
+
+    if (elementoEstado) {
+        elementoEstado.textContent =
+            cantidad === 1
+                ? "1 compra pendiente"
+                : `${cantidad} compras pendientes`;
+    }
+}
+
+/* =========================================================
+   CONECTAR BOTÓN O TARJETA DE COMPRAS
+   ========================================================= */
+
+function conectarBotonCompras() {
+    const elementos = document.querySelectorAll(
+        "a, button, article, section, div"
+    );
+
+    for (const elemento of elementos) {
+        const texto = limpiarTextoCompras(
+            elemento.textContent
+        );
+
+        const esModuloCompras =
+            texto === "compras" ||
+            texto.includes("registrar compras") ||
+            texto.includes("módulo compras") ||
+            texto.includes("modulo compras");
+
+        if (!esModuloCompras) {
+            continue;
+        }
+
+        if (elemento.tagName === "A") {
+            elemento.href = "compras.html";
+            return;
+        }
+
+        const enlaceCercano = elemento.closest("a");
+
+        if (enlaceCercano) {
+            enlaceCercano.href = "compras.html";
+            return;
+        }
+
+        elemento.style.cursor = "pointer";
+
+        elemento.addEventListener(
+            "click",
+            function () {
+                window.location.href = "compras.html";
+            }
+        );
+
+        return;
+    }
+}
+
+/* =========================================================
+   BUSCAR TARJETAS
+   ========================================================= */
+
+function buscarTarjetaPorTexto(textosBuscados) {
+    const tarjetas = document.querySelectorAll(
+        "article, section, .summary-card, .card, .stat-card, .dashboard-card, .module-card"
+    );
+
+    for (const tarjeta of tarjetas) {
+        const texto = limpiarTextoCompras(
+            tarjeta.textContent
+        );
+
+        const coincide = textosBuscados.some(
+            function (textoBuscado) {
+                return texto.includes(textoBuscado);
+            }
+        );
+
+        if (coincide) {
+            return tarjeta;
+        }
+    }
+
+    return null;
+}
+
+function buscarCantidadDentroDeTarjeta(tarjeta) {
+    const elementos = tarjeta.querySelectorAll(
+        "[id*='purchase'], [id*='compra'], strong, h2, h3, .amount, .value, .number"
+    );
+
+    for (const elemento of elementos) {
+        const texto = elemento.textContent.trim();
+
+        if (
+            texto.includes("$") ||
+            /^\d+([.,]\d{2})?$/.test(texto)
+        ) {
+            return elemento;
+        }
+    }
+
+    return null;
+}
+
+function buscarEstadoDentroDeTarjeta(tarjeta) {
+    const elementos = tarjeta.querySelectorAll(
+        "p, span, small, .status, .description"
+    );
+
+    for (const elemento of elementos) {
+        const texto = limpiarTextoCompras(
+            elemento.textContent
+        );
+
+        if (
+            texto.includes("sin compras") ||
+            texto.includes("compra registrada") ||
+            texto.includes("compras registradas") ||
+            texto.includes("compra pendiente") ||
+            texto.includes("compras pendientes")
+        ) {
+            return elemento;
+        }
+    }
+
+    return null;
+}
+
+/* =========================================================
+   UTILIDADES
+   ========================================================= */
+
+function limpiarTextoCompras(texto) {
+    return String(texto || "")
+        .toLowerCase()
+        .replace(/\s+/g, " ")
+        .trim();
+}
+
+function obtenerFechaLocalCompras(fecha) {
+    const año = fecha.getFullYear();
+
+    const mes = String(
+        fecha.getMonth() + 1
+    ).padStart(2, "0");
+
+    const día = String(
+        fecha.getDate()
+    ).padStart(2, "0");
+
+    return `${año}-${mes}-${día}`;
+}
+
+function formatearDineroCompras(cantidad) {
+    return new Intl.NumberFormat(
+        "en-US",
+        {
+            style: "currency",
+            currency: "USD"
+        }
+    ).format(Number(cantidad) || 0);
+}
+</script>
 </body>
 </html>
