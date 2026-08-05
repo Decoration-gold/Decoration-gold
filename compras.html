@@ -141,131 +141,12 @@
                     </h2>
 
                     <p class="purchases-heading-description">
-                        Registra compras, productos, costos y mercancía
-                        que será enviada al inventario de Square.
+                        Registra las compras, los productos, los costos,
+                        los pagos realizados y las cantidades pendientes
+                        por pagar.
                     </p>
 
                 </div>
-
-            </section>
-
-            <!-- =================================================
-                 TARJETAS DE RESUMEN
-                 ================================================= -->
-
-            <section class="purchases-summary-grid">
-
-                <article class="purchase-summary-card">
-
-                    <div class="purchase-summary-icon">
-
-                        <span>
-                            $
-                        </span>
-
-                    </div>
-
-                    <div class="purchase-summary-content">
-
-                        <span class="purchase-summary-label">
-                            Compras de hoy
-                        </span>
-
-                        <strong id="todayPurchases">
-                            $0.00
-                        </strong>
-
-                        <small id="todayPurchasesStatus">
-                            Sin compras registradas
-                        </small>
-
-                    </div>
-
-                </article>
-
-                <article class="purchase-summary-card">
-
-                    <div class="purchase-summary-icon">
-
-                        <span>
-                            7
-                        </span>
-
-                    </div>
-
-                    <div class="purchase-summary-content">
-
-                        <span class="purchase-summary-label">
-                            Esta semana
-                        </span>
-
-                        <strong id="weekPurchases">
-                            $0.00
-                        </strong>
-
-                        <small id="weekPurchasesStatus">
-                            Total semanal
-                        </small>
-
-                    </div>
-
-                </article>
-
-                <article class="purchase-summary-card">
-
-                    <div class="purchase-summary-icon">
-
-                        <span>
-                            30
-                        </span>
-
-                    </div>
-
-                    <div class="purchase-summary-content">
-
-                        <span class="purchase-summary-label">
-                            Este mes
-                        </span>
-
-                        <strong id="monthPurchases">
-                            $0.00
-                        </strong>
-
-                        <small id="monthPurchasesStatus">
-                            Total mensual
-                        </small>
-
-                    </div>
-
-                </article>
-
-                <article class="purchase-summary-card">
-
-                    <div class="purchase-summary-icon">
-
-                        <span>
-                            ◇
-                        </span>
-
-                    </div>
-
-                    <div class="purchase-summary-content">
-
-                        <span class="purchase-summary-label">
-                            Pendiente de recibir
-                        </span>
-
-                        <strong id="pendingPurchases">
-                            0
-                        </strong>
-
-                        <small id="pendingPurchasesStatus">
-                            Compras pendientes
-                        </small>
-
-                    </div>
-
-                </article>
 
             </section>
 
@@ -289,7 +170,7 @@
 
                         <p class="purchases-panel-description">
                             Introduce la compra y los productos que después
-                            serán sincronizados con Square.
+                            serán agregados al inventario y sincronizados con Square.
                         </p>
 
                     </div>
@@ -328,7 +209,7 @@
                                 </h4>
 
                                 <p>
-                                    Datos principales de la compra.
+                                    Datos principales de la compra y del pago.
                                 </p>
 
                             </div>
@@ -380,36 +261,8 @@
 
                             <div class="purchase-form-group">
 
-                                <label for="purchaseInvoice">
-                                    Número de factura
-                                </label>
-
-                                <input
-                                    type="text"
-                                    id="purchaseInvoice"
-                                    placeholder="Ejemplo: INV-10025"
-                                >
-
-                            </div>
-
-                            <div class="purchase-form-group">
-
-                                <label for="purchaseOrder">
-                                    Número de orden
-                                </label>
-
-                                <input
-                                    type="text"
-                                    id="purchaseOrder"
-                                    placeholder="Ejemplo: PO-0001"
-                                >
-
-                            </div>
-
-                            <div class="purchase-form-group">
-
                                 <label for="purchaseStatus">
-                                    Estado de la compra
+                                    Estado de la mercancía
                                 </label>
 
                                 <select
@@ -435,37 +288,6 @@
 
                                     <option value="Cancelada">
                                         Cancelada
-                                    </option>
-
-                                </select>
-
-                            </div>
-
-                            <div class="purchase-form-group">
-
-                                <label for="purchasePaymentStatus">
-                                    Estado del pago
-                                </label>
-
-                                <select
-                                    id="purchasePaymentStatus"
-                                    required
-                                >
-
-                                    <option value="">
-                                        Seleccionar
-                                    </option>
-
-                                    <option value="Pagada">
-                                        Pagada
-                                    </option>
-
-                                    <option value="Pendiente">
-                                        Pendiente
-                                    </option>
-
-                                    <option value="Pago parcial">
-                                        Pago parcial
                                     </option>
 
                                 </select>
@@ -521,13 +343,64 @@
 
                             <div class="purchase-form-group">
 
-                                <label for="purchaseExpectedDate">
-                                    Fecha esperada de entrega
+                                <label for="purchaseAmountPaid">
+                                    Monto pagado
+                                </label>
+
+                                <div class="purchase-money-input">
+
+                                    <span>
+                                        $
+                                    </span>
+
+                                    <input
+                                        type="number"
+                                        id="purchaseAmountPaid"
+                                        min="0"
+                                        step="0.01"
+                                        value="0"
+                                        placeholder="0.00"
+                                        required
+                                    >
+
+                                </div>
+
+                            </div>
+
+                            <div class="purchase-form-group">
+
+                                <label for="purchasePendingBalance">
+                                    Pendiente por pagar
+                                </label>
+
+                                <div class="purchase-money-input purchase-readonly-money">
+
+                                    <span>
+                                        $
+                                    </span>
+
+                                    <input
+                                        type="text"
+                                        id="purchasePendingBalance"
+                                        value="0.00"
+                                        readonly
+                                    >
+
+                                </div>
+
+                            </div>
+
+                            <div class="purchase-form-group">
+
+                                <label for="purchasePaymentStatus">
+                                    Estado del pago
                                 </label>
 
                                 <input
-                                    type="date"
-                                    id="purchaseExpectedDate"
+                                    type="text"
+                                    id="purchasePaymentStatus"
+                                    value="Pendiente"
+                                    readonly
                                 >
 
                             </div>
@@ -603,7 +476,7 @@
                                         </span>
 
                                         <small>
-                                            Información para Square, inventario y costos
+                                            Información para inventario, Square y costos
                                         </small>
 
                                     </div>
@@ -640,13 +513,14 @@
                                     <div class="purchase-form-group">
 
                                         <label>
-                                            SKU o código interno
+                                            Código interno automático
                                         </label>
 
                                         <input
                                             type="text"
                                             class="item-sku"
-                                            placeholder="Ejemplo: CUA-ARB-001"
+                                            placeholder="Se generará automáticamente"
+                                            readonly
                                         >
 
                                     </div>
@@ -862,20 +736,6 @@
 
                                     </div>
 
-                                    <div class="purchase-form-group">
-
-                                        <label>
-                                            Ubicación física
-                                        </label>
-
-                                        <input
-                                            type="text"
-                                            class="item-location"
-                                            placeholder="Ejemplo: Almacén A"
-                                        >
-
-                                    </div>
-
                                     <!-- =========================
                                          CONFIGURACIÓN DE SQUARE
                                          ========================= -->
@@ -1028,31 +888,6 @@
 
                             <div class="purchase-form-group">
 
-                                <label for="purchaseTaxes">
-                                    Impuestos
-                                </label>
-
-                                <div class="purchase-money-input">
-
-                                    <span>
-                                        $
-                                    </span>
-
-                                    <input
-                                        type="number"
-                                        id="purchaseTaxes"
-                                        min="0"
-                                        step="0.01"
-                                        value="0"
-                                        placeholder="0.00"
-                                    >
-
-                                </div>
-
-                            </div>
-
-                            <div class="purchase-form-group">
-
                                 <label for="purchaseOtherCosts">
                                     Otros costos
                                 </label>
@@ -1076,31 +911,6 @@
 
                             </div>
 
-                            <div class="purchase-form-group">
-
-                                <label for="purchaseDiscount">
-                                    Descuento
-                                </label>
-
-                                <div class="purchase-money-input">
-
-                                    <span>
-                                        $
-                                    </span>
-
-                                    <input
-                                        type="number"
-                                        id="purchaseDiscount"
-                                        min="0"
-                                        step="0.01"
-                                        value="0"
-                                        placeholder="0.00"
-                                    >
-
-                                </div>
-
-                            </div>
-
                             <div class="purchase-form-group purchase-full-width">
 
                                 <label for="purchaseNotes">
@@ -1110,7 +920,7 @@
                                 <textarea
                                     id="purchaseNotes"
                                     rows="4"
-                                    placeholder="Información adicional sobre esta compra, proveedor o entrega"
+                                    placeholder="Información adicional sobre esta compra o proveedor"
                                 ></textarea>
 
                             </div>
@@ -1134,7 +944,7 @@
                                 </p>
 
                                 <h4>
-                                    Totales
+                                    Totales y pagos
                                 </h4>
 
                             </div>
@@ -1174,35 +984,11 @@
                             <div class="purchase-total-line">
 
                                 <span>
-                                    Impuestos
-                                </span>
-
-                                <strong id="taxesTotal">
-                                    $0.00
-                                </strong>
-
-                            </div>
-
-                            <div class="purchase-total-line">
-
-                                <span>
                                     Otros costos
                                 </span>
 
                                 <strong id="otherCostsTotal">
                                     $0.00
-                                </strong>
-
-                            </div>
-
-                            <div class="purchase-total-line purchase-discount-line">
-
-                                <span>
-                                    Descuento
-                                </span>
-
-                                <strong id="discountTotal">
-                                    -$0.00
                                 </strong>
 
                             </div>
@@ -1214,6 +1000,30 @@
                                 </span>
 
                                 <strong id="purchaseGrandTotal">
+                                    $0.00
+                                </strong>
+
+                            </div>
+
+                            <div class="purchase-total-line">
+
+                                <span>
+                                    Monto pagado
+                                </span>
+
+                                <strong id="amountPaidTotal">
+                                    $0.00
+                                </strong>
+
+                            </div>
+
+                            <div class="purchase-total-line purchase-grand-total">
+
+                                <span>
+                                    Pendiente por pagar
+                                </span>
+
+                                <strong id="pendingBalanceTotal">
                                     $0.00
                                 </strong>
 
@@ -1305,7 +1115,7 @@
                         <input
                             type="search"
                             id="purchaseSearch"
-                            placeholder="Buscar proveedor, producto, factura, SKU o código"
+                            placeholder="Buscar proveedor, producto, SKU o código"
                         >
 
                     </div>
@@ -1397,15 +1207,11 @@
                                 </th>
 
                                 <th>
-                                    Factura
-                                </th>
-
-                                <th>
                                     Productos
                                 </th>
 
                                 <th>
-                                    Estado
+                                    Mercancía
                                 </th>
 
                                 <th>
@@ -1414,6 +1220,14 @@
 
                                 <th>
                                     Total
+                                </th>
+
+                                <th>
+                                    Pagado
+                                </th>
+
+                                <th>
+                                    Pendiente
                                 </th>
 
                                 <th>
@@ -1428,7 +1242,7 @@
 
                             <tr class="purchases-empty-row">
 
-                                <td colspan="8">
+                                <td colspan="9">
 
                                     <div class="purchases-empty-state">
 
@@ -1552,7 +1366,7 @@
                     </span>
 
                     <small>
-                        Información para Square, inventario y costos
+                        Información para inventario, Square y costos
                     </small>
 
                 </div>
@@ -1588,13 +1402,14 @@
                 <div class="purchase-form-group">
 
                     <label>
-                        SKU o código interno
+                        Código interno automático
                     </label>
 
                     <input
                         type="text"
                         class="item-sku"
-                        placeholder="Ejemplo: CUA-ARB-001"
+                        placeholder="Se generará automáticamente"
+                        readonly
                     >
 
                 </div>
@@ -1807,20 +1622,6 @@
                         >
 
                     </div>
-
-                </div>
-
-                <div class="purchase-form-group">
-
-                    <label>
-                        Ubicación física
-                    </label>
-
-                    <input
-                        type="text"
-                        class="item-location"
-                        placeholder="Ejemplo: Almacén A"
-                    >
 
                 </div>
 
