@@ -1,13 +1,10 @@
 /* =========================================================
    DECORATION GOLD INC
-   FUNCIONAMIENTO DEL MÓDULO DE COMPRAS
+   MÓDULO DE COMPRAS PREPARADO PARA SQUARE
    ========================================================= */
 
 const PURCHASES_STORAGE_KEY = "decorationGoldPurchases";
-
-/* =========================================================
-   ELEMENTOS PRINCIPALES
-   ========================================================= */
+const SQUARE_SYNC_QUEUE_KEY = "decorationGoldSquareSyncQueue";
 
 const purchaseForm = document.getElementById("purchaseForm");
 
@@ -43,7 +40,6 @@ const purchaseItemTemplate = document.getElementById(
     "purchaseItemTemplate"
 );
 const addProductButton = document.getElementById("addProductButton");
-
 const clearPurchaseButton = document.getElementById(
     "clearPurchaseButton"
 );
@@ -113,7 +109,7 @@ let purchases = loadPurchases();
 let notificationTimer;
 
 /* =========================================================
-   INICIAR MÓDULO
+   INICIO
    ========================================================= */
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -125,7 +121,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 /* =========================================================
-   PREPARAR PRIMER PRODUCTO
+   PRODUCTOS
    ========================================================= */
 
 function prepareExistingProductCard() {
@@ -141,10 +137,6 @@ function prepareExistingProductCard() {
     updateProductNumbers();
     updateRemoveButtons();
 }
-
-/* =========================================================
-   AGREGAR PRODUCTOS
-   ========================================================= */
 
 addProductButton.addEventListener("click", function () {
     const templateContent =
@@ -173,10 +165,6 @@ addProductButton.addEventListener("click", function () {
     showPurchaseNotification("Producto agregado.");
 });
 
-/* =========================================================
-   EVENTOS DE CADA PRODUCTO
-   ========================================================= */
-
 function addProductCardEvents(productCard) {
     const quantityInput = productCard.querySelector(
         ".item-quantity"
@@ -194,40 +182,28 @@ function addProductCardEvents(productCard) {
         ".remove-product-button"
     );
 
-    if (quantityInput) {
-        quantityInput.addEventListener("input", function () {
+    quantityInput?.addEventListener("input", function () {
+        validateReceivedQuantity(productCard);
+        calculateProductTotal(productCard);
+        calculatePurchaseTotals();
+    });
+
+    unitCostInput?.addEventListener("input", function () {
+        calculateProductTotal(productCard);
+        calculatePurchaseTotals();
+    });
+
+    receivedQuantityInput?.addEventListener(
+        "input",
+        function () {
             validateReceivedQuantity(productCard);
-            calculateProductTotal(productCard);
-            calculatePurchaseTotals();
-        });
-    }
+        }
+    );
 
-    if (unitCostInput) {
-        unitCostInput.addEventListener("input", function () {
-            calculateProductTotal(productCard);
-            calculatePurchaseTotals();
-        });
-    }
-
-    if (receivedQuantityInput) {
-        receivedQuantityInput.addEventListener(
-            "input",
-            function () {
-                validateReceivedQuantity(productCard);
-            }
-        );
-    }
-
-    if (removeButton) {
-        removeButton.addEventListener("click", function () {
-            removeProductCard(productCard);
-        });
-    }
+    removeButton?.addEventListener("click", function () {
+        removeProductCard(productCard);
+    });
 }
-
-/* =========================================================
-   VALIDAR CANTIDAD RECIBIDA
-   ========================================================= */
 
 function validateReceivedQuantity(productCard) {
     const quantityInput = productCard.querySelector(
@@ -253,14 +229,9 @@ function validateReceivedQuantity(productCard) {
     );
 
     if (receivedQuantity > purchasedQuantity) {
-        receivedQuantity = purchasedQuantity;
         receivedQuantityInput.value = purchasedQuantity;
     }
 }
-
-/* =========================================================
-   ELIMINAR PRODUCTO
-   ========================================================= */
 
 function removeProductCard(productCard) {
     const productCards = purchaseItemsContainer.querySelectorAll(
@@ -285,10 +256,6 @@ function removeProductCard(productCard) {
     showPurchaseNotification("Producto eliminado.");
 }
 
-/* =========================================================
-   NUMERAR PRODUCTOS
-   ========================================================= */
-
 function updateProductNumbers() {
     const productCards = purchaseItemsContainer.querySelectorAll(
         ".purchase-item-card"
@@ -297,73 +264,60 @@ function updateProductNumbers() {
     productCards.forEach(function (productCard, index) {
         productCard.dataset.itemIndex = index;
 
-        const productNumber = productCard.querySelector(
+        const number = productCard.querySelector(
             ".purchase-item-number"
         );
 
-        if (productNumber) {
-            productNumber.textContent = `Producto ${index + 1}`;
+        if (number) {
+            number.textContent = `Producto ${index + 1}`;
         }
     });
 }
 
-/* =========================================================
-   ACTIVAR O DESACTIVAR BOTONES DE ELIMINAR
-   ========================================================= */
-
 function updateRemoveButtons() {
-    const productCards = purchaseItemsContainer.querySelectorAll(
+    const cards = purchaseItemsContainer.querySelectorAll(
         ".purchase-item-card"
     );
 
-    const removeButtons = purchaseItemsContainer.querySelectorAll(
+    const buttons = purchaseItemsContainer.querySelectorAll(
         ".remove-product-button"
     );
 
-    removeButtons.forEach(function (button) {
-        button.disabled = productCards.length <= 1;
+    buttons.forEach(function (button) {
+        button.disabled = cards.length <= 1;
     });
 }
 
 /* =========================================================
-   CALCULAR TOTAL DE CADA PRODUCTO
+   CÁLCULOS
    ========================================================= */
 
 function calculateProductTotal(productCard) {
-    const quantityInput = productCard.querySelector(
-        ".item-quantity"
-    );
-
-    const unitCostInput = productCard.querySelector(
-        ".item-unit-cost"
-    );
-
-    const totalInput = productCard.querySelector(
-        ".item-total"
-    );
-
     const quantity = Math.max(
         0,
-        Number(quantityInput?.value) || 0
+        Number(
+            productCard.querySelector(".item-quantity")?.value
+        ) || 0
     );
 
     const unitCost = Math.max(
         0,
-        Number(unitCostInput?.value) || 0
+        Number(
+            productCard.querySelector(".item-unit-cost")?.value
+        ) || 0
     );
 
-    const productTotal = quantity * unitCost;
+    const total = quantity * unitCost;
+
+    const totalInput =
+        productCard.querySelector(".item-total");
 
     if (totalInput) {
-        totalInput.value = productTotal.toFixed(2);
+        totalInput.value = total.toFixed(2);
     }
 
-    return productTotal;
+    return total;
 }
-
-/* =========================================================
-   CALCULAR TOTAL GENERAL
-   ========================================================= */
 
 [
     purchaseShipping,
@@ -381,8 +335,8 @@ function calculatePurchaseTotals() {
 
     let subtotal = 0;
 
-    productCards.forEach(function (productCard) {
-        subtotal += calculateProductTotal(productCard);
+    productCards.forEach(function (card) {
+        subtotal += calculateProductTotal(card);
     });
 
     const shipping = getPositiveNumber(purchaseShipping.value);
@@ -431,15 +385,20 @@ purchaseForm.addEventListener("submit", function (event) {
 
     const totals = calculatePurchaseTotals();
 
+    const purchaseId = createUniqueId();
+
     const newPurchase = {
-        id: createUniqueId(),
+        id: purchaseId,
+
         date: purchaseDate.value,
         supplier: purchaseSupplier.value.trim(),
         invoice: purchaseInvoice.value.trim(),
         orderNumber: purchaseOrder.value.trim(),
+
         status: purchaseStatus.value,
         paymentStatus: purchasePaymentStatus.value,
         paymentMethod: purchasePaymentMethod.value,
+
         expectedDate: purchaseExpectedDate.value,
         notes: purchaseNotes.value.trim(),
 
@@ -452,99 +411,246 @@ purchaseForm.addEventListener("submit", function (event) {
         discount: totals.discount,
         total: totals.grandTotal,
 
-        createdAt: new Date().toISOString()
+        squareSyncStatus: determinePurchaseSyncStatus(items),
+        squareSyncError: "",
+        squareLastSyncAt: null,
+
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
     };
 
     purchases.unshift(newPurchase);
 
     savePurchases();
+    addPurchaseToSquareQueue(newPurchase);
+
     renderPurchases();
     updatePurchaseSummary();
     resetPurchaseForm();
 
     showPurchaseNotification(
-        "Compra guardada correctamente."
+        "Compra guardada y preparada para Square."
     );
 });
 
 /* =========================================================
-   RECOGER PRODUCTOS DEL FORMULARIO
+   RECOGER PRODUCTOS
    ========================================================= */
 
 function collectPurchaseItems() {
-    const productCards = purchaseItemsContainer.querySelectorAll(
+    const cards = purchaseItemsContainer.querySelectorAll(
         ".purchase-item-card"
     );
 
-    return Array.from(productCards).map(function (
-        productCard,
-        index
-    ) {
+    return Array.from(cards).map(function (card, index) {
         const quantity = Math.max(
             1,
             Number(
-                productCard.querySelector(".item-quantity")
-                    ?.value
+                card.querySelector(".item-quantity")?.value
             ) || 1
         );
 
-        const receivedQuantity = Math.max(
-            0,
-            Number(
-                productCard.querySelector(
-                    ".item-received-quantity"
-                )?.value
-            ) || 0
+        const receivedQuantity = Math.min(
+            quantity,
+            Math.max(
+                0,
+                Number(
+                    card.querySelector(
+                        ".item-received-quantity"
+                    )?.value
+                ) || 0
+            )
         );
 
         const unitCost = getPositiveNumber(
-            productCard.querySelector(".item-unit-cost")
-                ?.value
+            card.querySelector(".item-unit-cost")?.value
         );
+
+        const syncEnabled =
+            card.querySelector(".item-square-enabled")?.value !==
+            "false";
+
+        const trackInventory =
+            card.querySelector(".item-track-inventory")?.value !==
+            "false";
 
         return {
             id: createUniqueId(),
             position: index + 1,
+
             name:
-                productCard
-                    .querySelector(".item-name")
+                card.querySelector(".item-name")
                     ?.value.trim() || "",
+
             sku:
-                productCard
-                    .querySelector(".item-sku")
+                card.querySelector(".item-sku")
                     ?.value.trim() || "",
+
+            barcode:
+                card.querySelector(".item-barcode")
+                    ?.value.trim() || "",
+
             category:
-                productCard.querySelector(".item-category")
+                card.querySelector(".item-category")
                     ?.value || "",
+
             variant:
-                productCard
-                    .querySelector(".item-variant")
+                card.querySelector(".item-variant")
                     ?.value.trim() || "",
+
+            variationName:
+                card.querySelector(".item-variation-name")
+                    ?.value.trim() || "Regular",
+
             quantity,
-            receivedQuantity: Math.min(
-                receivedQuantity,
-                quantity
-            ),
+            receivedQuantity,
             unitCost,
+
             salePrice: getPositiveNumber(
-                productCard.querySelector(".item-sale-price")
-                    ?.value
+                card.querySelector(".item-sale-price")?.value
             ),
+
             total: quantity * unitCost,
+
             location:
-                productCard
-                    .querySelector(".item-location")
+                card.querySelector(".item-location")
                     ?.value.trim() || "",
+
             notes:
-                productCard
-                    .querySelector(".item-notes")
-                    ?.value.trim() || ""
+                card.querySelector(".item-notes")
+                    ?.value.trim() || "",
+
+            square: {
+                enabled: syncEnabled,
+                trackInventory,
+                itemId:
+                    card.querySelector(".item-square-item-id")
+                        ?.value || "",
+                variationId:
+                    card.querySelector(
+                        ".item-square-variation-id"
+                    )?.value || "",
+                syncStatus: syncEnabled
+                    ? "pending"
+                    : "disabled",
+                syncError: "",
+                inventorySyncedQuantity: Number(
+                    card.querySelector(
+                        ".item-inventory-synced-quantity"
+                    )?.value || 0
+                ),
+                catalogIdempotencyKey: createUniqueId(),
+                inventoryIdempotencyKey: createUniqueId(),
+                lastSyncAt: null
+            }
         };
     });
 }
 
+function determinePurchaseSyncStatus(items) {
+    const squareItems = items.filter(function (item) {
+        return item.square.enabled;
+    });
+
+    if (squareItems.length === 0) {
+        return "disabled";
+    }
+
+    return "pending";
+}
+
 /* =========================================================
-   VALIDAR COMPRA
+   COLA PARA SQUARE
+   ========================================================= */
+
+function addPurchaseToSquareQueue(purchase) {
+    const queue = loadSquareQueue();
+
+    const jobs = purchase.items
+        .filter(function (item) {
+            return item.square.enabled;
+        })
+        .map(function (item) {
+            return {
+                id: createUniqueId(),
+
+                type: "UPSERT_CATALOG_AND_INVENTORY",
+
+                purchaseId: purchase.id,
+                purchaseItemId: item.id,
+
+                status: "pending",
+                attempts: 0,
+
+                payload: {
+                    name: item.name,
+                    sku: item.sku,
+                    barcode: item.barcode,
+                    category: item.category,
+                    variationName:
+                        item.variationName || "Regular",
+                    salePrice: item.salePrice,
+                    trackInventory:
+                        item.square.trackInventory,
+
+                    quantityToAdd:
+                        shouldIncreaseSquareInventory(purchase)
+                            ? item.receivedQuantity
+                            : 0,
+
+                    supplier: purchase.supplier,
+                    purchaseDate: purchase.date,
+                    invoice: purchase.invoice,
+
+                    catalogIdempotencyKey:
+                        item.square.catalogIdempotencyKey,
+
+                    inventoryIdempotencyKey:
+                        item.square.inventoryIdempotencyKey
+                },
+
+                createdAt: new Date().toISOString(),
+                processedAt: null,
+                error: ""
+            };
+        });
+
+    queue.push(...jobs);
+
+    localStorage.setItem(
+        SQUARE_SYNC_QUEUE_KEY,
+        JSON.stringify(queue)
+    );
+}
+
+function shouldIncreaseSquareInventory(purchase) {
+    return (
+        purchase.status === "Recibida" ||
+        purchase.status === "Recibida parcialmente"
+    );
+}
+
+function loadSquareQueue() {
+    try {
+        const saved = localStorage.getItem(
+            SQUARE_SYNC_QUEUE_KEY
+        );
+
+        const parsed = saved ? JSON.parse(saved) : [];
+
+        return Array.isArray(parsed) ? parsed : [];
+    } catch (error) {
+        console.error(
+            "No se pudo cargar la cola de Square:",
+            error
+        );
+
+        return [];
+    }
+}
+
+/* =========================================================
+   VALIDACIONES
    ========================================================= */
 
 function validatePurchaseForm(items) {
@@ -621,16 +727,6 @@ function validatePurchaseForm(items) {
             return false;
         }
 
-        if (item.quantity <= 0) {
-            showPurchaseNotification(
-                `La cantidad del producto ${index + 1} debe ser mayor que cero.`,
-                "error"
-            );
-
-            focusProductField(index, ".item-quantity");
-            return false;
-        }
-
         if (item.unitCost <= 0) {
             showPurchaseNotification(
                 `Escribe el costo del producto ${index + 1}.`,
@@ -640,20 +736,48 @@ function validatePurchaseForm(items) {
             focusProductField(index, ".item-unit-cost");
             return false;
         }
+
+        if (
+            item.square.enabled &&
+            item.salePrice <= 0
+        ) {
+            showPurchaseNotification(
+                `Escribe el precio de venta del producto ${index + 1} para enviarlo a Square.`,
+                "error"
+            );
+
+            focusProductField(index, ".item-sale-price");
+            return false;
+        }
+
+        if (
+            item.square.enabled &&
+            !item.sku &&
+            !item.barcode
+        ) {
+            showPurchaseNotification(
+                `Escribe un SKU o código de barras para el producto ${index + 1}.`,
+                "error"
+            );
+
+            focusProductField(index, ".item-sku");
+            return false;
+        }
     }
 
     return true;
 }
 
 function focusProductField(index, selector) {
-    const productCards = purchaseItemsContainer.querySelectorAll(
+    const cards = purchaseItemsContainer.querySelectorAll(
         ".purchase-item-card"
     );
 
-    const field = productCards[index]?.querySelector(selector);
+    const field = cards[index]?.querySelector(selector);
 
     if (field) {
         field.focus();
+
         field.scrollIntoView({
             behavior: "smooth",
             block: "center"
@@ -662,7 +786,7 @@ function focusProductField(index, selector) {
 }
 
 /* =========================================================
-   LIMPIAR FORMULARIO
+   LIMPIAR
    ========================================================= */
 
 clearPurchaseButton.addEventListener("click", function () {
@@ -687,43 +811,43 @@ function resetPurchaseForm() {
 }
 
 function resetProductCards() {
-    const productCards = purchaseItemsContainer.querySelectorAll(
+    const cards = purchaseItemsContainer.querySelectorAll(
         ".purchase-item-card"
     );
 
-    productCards.forEach(function (productCard, index) {
+    cards.forEach(function (card, index) {
         if (index > 0) {
-            productCard.remove();
+            card.remove();
         }
     });
 
-    const firstProductCard = purchaseItemsContainer.querySelector(
+    const firstCard = purchaseItemsContainer.querySelector(
         ".purchase-item-card"
     );
 
-    if (firstProductCard) {
-        const quantityInput = firstProductCard.querySelector(
-            ".item-quantity"
+    if (firstCard) {
+        firstCard.querySelector(".item-quantity").value = 1;
+
+        firstCard.querySelector(
+            ".item-received-quantity"
+        ).value = 0;
+
+        firstCard.querySelector(".item-total").value = "0.00";
+
+        const variationName = firstCard.querySelector(
+            ".item-variation-name"
         );
 
-        const receivedQuantityInput =
-            firstProductCard.querySelector(
-                ".item-received-quantity"
-            );
-
-        const totalInput =
-            firstProductCard.querySelector(".item-total");
-
-        if (quantityInput) {
-            quantityInput.value = 1;
+        if (variationName) {
+            variationName.value = "Regular";
         }
 
-        if (receivedQuantityInput) {
-            receivedQuantityInput.value = 0;
-        }
+        const syncStatus = firstCard.querySelector(
+            ".item-sync-status"
+        );
 
-        if (totalInput) {
-            totalInput.value = "0.00";
+        if (syncStatus) {
+            syncStatus.value = "Pendiente de sincronizar";
         }
     }
 
@@ -732,7 +856,7 @@ function resetProductCards() {
 }
 
 /* =========================================================
-   MOSTRAR COMPRAS EN LA TABLA
+   TABLA
    ========================================================= */
 
 function renderPurchases() {
@@ -756,24 +880,10 @@ function renderPurchases() {
         );
 
         row.innerHTML = `
-            <td>
-                ${formatDate(purchase.date)}
-            </td>
+            <td>${formatDate(purchase.date)}</td>
 
             <td>
-                <strong>
-                    ${escapeHTML(purchase.supplier)}
-                </strong>
-
-                ${
-                    purchase.orderNumber
-                        ? `<small>
-                            Orden: ${escapeHTML(
-                                purchase.orderNumber
-                            )}
-                           </small>`
-                        : ""
-                }
+                <strong>${escapeHTML(purchase.supplier)}</strong>
             </td>
 
             <td>
@@ -785,23 +895,19 @@ function renderPurchases() {
             </td>
 
             <td>
-                <strong>
-                    ${productCount}
-                </strong>
-
+                <strong>${productCount}</strong>
                 <small>
+                    ${purchase.items.length}
                     ${
                         purchase.items.length === 1
-                            ? "1 tipo de producto"
-                            : `${purchase.items.length} tipos de productos`
+                            ? "producto"
+                            : "productos"
                     }
                 </small>
             </td>
 
             <td>
-                ${createPurchaseStatusBadge(
-                    purchase.status
-                )}
+                ${createPurchaseStatusBadge(purchase.status)}
             </td>
 
             <td>
@@ -823,7 +929,6 @@ function renderPurchases() {
                         type="button"
                         class="view-purchase-button"
                         data-purchase-id="${purchase.id}"
-                        aria-label="Ver compra"
                         title="Ver detalles"
                     >
                         ◉
@@ -833,7 +938,6 @@ function renderPurchases() {
                         type="button"
                         class="delete-purchase-button"
                         data-purchase-id="${purchase.id}"
-                        aria-label="Eliminar compra"
                         title="Eliminar compra"
                     >
                         ×
@@ -850,7 +954,7 @@ function renderPurchases() {
 }
 
 /* =========================================================
-   FILTROS Y BÚSQUEDA
+   FILTROS
    ========================================================= */
 
 purchaseSearch.addEventListener("input", renderPurchases);
@@ -863,55 +967,46 @@ function getFilteredPurchases() {
         .trim()
         .toLowerCase();
 
-    const statusValue = purchaseStatusFilter.value;
-    const paymentValue = purchasePaymentFilter.value;
-    const periodValue = purchasePeriodFilter.value;
-
     return purchases.filter(function (purchase) {
-        const productSearchText = purchase.items
+        const productText = purchase.items
             .map(function (item) {
                 return [
                     item.name,
                     item.sku,
+                    item.barcode,
                     item.category,
-                    item.variant
+                    item.variant,
+                    item.variationName
                 ].join(" ");
             })
             .join(" ")
             .toLowerCase();
 
-        const generalSearchText = [
+        const searchText = [
             purchase.supplier,
             purchase.invoice,
             purchase.orderNumber,
-            purchase.paymentMethod,
             purchase.notes,
-            productSearchText
+            productText
         ]
             .join(" ")
             .toLowerCase();
 
-        const matchesSearch =
-            generalSearchText.includes(searchValue);
-
-        const matchesStatus =
-            statusValue === "Todos" ||
-            purchase.status === statusValue;
-
-        const matchesPayment =
-            paymentValue === "Todos" ||
-            purchase.paymentStatus === paymentValue;
-
-        const matchesPeriod = purchaseMatchesPeriod(
-            purchase.date,
-            periodValue
-        );
-
         return (
-            matchesSearch &&
-            matchesStatus &&
-            matchesPayment &&
-            matchesPeriod
+            searchText.includes(searchValue) &&
+            (
+                purchaseStatusFilter.value === "Todos" ||
+                purchase.status === purchaseStatusFilter.value
+            ) &&
+            (
+                purchasePaymentFilter.value === "Todos" ||
+                purchase.paymentStatus ===
+                    purchasePaymentFilter.value
+            ) &&
+            purchaseMatchesPeriod(
+                purchase.date,
+                purchasePeriodFilter.value
+            )
         );
     });
 }
@@ -924,42 +1019,30 @@ function purchaseMatchesPeriod(dateString, period) {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
-    const purchaseDateValue = createLocalDate(dateString);
+    const date = createLocalDate(dateString);
 
     if (period === "Hoy") {
         return (
-            getLocalDateString(purchaseDateValue) ===
+            getLocalDateString(date) ===
             getLocalDateString(today)
         );
     }
 
     if (period === "Semana") {
-        const startOfWeek = getStartOfWeek(today);
-
-        return (
-            purchaseDateValue >= startOfWeek &&
-            purchaseDateValue <= today
-        );
+        return date >= getStartOfWeek(today) && date <= today;
     }
 
     if (period === "Mes") {
         return (
-            purchaseDateValue.getFullYear() ===
-                today.getFullYear() &&
-            purchaseDateValue.getMonth() === today.getMonth()
+            date.getFullYear() === today.getFullYear() &&
+            date.getMonth() === today.getMonth()
         );
     }
 
     return true;
 }
 
-/* =========================================================
-   ESTADO VACÍO
-   ========================================================= */
-
 function renderEmptyPurchasesState() {
-    const hasPurchases = purchases.length > 0;
-
     purchasesTableBody.innerHTML = `
         <tr class="purchases-empty-row">
 
@@ -973,7 +1056,7 @@ function renderEmptyPurchasesState() {
 
                     <strong>
                         ${
-                            hasPurchases
+                            purchases.length
                                 ? "No se encontraron resultados"
                                 : "Todavía no hay compras"
                         }
@@ -981,9 +1064,9 @@ function renderEmptyPurchasesState() {
 
                     <span>
                         ${
-                            hasPurchases
-                                ? "Prueba con otros filtros o términos de búsqueda."
-                                : "Las compras que registres aparecerán aquí."
+                            purchases.length
+                                ? "Prueba con otros filtros."
+                                : "Las compras registradas aparecerán aquí."
                         }
                     </span>
 
@@ -995,34 +1078,28 @@ function renderEmptyPurchasesState() {
     `;
 }
 
-/* =========================================================
-   EVENTOS DE LA TABLA
-   ========================================================= */
-
 function addPurchaseTableEvents() {
-    const viewButtons = document.querySelectorAll(
-        ".view-purchase-button"
-    );
-
-    const deleteButtons = document.querySelectorAll(
-        ".delete-purchase-button"
-    );
-
-    viewButtons.forEach(function (button) {
-        button.addEventListener("click", function () {
-            openPurchaseDetails(button.dataset.purchaseId);
+    document
+        .querySelectorAll(".view-purchase-button")
+        .forEach(function (button) {
+            button.addEventListener("click", function () {
+                openPurchaseDetails(
+                    button.dataset.purchaseId
+                );
+            });
         });
-    });
 
-    deleteButtons.forEach(function (button) {
-        button.addEventListener("click", function () {
-            deletePurchase(button.dataset.purchaseId);
+    document
+        .querySelectorAll(".delete-purchase-button")
+        .forEach(function (button) {
+            button.addEventListener("click", function () {
+                deletePurchase(button.dataset.purchaseId);
+            });
         });
-    });
 }
 
 /* =========================================================
-   MODAL DE DETALLES
+   DETALLES
    ========================================================= */
 
 function openPurchaseDetails(purchaseId) {
@@ -1031,11 +1108,6 @@ function openPurchaseDetails(purchaseId) {
     });
 
     if (!purchase) {
-        showPurchaseNotification(
-            "No se encontró la compra.",
-            "error"
-        );
-
         return;
     }
 
@@ -1051,16 +1123,14 @@ function openPurchaseDetails(purchaseId) {
                         </strong>
 
                         <small>
-                            Cantidad: ${item.quantity}
-                            · Recibida: ${item.receivedQuantity}
-                            · Costo: ${formatMoney(item.unitCost)}
-                            ${
-                                item.sku
-                                    ? ` · SKU: ${escapeHTML(
-                                          item.sku
-                                      )}`
-                                    : ""
-                            }
+                            SKU: ${escapeHTML(item.sku || "Sin SKU")}
+                            · Recibido: ${item.receivedQuantity}
+                            · Square:
+                            ${escapeHTML(
+                                translateSyncStatus(
+                                    item.square?.syncStatus
+                                )
+                            )}
                         </small>
 
                     </div>
@@ -1093,39 +1163,27 @@ function openPurchaseDetails(purchaseId) {
             )}
 
             ${createPurchaseDetail(
-                "Número de orden",
-                purchase.orderNumber || "Sin número"
-            )}
-
-            ${createPurchaseDetail(
                 "Estado",
                 purchase.status
             )}
 
             ${createPurchaseDetail(
-                "Estado del pago",
+                "Pago",
                 purchase.paymentStatus
             )}
 
             ${createPurchaseDetail(
-                "Método de pago",
-                purchase.paymentMethod
-            )}
-
-            ${createPurchaseDetail(
-                "Entrega esperada",
-                purchase.expectedDate
-                    ? formatDate(purchase.expectedDate)
-                    : "No especificada"
+                "Sincronización Square",
+                translateSyncStatus(
+                    purchase.squareSyncStatus
+                )
             )}
 
         </div>
 
         <div class="purchase-detail-products">
 
-            <h4>
-                Productos comprados
-            </h4>
+            <h4>Productos comprados</h4>
 
             ${productsHTML}
 
@@ -1149,11 +1207,6 @@ function openPurchaseDetails(purchaseId) {
             )}
 
             ${createPurchaseDetail(
-                "Otros costos",
-                formatMoney(purchase.otherCosts)
-            )}
-
-            ${createPurchaseDetail(
                 "Descuento",
                 `-${formatMoney(purchase.discount)}`
             )}
@@ -1164,29 +1217,10 @@ function openPurchaseDetails(purchaseId) {
             )}
 
         </div>
-
-        ${
-            purchase.notes
-                ? `
-                    <div class="purchase-detail-products">
-
-                        <h4>
-                            Notas
-                        </h4>
-
-                        <p>
-                            ${escapeHTML(purchase.notes)}
-                        </p>
-
-                    </div>
-                  `
-                : ""
-        }
     `;
 
     purchaseDetailsModal.classList.add("is-open");
     purchaseDetailsModal.setAttribute("aria-hidden", "false");
-
     document.body.style.overflow = "hidden";
 }
 
@@ -1194,16 +1228,25 @@ function createPurchaseDetail(label, value) {
     return `
         <div class="purchase-detail-item">
 
-            <span>
-                ${escapeHTML(label)}
-            </span>
+            <span>${escapeHTML(label)}</span>
 
-            <strong>
-                ${escapeHTML(value)}
-            </strong>
+            <strong>${escapeHTML(value)}</strong>
 
         </div>
     `;
+}
+
+function translateSyncStatus(status) {
+    const statuses = {
+        pending: "Pendiente",
+        processing: "Procesando",
+        synced: "Sincronizado",
+        error: "Error",
+        disabled: "No enviar",
+        partial: "Parcial"
+    };
+
+    return statuses[status] || "Pendiente";
 }
 
 closePurchaseModalButton.addEventListener(
@@ -1214,54 +1257,33 @@ closePurchaseModalButton.addEventListener(
 purchaseDetailsModal.addEventListener(
     "click",
     function (event) {
-        if (
-            event.target.dataset.closeModal === "true"
-        ) {
+        if (event.target.dataset.closeModal === "true") {
             closePurchaseDetails();
         }
     }
 );
 
-document.addEventListener("keydown", function (event) {
-    if (
-        event.key === "Escape" &&
-        purchaseDetailsModal.classList.contains("is-open")
-    ) {
-        closePurchaseDetails();
-    }
-});
-
 function closePurchaseDetails() {
     purchaseDetailsModal.classList.remove("is-open");
     purchaseDetailsModal.setAttribute("aria-hidden", "true");
-
     document.body.style.overflow = "";
 }
 
 /* =========================================================
-   ELIMINAR UNA COMPRA
+   ELIMINAR
    ========================================================= */
 
 function deletePurchase(purchaseId) {
-    const selectedPurchase = purchases.find(function (
-        purchase
-    ) {
+    const selected = purchases.find(function (purchase) {
         return purchase.id === purchaseId;
     });
 
-    if (!selectedPurchase) {
-        showPurchaseNotification(
-            "No se encontró la compra.",
-            "error"
-        );
-
+    if (!selected) {
         return;
     }
 
     const confirmation = window.confirm(
-        `¿Seguro que quieres eliminar la compra de "${selectedPurchase.supplier}" por ${formatMoney(
-            selectedPurchase.total
-        )}?`
+        `¿Eliminar la compra de "${selected.supplier}"?`
     );
 
     if (!confirmation) {
@@ -1276,19 +1298,13 @@ function deletePurchase(purchaseId) {
     renderPurchases();
     updatePurchaseSummary();
 
-    showPurchaseNotification(
-        "Compra eliminada correctamente."
-    );
+    showPurchaseNotification("Compra eliminada.");
 }
-
-/* =========================================================
-   BORRAR TODAS LAS COMPRAS
-   ========================================================= */
 
 deleteAllPurchasesButton.addEventListener(
     "click",
     function () {
-        if (purchases.length === 0) {
+        if (!purchases.length) {
             showPurchaseNotification(
                 "No hay compras registradas.",
                 "error"
@@ -1297,11 +1313,11 @@ deleteAllPurchasesButton.addEventListener(
             return;
         }
 
-        const confirmation = window.confirm(
-            "¿Seguro que quieres borrar todas las compras registradas?"
-        );
-
-        if (!confirmation) {
+        if (
+            !window.confirm(
+                "¿Seguro que quieres borrar todas las compras?"
+            )
+        ) {
             return;
         }
 
@@ -1318,7 +1334,7 @@ deleteAllPurchasesButton.addEventListener(
 );
 
 /* =========================================================
-   RESUMEN DE COMPRAS
+   RESÚMENES
    ========================================================= */
 
 function updatePurchaseSummary() {
@@ -1334,77 +1350,64 @@ function updatePurchaseSummary() {
         1
     );
 
-    const purchasesToday = purchases.filter(function (
-        purchase
-    ) {
+    const todayList = purchases.filter(function (purchase) {
         return purchase.date === todayString;
     });
 
-    const purchasesThisWeek = purchases.filter(function (
-        purchase
-    ) {
+    const weekList = purchases.filter(function (purchase) {
         const date = createLocalDate(purchase.date);
 
         return date >= startOfWeek && date <= today;
     });
 
-    const purchasesThisMonth = purchases.filter(function (
-        purchase
-    ) {
+    const monthList = purchases.filter(function (purchase) {
         const date = createLocalDate(purchase.date);
 
         return date >= startOfMonth && date <= today;
     });
 
-    const pendingCount = purchases.filter(function (
-        purchase
-    ) {
+    const pendingCount = purchases.filter(function (purchase) {
         return (
             purchase.status === "Pendiente" ||
             purchase.status === "Recibida parcialmente"
         );
     }).length;
 
-    const totalToday = sumPurchaseTotals(purchasesToday);
-    const totalWeek = sumPurchaseTotals(purchasesThisWeek);
-    const totalMonth = sumPurchaseTotals(purchasesThisMonth);
+    todayPurchases.textContent = formatMoney(
+        sumPurchaseTotals(todayList)
+    );
 
-    todayPurchases.textContent = formatMoney(totalToday);
-    weekPurchases.textContent = formatMoney(totalWeek);
-    monthPurchases.textContent = formatMoney(totalMonth);
+    weekPurchases.textContent = formatMoney(
+        sumPurchaseTotals(weekList)
+    );
+
+    monthPurchases.textContent = formatMoney(
+        sumPurchaseTotals(monthList)
+    );
+
     pendingPurchases.textContent = pendingCount;
 
     todayPurchasesStatus.textContent =
-        purchasesToday.length === 0
-            ? "Sin compras registradas"
-            : purchasesToday.length === 1
-              ? "1 compra registrada"
-              : `${purchasesToday.length} compras registradas`;
+        `${todayList.length} compras registradas`;
 
     weekPurchasesStatus.textContent =
-        purchasesThisWeek.length === 1
-            ? "1 compra esta semana"
-            : `${purchasesThisWeek.length} compras esta semana`;
+        `${weekList.length} compras esta semana`;
 
     monthPurchasesStatus.textContent =
-        purchasesThisMonth.length === 1
-            ? "1 compra este mes"
-            : `${purchasesThisMonth.length} compras este mes`;
+        `${monthList.length} compras este mes`;
 
     pendingPurchasesStatus.textContent =
-        pendingCount === 1
-            ? "1 compra pendiente"
-            : `${pendingCount} compras pendientes`;
+        `${pendingCount} compras pendientes`;
 }
 
-function sumPurchaseTotals(purchaseList) {
-    return purchaseList.reduce(function (total, purchase) {
+function sumPurchaseTotals(list) {
+    return list.reduce(function (total, purchase) {
         return total + Number(purchase.total || 0);
     }, 0);
 }
 
 /* =========================================================
-   ETIQUETAS DE ESTADO
+   ESTADOS
    ========================================================= */
 
 function createPurchaseStatusBadge(status) {
@@ -1448,57 +1451,32 @@ function createPaymentStatusBadge(status) {
 }
 
 /* =========================================================
-   GUARDAR Y CARGAR
+   ALMACENAMIENTO
    ========================================================= */
 
 function savePurchases() {
-    try {
-        localStorage.setItem(
-            PURCHASES_STORAGE_KEY,
-            JSON.stringify(purchases)
-        );
-    } catch (error) {
-        console.error(
-            "No se pudieron guardar las compras:",
-            error
-        );
-
-        showPurchaseNotification(
-            "No fue posible guardar la información.",
-            "error"
-        );
-    }
+    localStorage.setItem(
+        PURCHASES_STORAGE_KEY,
+        JSON.stringify(purchases)
+    );
 }
 
 function loadPurchases() {
     try {
-        const storedPurchases = localStorage.getItem(
+        const saved = localStorage.getItem(
             PURCHASES_STORAGE_KEY
         );
 
-        if (!storedPurchases) {
-            return [];
-        }
+        const parsed = saved ? JSON.parse(saved) : [];
 
-        const parsedPurchases = JSON.parse(storedPurchases);
-
-        if (!Array.isArray(parsedPurchases)) {
-            return [];
-        }
-
-        return parsedPurchases;
+        return Array.isArray(parsed) ? parsed : [];
     } catch (error) {
-        console.error(
-            "No se pudieron cargar las compras:",
-            error
-        );
-
         return [];
     }
 }
 
 /* =========================================================
-   FECHAS
+   UTILIDADES
    ========================================================= */
 
 function setTodayDate() {
@@ -1522,11 +1500,11 @@ function getLocalDateString(date) {
 function createLocalDate(dateString) {
     const parts = String(dateString).split("-");
 
-    const year = Number(parts[0]);
-    const month = Number(parts[1]) - 1;
-    const day = Number(parts[2]);
-
-    const date = new Date(year, month, day);
+    const date = new Date(
+        Number(parts[0]),
+        Number(parts[1]) - 1,
+        Number(parts[2])
+    );
 
     date.setHours(0, 0, 0, 0);
 
@@ -1534,27 +1512,20 @@ function createLocalDate(dateString) {
 }
 
 function getStartOfWeek(date) {
-    const startDate = new Date(date);
+    const start = new Date(date);
 
-    const day = startDate.getDay();
+    const day = start.getDay();
 
-    const daysFromMonday =
-        day === 0
-            ? 6
-            : day - 1;
-
-    startDate.setDate(
-        startDate.getDate() - daysFromMonday
+    start.setDate(
+        start.getDate() - (day === 0 ? 6 : day - 1)
     );
 
-    startDate.setHours(0, 0, 0, 0);
+    start.setHours(0, 0, 0, 0);
 
-    return startDate;
+    return start;
 }
 
 function formatDate(dateString) {
-    const date = createLocalDate(dateString);
-
     return new Intl.DateTimeFormat(
         "es-US",
         {
@@ -1562,12 +1533,8 @@ function formatDate(dateString) {
             day: "numeric",
             year: "numeric"
         }
-    ).format(date);
+    ).format(createLocalDate(dateString));
 }
-
-/* =========================================================
-   DINERO
-   ========================================================= */
 
 function getPositiveNumber(value) {
     return Math.max(0, Number(value) || 0);
@@ -1582,10 +1549,6 @@ function formatMoney(value) {
         }
     ).format(Number(value) || 0);
 }
-
-/* =========================================================
-   IDENTIFICADOR ÚNICO
-   ========================================================= */
 
 function createUniqueId() {
     if (
@@ -1602,10 +1565,6 @@ function createUniqueId() {
     );
 }
 
-/* =========================================================
-   PROTEGER TEXTO
-   ========================================================= */
-
 function escapeHTML(value) {
     return String(value ?? "")
         .replaceAll("&", "&amp;")
@@ -1615,10 +1574,6 @@ function escapeHTML(value) {
         .replaceAll("'", "&#039;");
 }
 
-/* =========================================================
-   NOTIFICACIONES
-   ========================================================= */
-
 function showPurchaseNotification(
     message,
     type = "success"
@@ -1627,13 +1582,11 @@ function showPurchaseNotification(
 
     purchaseNotification.textContent = message;
 
-    if (type === "error") {
-        purchaseNotification.style.borderColor = "#a13d3d";
-        purchaseNotification.style.color = "#ffd4d4";
-    } else {
-        purchaseNotification.style.borderColor = "#c99b36";
-        purchaseNotification.style.color = "#e7ca78";
-    }
+    purchaseNotification.style.borderColor =
+        type === "error" ? "#a13d3d" : "#c99b36";
+
+    purchaseNotification.style.color =
+        type === "error" ? "#ffd4d4" : "#e7ca78";
 
     purchaseNotification.classList.add("show");
 
